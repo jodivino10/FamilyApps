@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="tl">
 <head>
@@ -127,7 +126,6 @@
 
         function checkPassword() {
             var input = document.getElementById("password-input").value;
-            // Ginamit nating mas simpleng password para sigurado
             if (input === "pamilyako2026") {
                 document.getElementById("login-box").style.display = "none";
                 document.getElementById("protected-content").style.display = "block";
@@ -181,3 +179,4 @@
             renderView();
         }
 
+        function deleteAlbum(id) {
