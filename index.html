@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="tl">
 <head>
@@ -6,13 +7,8 @@
     <title>FamilyLOVE - Dashboard</title>
     <style>
         body { font-family: Arial, sans-serif; background-color: #f8f9fa; margin: 0; padding: 0; }
-        .login-container { max-width: 400px; margin: 100px auto; background: white; padding: 30px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); text-align: center; }
-        input[type="password"] { width: 85%; padding: 12px; margin: 15px 0; border: 1px solid #ddd; border-radius: 8px; font-size: 16px; text-align: center; background-color: #f1f3f5; }
-        .login-btn { width: 90%; padding: 12px; background-color: #0070f3; color: white; border: none; border-radius: 8px; font-size: 16px; cursor: pointer; font-weight: bold; }
-        #error-msg { color: red; font-size: 14px; margin-top: 10px; display: none; }
         
         /* Main Layout */
-        #protected-content { display: none; }
         .header { background: white; padding: 15px 20px; box-shadow: 0 2px 4px rgba(0,0,0,0.02); display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #eceff1; }
         .header .logo { font-weight: bold; color: #0070f3; font-size: 22px; letter-spacing: 0.5px; }
         .header-icons { display: flex; gap: 18px; font-size: 20px; cursor: pointer; }
@@ -58,23 +54,14 @@
 </head>
 <body>
 
-    <!-- 1. LOGIN SCREEN -->
-    <div id="login-box" class="login-container">
-        <h2 style="margin-top:0;">🔒 Family Login</h2>
-        <p style="color:#666; font-size:14px;">Ipasok ang password ng ating pamilya para makapasok:</p>
-        <input type="password" id="password-input" placeholder="Password dito...">
-        <button class="login-btn" onclick="checkPassword()">Pumasok</button>
-        <p id="error-msg">Mali ang password! Subukan muli.</p>
-    </div>
-
-    <!-- 2. MAIN LAYOUT -->
-    <div id="protected-content">
+    <!-- MAIN APP LAYOUT (DIPRETSO NA NATIN DITO) -->
+    <div>
         <!-- Top Navbar -->
         <div class="header">
             <div class="logo">FamilyLOVE</div>
             <div class="header-icons">
                 <span onclick="alert('Settings: Parating na ito sa susunod na update!')">⚙️</span>
-                <span onclick="logout()">Logout 🚪</span>
+                <span onclick="alert('Naka-disable muna ang logout dahil inalis natin ang password screen!')">🚪</span>
             </div>
         </div>
 
@@ -108,7 +95,7 @@
                     <h3 style="margin-top:0; color:#333;">💬 Pampamilyang Kwentuhan</h3>
                     <input type="text" id="chat-name" class="msg-input" placeholder="Iyong Pangalan...">
                     <textarea id="chat-msg" class="msg-area" rows="2" placeholder="Sumulat ng mensahe para sa pamilya..."></textarea>
-                    <button class="login-btn" style="width:100%; padding:10px;" onclick="addMessage()">I-send ang Mensahe</button>
+                    <button class="login-btn" style="width:100%; padding:10px; background-color:#0070f3; color:white; border:none; border-radius:8px; font-weight:bold; cursor:pointer;" onclick="addMessage()">I-send ang Mensahe</button>
                 </div>
                 <div id="chat-list" class="chat-list"></div>
             </div>
@@ -124,22 +111,10 @@
         };
         let messagesData = JSON.parse(localStorage.getItem('familyLoveMessages')) || [];
 
-        function checkPassword() {
-            var input = document.getElementById("password-input").value;
-            if (input === "1") {
-                document.getElementById("login-box").style.display = "none";
-                document.getElementById("protected-content").style.display = "block";
-                renderView();
-            } else {
-                document.getElementById("error-msg").style.display = "block";
-            }
-        }
-
-        function logout() {
-            document.getElementById("password-input").value = "";
-            document.getElementById("login-box").style.display = "block";
-            document.getElementById("protected-content").style.display = "none";
-        }
+        // Awtomatikong pinapagana ang view pagkabukas ng site
+        window.onload = function() {
+            renderView();
+        };
 
         function switchTab(tabName) {
             currentTab = tabName;
@@ -180,3 +155,38 @@
         }
 
         function deleteAlbum(id) {
+            if (confirm("Sigurado ka bang buburahin ang album na ito?")) {
+                storageData[currentTab] = storageData[currentTab].filter(a => a.id !== id);
+                localStorage.setItem('familyLoveAlbums', JSON.stringify(storageData));
+                renderView();
+            }
+        }
+
+        function addMessage() {
+            let name = document.getElementById('chat-name').value.trim();
+            let msg = document.getElementById('chat-msg').value.trim();
+            if (!name || !msg) { alert("Paki-puno ang pangalan at mensahe!"); return; }
+
+            let time = new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
+            let newMsg = { id: Date.now(), name: name, text: msg, time: time };
+            
+            messagesData.unshift(newMsg);
+            localStorage.setItem('familyLoveMessages', JSON.stringify(messagesData));
+            
+            document.getElementById('chat-msg').value = '';
+            renderMessages();
+        }
+
+        function deleteMessage(id) {
+            messagesData = messagesData.filter(m => m.id !== id);
+            localStorage.setItem('familyLoveMessages', JSON.stringify(messagesData));
+            renderMessages();
+        }
+
+        function renderMessages() {
+            let container = document.getElementById('chat-list');
+            container.innerHTML = '';
+            if (messagesData.length === 0) {
+                container.innerHTML = '<div class="empty-state" style="padding:20px;">Wala pang mensahe. Mag-iwan ng unang sulat!</div>';
+                return;
+            }
