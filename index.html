@@ -1,74 +1,199 @@
-
 <!DOCTYPE html>
 <html lang="tl">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Family Apps - Pribado</title>
+    <title>FamilyLOVE - Dashboard</title>
     <style>
-        body { font-family: Arial, sans-serif; background-color: #f4f4f9; text-align: center; margin: 0; padding: 15px; }
-        .container { max-width: 600px; margin: 30px auto; background: white; padding: 25px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); }
-        h1 { color: #333; margin-bottom: 5px; }
-        input[type="password"] { width: 80%; padding: 12px; margin: 15px 0; border: 1px solid #ccc; border-radius: 6px; font-size: 16px; text-align: center; }
-        .btn { width: 85%; padding: 12px; background-color: #0070f3; color: white; border: none; border-radius: 6px; font-size: 16px; cursor: pointer; font-weight: bold; }
-        .btn:hover { background-color: #0051b3; }
+        body { font-family: Arial, sans-serif; background-color: #f8f9fa; margin: 0; padding: 0; }
+        .login-container { max-width: 400px; margin: 100px auto; background: white; padding: 30px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); text-align: center; }
+        input[type="password"] { width: 85%; padding: 12px; margin: 15px 0; border: 1px solid #ddd; border-radius: 8px; font-size: 16px; text-align: center; background-color: #f1f3f5; }
+        .login-btn { width: 90%; padding: 12px; background-color: #0070f3; color: white; border: none; border-radius: 8px; font-size: 16px; cursor: pointer; font-weight: bold; }
         #error-msg { color: red; font-size: 14px; margin-top: 10px; display: none; }
-        #protected-content { display: none; }
         
-        /* New Gallery Styles */
-        .upload-section { background: #eef2ff; border: 2px dashed #6366f1; padding: 20px; border-radius: 8px; margin-top: 20px; }
-        .upload-btn { background-color: #4f46e5; color: white; padding: 12px 20px; text-decoration: none; border-radius: 6px; display: inline-block; font-weight: bold; margin-top: 10px; width: 80%; }
-        .gallery { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; margin-top: 20px; }
-        .photo-card { background: #eee; border-radius: 8px; overflow: hidden; height: 120px; display: flex; align-items: center; justify-content: center; color: #888; font-size: 14px; border: 1px solid #ddd; font-weight: bold; }
+        /* Main Layout */
+        #protected-content { display: none; }
+        .header { background: white; padding: 15px 20px; box-shadow: 0 2px 4px rgba(0,0,0,0.02); display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #eceff1; }
+        .header .logo { font-weight: bold; color: #0070f3; font-size: 22px; letter-spacing: 0.5px; }
+        .header-icons { display: flex; gap: 18px; font-size: 20px; cursor: pointer; }
+        
+        /* Navigation Tabs */
+        .nav-tabs { display: flex; background: white; border-bottom: 1px solid #eceff1; overflow-x: auto; white-space: nowrap; }
+        .tab-btn { background: none; border: none; padding: 15px 20px; font-size: 14px; font-weight: bold; color: #666; cursor: pointer; border-bottom: 3px solid transparent; text-transform: uppercase; }
+        .tab-btn.active { color: #0070f3; border-bottom-color: #0070f3; }
+        
+        /* Content Area */
+        .feed-container { max-width: 600px; margin: 20px auto; padding: 0 15px; }
+        
+        /* Control Section (Create Controls) */
+        .control-panel { display: flex; gap: 10px; margin-bottom: 20px; justify-content: center; }
+        .action-btn { background-color: #0070f3; color: white; border: none; padding: 10px 15px; border-radius: 20px; font-weight: bold; font-size: 13px; cursor: pointer; display: flex; align-items: center; gap: 5px; }
+        .action-btn.folder-btn { background-color: #4f46e5; }
+        
+        /* Grid Display for Albums/Folders */
+        .grid-display { display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px; margin-top: 15px; }
+        .item-card { background: white; border-radius: 12px; padding: 15px; border: 1px solid #eceff1; box-shadow: 0 2px 8px rgba(0,0,0,0.03); text-align: center; position: relative; }
+        .item-icon { font-size: 40px; margin-bottom: 8px; }
+        .item-title { font-weight: bold; color: #333; font-size: 15px; margin-bottom: 10px; word-break: break-word; }
+        
+        /* Inner Buttons for Cards */
+        .card-actions { display: flex; justify-content: center; gap: 5px; }
+        .mini-btn { background: #f1f3f5; border: none; padding: 5px 10px; border-radius: 4px; font-size: 11px; cursor: pointer; font-weight: bold; color: #495057; }
+        .mini-btn.open-btn { background: #e3f2fd; color: #0d47a1; }
+        
+        /* Empty State */
+        .empty-state { text-align: center; padding: 50px 20px; color: #868e96; background: white; border-radius: 12px; border: 1px solid #eceff1; box-shadow: 0 2px 8px rgba(0,0,0,0.04); }
     </style>
 </head>
 <body>
 
     <!-- 1. LOGIN SCREEN -->
-    <div id="login-box" class="container">
-        <h1>🔒 Pribadong Tambayan</h1>
-        <p>Ipasok ang password ng ating pamilya para makapasok:</p>
-        <input type="password" id="password-input" placeholder="I-type ang password dito...">
-        <br>
-        <button class="btn" onclick="checkPassword()">Pumasok</button>
+    <div id="login-box" class="login-container">
+        <h2 style="margin-top:0;">🔒 Family Login</h2>
+        <p style="color:#666; font-size:14px;">Ipasok ang password ng ating pamilya para makapasok:</p>
+        <input type="password" id="password-input" placeholder="Password dito...">
+        <button class="login-btn" onclick="checkPassword()">Pumasok</button>
         <p id="error-msg">Mali ang password! Subukan muli.</p>
     </div>
 
-    <!-- 2. IPINAKITA LANG KAPAG TAMA ANG PASSWORD -->
-    <div id="protected-content" class="container">
-        <h1>FamilyApps! ❤️</h1>
-        <p>Ang pribadong album at kwentuhan ng ating pamilya.</p>
-        
-        <!-- UPLOAD SECTION -->
-        <div class="upload-section">
-            <h3>📸 Mag-upload ng Larawan o Video</h3>
-            <p>I-click the button sa ibaba para magdagdag sa ating pampamilyang folder.</p>
-            <a href="https://google.com" target="_blank" class="upload-btn">📤 Pindutin para Mag-upload</a>
+    <!-- 2. MAIN LAYOUT -->
+    <div id="protected-content">
+        <!-- Top Navbar with Request Changes -->
+        <div class="header">
+            <div class="logo">FamilyLOVE</div>
+            <div class="header-icons">
+                <span onclick="alert('Settings: Dito mo mababago ang profile ninyo sa susunod!')">⚙️</span>
+                <span onclick="logout()">Logout 🚪</span>
+            </div>
         </div>
 
-        <hr style="border: 0; border-top: 1px solid #eee; margin: 25px 0;">
+        <!-- Navigation Tabs -->
+        <div class="nav-tabs">
+            <button class="tab-btn active" id="tab-jhaneez" onclick="switchTab('jhaneez')">Jhaneez</button>
+            <button class="tab-btn" id="tab-message" onclick="switchTab('message')">Message</button>
+            <button class="tab-btn" id="tab-parents" onclick="switchTab('parents')">Parents</button>
+            <button class="tab-btn" id="tab-kuyas" onclick="switchTab('kuyas')">Kuya's</button>
+        </div>
 
-        <!-- GALLERY SECTION -->
-        <h3>🖼️ Ang Ating Mga Alaala</h3>
-        <div class="gallery">
-            <div class="photo-card">Larawan 1<br>(Sample)</div>
-            <div class="photo-card">Larawan 2<br>(Sample)</div>
-            <div class="photo-card">Larawan 3<br>(Sample)</div>
-            <div class="photo-card">Larawan 4<br>(Sample)</div>
+        <div class="feed-container">
+            <!-- Create Album and Folder Buttons -->
+            <div class="control-panel">
+                <button class="action-btn" onclick="createNewItem('album')">🖼️ Create Album</button>
+                <button class="action-btn folder-btn" onclick="createNewItem('folder')">📁 Create Folder</button>
+            </div>
+
+            <!-- Display Area -->
+            <div id="items-grid" class="grid-display"></div>
+
+            <!-- Empty State Loader -->
+            <div id="empty-view" class="empty-state" style="display: none;">
+                <div style="font-size: 40px; margin-bottom: 10px; opacity: 0.5;">📸</div>
+                <h3>No Content Yet</h3>
+                <p style="margin:5px 0 0 0; font-size:14px;">Gumawa ng unang Album o Folder para ma-arrange ang alaala.</p>
+            </div>
         </div>
     </div>
 
     <script>
+        // System Data Storage Management
+        let currentTab = 'jhaneez';
+        let storageData = JSON.parse(localStorage.getItem('familyLoveData')) || {
+            jhaneez: [], message: [], parents: [], kuyas: []
+        };
+
         function checkPassword() {
             var input = document.getElementById("password-input").value;
-            // Ang password ninyo ay nananatiling: pamilyako2026
-            var tamangPassword = "pamilyako2026"; 
-            
-            if (input === tamangPassword) {
+            if (input === "pamilyako2026") {
                 document.getElementById("login-box").style.display = "none";
                 document.getElementById("protected-content").style.display = "block";
+                renderItems();
             } else {
                 document.getElementById("error-msg").style.display = "block";
+            }
+        }
+
+        function logout() {
+            document.getElementById("password-input").value = "";
+            document.getElementById("login-box").style.display = "block";
+            document.getElementById("protected-content").style.display = "none";
+        }
+
+        function switchTab(tabName) {
+            currentTab = tabName;
+            let tabs = document.getElementsByClassName("tab-btn");
+            for (let i = 0; i < tabs.length; i++) { tabs[i].classList.remove("active"); }
+            document.getElementById('tab-' + tabName).classList.add("active");
+            renderItems();
+        }
+
+        function createNewItem(type) {
+            let defaultName = type === 'album' ? 'New Album' : 'New Folder';
+            let title = prompt(`Ipasok ang pangalan ng iyong ${type}:`, defaultName);
+            if (!title) return;
+
+            let newItem = {
+                id: Date.now(),
+                type: type,
+                title: title,
+                link: "https://google.com" // Default link, pwedeng baguhin sa code mamaya
+            };
+
+            storageData[currentTab].push(newItem);
+            saveData();
+            renderItems();
+        }
+
+        function renameItem(id) {
+            let item = storageData[currentTab].find(i => i.id === id);
+            if (!item) return;
+            let newTitle = prompt("Ipasok ang bagong magandang Title:", item.title);
+            if (!newTitle) return;
+            item.title = newTitle;
+            saveData();
+            renderItems();
+        }
+
+        function deleteItem(id) {
+            if (confirm("Sigurado ka bang buburahin ito?")) {
+                storageData[currentTab] = storageData[currentTab].filter(i => i.id !== id);
+                saveData();
+                renderItems();
+            }
+        }
+
+        function saveData() {
+            localStorage.setItem('familyLoveData', JSON.stringify(storageData));
+        }
+
+        function renderItems() {
+            let grid = document.getElementById('items-grid');
+            let emptyView = document.getElementById('empty-view');
+            let currentItems = storageData[currentTab];
+
+            grid.innerHTML = '';
+
+            if (currentItems.length === 0) {
+                emptyView.style.display = 'block';
+                grid.style.display = 'none';
+            } else {
+                emptyView.style.display = 'none';
+                grid.style.display = 'grid';
+
+                currentItems.forEach(item => {
+                    let icon = item.type === 'album' ? '🖼️' : '📁';
+                    let card = document.createElement('div');
+                    card.className = 'item-card';
+                    card.innerHTML = `
+                        <div class="item-icon">${icon}</div>
+                        <div class="item-title">${item.title}</div>
+                        <div class="card-actions">
+                            <button class="mini-btn open-btn" onclick="window.open('${item.link}', '_blank')">Open</button>
+                            <button class="mini-btn" onclick="renameItem(${item.id})">Rename</button>
+                            <button class="mini-btn" style="color:red;" onclick="deleteItem(${item.id})">❌</button>
+                        </div>
+                    `;
+                    grid.appendChild(card);
+                });
             }
         }
     </script>
