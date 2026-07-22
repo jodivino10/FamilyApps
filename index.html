@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="tl">
 <head>
@@ -25,24 +26,35 @@
         /* Content Area */
         .feed-container { max-width: 600px; margin: 20px auto; padding: 0 15px; }
         
-        /* Control Section (Create Controls) */
-        .control-panel { display: flex; gap: 10px; margin-bottom: 20px; justify-content: center; }
-        .action-btn { background-color: #0070f3; color: white; border: none; padding: 10px 15px; border-radius: 20px; font-weight: bold; font-size: 13px; cursor: pointer; display: flex; align-items: center; gap: 5px; }
-        .action-btn.folder-btn { background-color: #4f46e5; }
+        /* Header inside member tab */
+        .tab-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; }
+        .tab-header h2 { margin: 0; font-size: 18px; color: #333; text-transform: uppercase; }
+        .create-btn { background-color: #74b816; color: white; border: none; padding: 8px 15px; border-radius: 20px; font-weight: bold; font-size: 13px; cursor: pointer; }
         
-        /* Grid Display for Albums/Folders */
-        .grid-display { display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px; margin-top: 15px; }
-        .item-card { background: white; border-radius: 12px; padding: 15px; border: 1px solid #eceff1; box-shadow: 0 2px 8px rgba(0,0,0,0.03); text-align: center; position: relative; }
+        /* Grid Display for Albums */
+        .grid-display { display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px; }
+        .item-card { background: white; border-radius: 12px; padding: 15px; border: 1px solid #eceff1; box-shadow: 0 2px 8px rgba(0,0,0,0.03); text-align: center; }
         .item-icon { font-size: 40px; margin-bottom: 8px; }
         .item-title { font-weight: bold; color: #333; font-size: 15px; margin-bottom: 10px; word-break: break-word; }
         
-        /* Inner Buttons for Cards */
+        /* Card Actions */
         .card-actions { display: flex; justify-content: center; gap: 5px; }
         .mini-btn { background: #f1f3f5; border: none; padding: 5px 10px; border-radius: 4px; font-size: 11px; cursor: pointer; font-weight: bold; color: #495057; }
         .mini-btn.open-btn { background: #e3f2fd; color: #0d47a1; }
         
         /* Empty State */
-        .empty-state { text-align: center; padding: 50px 20px; color: #868e96; background: white; border-radius: 12px; border: 1px solid #eceff1; box-shadow: 0 2px 8px rgba(0,0,0,0.04); }
+        .empty-state { text-align: center; padding: 40px 20px; color: #868e96; background: white; border-radius: 12px; border: 1px solid #eceff1; }
+        
+        /* Message Board Styles */
+        .message-box { background: white; border-radius: 12px; padding: 15px; border: 1px solid #eceff1; margin-bottom: 15px; }
+        .msg-input { width: 93%; padding: 10px; border: 1px solid #ddd; border-radius: 8px; margin-bottom: 10px; font-size: 14px; }
+        .msg-area { width: 93%; padding: 10px; border: 1px solid #ddd; border-radius: 8px; margin-bottom: 10px; font-size: 14px; resize: none; }
+        .chat-list { display: flex; flex-direction: column; gap: 10px; max-height: 300px; overflow-y: auto; }
+        .chat-bubble { background: white; padding: 12px 15px; border-radius: 12px; border: 1px solid #eceff1; text-align: left; position: relative; }
+        .chat-name { font-weight: bold; color: #0070f3; font-size: 13px; margin-bottom: 3px; }
+        .chat-text { color: #333; font-size: 14px; margin: 0; }
+        .chat-time { font-size: 10px; color: #999; text-align: right; margin-top: 5px; }
+        .del-msg { position: absolute; top: 10px; right: 10px; background: none; border: none; color: #ff8787; cursor: pointer; font-size: 12px; }
     </style>
 </head>
 <body>
@@ -58,11 +70,11 @@
 
     <!-- 2. MAIN LAYOUT -->
     <div id="protected-content">
-        <!-- Top Navbar with Request Changes -->
+        <!-- Top Navbar -->
         <div class="header">
             <div class="logo">FamilyLOVE</div>
             <div class="header-icons">
-                <span onclick="alert('Settings: Dito mo mababago ang profile ninyo sa susunod!')">⚙️</span>
+                <span onclick="alert('Settings: Parating na ito sa susunod na update!')">⚙️</span>
                 <span onclick="logout()">Logout 🚪</span>
             </div>
         </div>
@@ -76,37 +88,50 @@
         </div>
 
         <div class="feed-container">
-            <!-- Create Album and Folder Buttons -->
-            <div class="control-panel">
-                <button class="action-btn" onclick="createNewItem('album')">🖼️ Create Album</button>
-                <button class="action-btn folder-btn" onclick="createNewItem('folder')">📁 Create Folder</button>
+            
+            <!-- SECTION PARA SA ALBUMS (Para sa Jhaneez, Parents, Kuya's) -->
+            <div id="album-section">
+                <div class="tab-header">
+                    <h2 id="section-title">Space</h2>
+                    <button class="create-btn" onclick="createNewAlbum()">✨ Create Album</button>
+                </div>
+                <div id="items-grid" class="grid-display"></div>
+                <div id="empty-view" class="empty-state">
+                    <div style="font-size: 40px; margin-bottom: 5px; opacity: 0.5;">📸</div>
+                    <h3>No Album Yet</h3>
+                    <p style="margin:5px 0 0 0; font-size:13px;">Pindutin ang "Create Album" sa itaas para mag-ayos ng mga alaala.</p>
+                </div>
             </div>
 
-            <!-- Display Area -->
-            <div id="items-grid" class="grid-display"></div>
-
-            <!-- Empty State Loader -->
-            <div id="empty-view" class="empty-state" style="display: none;">
-                <div style="font-size: 40px; margin-bottom: 10px; opacity: 0.5;">📸</div>
-                <h3>No Content Yet</h3>
-                <p style="margin:5px 0 0 0; font-size:14px;">Gumawa ng unang Album o Folder para ma-arrange ang alaala.</p>
+            <!-- SECTION PARA SA MESSAGE (Chat Board) -->
+            <div id="message-section" style="display: none;">
+                <div class="message-box">
+                    <h3 style="margin-top:0; color:#333;">💬 Pampamilyang Kwentuhan</h3>
+                    <input type="text" id="chat-name" class="msg-input" placeholder="Iyong Pangalan...">
+                    <textarea id="chat-msg" class="msg-area" rows="2" placeholder="Sumulat ng mensahe para sa pamilya..."></textarea>
+                    <button class="login-btn" style="width:100%; padding:10px;" onclick="addMessage()">I-send ang Mensahe</button>
+                </div>
+                <div id="chat-list" class="chat-list"></div>
             </div>
+
         </div>
     </div>
 
     <script>
-        // System Data Storage Management
         let currentTab = 'jhaneez';
-        let storageData = JSON.parse(localStorage.getItem('familyLoveData')) || {
-            jhaneez: [], message: [], parents: [], kuyas: []
+        
+        // Kinukuha ang data sa browser para kahit i-refresh ay andun pa rin
+        let storageData = JSON.parse(localStorage.getItem('familyLoveAlbums')) || {
+            jhaneez: [], parents: [], kuyas: []
         };
+        let messagesData = JSON.parse(localStorage.getItem('familyLoveMessages')) || [];
 
         function checkPassword() {
             var input = document.getElementById("password-input").value;
             if (input === "pamilyako2026") {
                 document.getElementById("login-box").style.display = "none";
                 document.getElementById("protected-content").style.display = "block";
-                renderItems();
+                renderView();
             } else {
                 document.getElementById("error-msg").style.display = "block";
             }
@@ -122,80 +147,32 @@
             currentTab = tabName;
             let tabs = document.getElementsByClassName("tab-btn");
             for (let i = 0; i < tabs.length; i++) { tabs[i].classList.remove("active"); }
-            document.getElementById('tab-' + tabName).classList.add("active");
-            renderItems();
+            
+            let idMap = { 'jhaneez': 'tab-jhaneez', 'message': 'tab-message', 'parents': 'tab-parents', 'kuyas': 'tab-kuyas' };
+            document.getElementById(idMap[tabName]).classList.add("active");
+            
+            renderView();
         }
 
-        function createNewItem(type) {
-            let defaultName = type === 'album' ? 'New Album' : 'New Folder';
-            let title = prompt(`Ipasok ang pangalan ng iyong ${type}:`, defaultName);
+        function createNewAlbum() {
+            let title = prompt("Mag-isip ng magandang Title para sa Album na ito:", "Bagong Album");
             if (!title) return;
 
-            let newItem = {
+            let newAlbum = {
                 id: Date.now(),
-                type: type,
                 title: title,
-                link: "https://google.com" // Default link, pwedeng baguhin sa code mamaya
+                link: "https://google.com" // Pwedeng i-link sa inyong Google Drive folder
             };
 
-            storageData[currentTab].push(newItem);
-            saveData();
-            renderItems();
+            storageData[currentTab].push(newAlbum);
+            localStorage.setItem('familyLoveAlbums', JSON.stringify(storageData));
+            renderView();
         }
 
-        function renameItem(id) {
-            let item = storageData[currentTab].find(i => i.id === id);
-            if (!item) return;
-            let newTitle = prompt("Ipasok ang bagong magandang Title:", item.title);
+        function renameAlbum(id) {
+            let album = storageData[currentTab].find(a => a.id === id);
+            if (!album) return;
+            let newTitle = prompt("Ipasok ang bagong pamagat ng Album:", album.title);
             if (!newTitle) return;
-            item.title = newTitle;
-            saveData();
-            renderItems();
-        }
-
-        function deleteItem(id) {
-            if (confirm("Sigurado ka bang buburahin ito?")) {
-                storageData[currentTab] = storageData[currentTab].filter(i => i.id !== id);
-                saveData();
-                renderItems();
-            }
-        }
-
-        function saveData() {
-            localStorage.setItem('familyLoveData', JSON.stringify(storageData));
-        }
-
-        function renderItems() {
-            let grid = document.getElementById('items-grid');
-            let emptyView = document.getElementById('empty-view');
-            let currentItems = storageData[currentTab];
-
-            grid.innerHTML = '';
-
-            if (currentItems.length === 0) {
-                emptyView.style.display = 'block';
-                grid.style.display = 'none';
-            } else {
-                emptyView.style.display = 'none';
-                grid.style.display = 'grid';
-
-                currentItems.forEach(item => {
-                    let icon = item.type === 'album' ? '🖼️' : '📁';
-                    let card = document.createElement('div');
-                    card.className = 'item-card';
-                    card.innerHTML = `
-                        <div class="item-icon">${icon}</div>
-                        <div class="item-title">${item.title}</div>
-                        <div class="card-actions">
-                            <button class="mini-btn open-btn" onclick="window.open('${item.link}', '_blank')">Open</button>
-                            <button class="mini-btn" onclick="renameItem(${item.id})">Rename</button>
-                            <button class="mini-btn" style="color:red;" onclick="deleteItem(${item.id})">❌</button>
-                        </div>
-                    `;
-                    grid.appendChild(card);
-                });
-            }
-        }
-    </script>
-</body>
-</html>
+            album.title = newTitle;
+            localStorage.setItem('familyLoveAlbums', JSON.stringify(storageData));
