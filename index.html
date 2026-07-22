@@ -1,4 +1,4 @@
-l
+
 <!DOCTYPE html>
 <html lang="tl">
 <head>
@@ -92,7 +92,7 @@ l
             <!-- SECTION PARA SA ALBUMS (Para sa Jhaneez, Parents, Kuya's) -->
             <div id="album-section">
                 <div class="tab-header">
-                    <h2 id="section-title">Space</h2>
+                    <h2 id="section-title">Jhaneez Space</h2>
                     <button class="create-btn" onclick="createNewAlbum()">✨ Create Album</button>
                 </div>
                 <div id="items-grid" class="grid-display"></div>
@@ -120,7 +120,6 @@ l
     <script>
         let currentTab = 'jhaneez';
         
-        // Kinukuha ang data sa browser para kahit i-refresh ay andun pa rin
         let storageData = JSON.parse(localStorage.getItem('familyLoveAlbums')) || {
             jhaneez: [], parents: [], kuyas: []
         };
@@ -128,7 +127,8 @@ l
 
         function checkPassword() {
             var input = document.getElementById("password-input").value;
-            if (input === "090924") {
+            // Ginamit nating mas simpleng password para sigurado
+            if (input === "pamilyako2026") {
                 document.getElementById("login-box").style.display = "none";
                 document.getElementById("protected-content").style.display = "block";
                 renderView();
@@ -146,7 +146,9 @@ l
         function switchTab(tabName) {
             currentTab = tabName;
             let tabs = document.getElementsByClassName("tab-btn");
-            for (let i = 0; i < tabs.length; i++) { tabs[i].classList.remove("active"); }
+            for (let i = 0; i < tabs.length; i++) { 
+                tabs[i].classList.remove("active"); 
+            }
             
             let idMap = { 'jhaneez': 'tab-jhaneez', 'message': 'tab-message', 'parents': 'tab-parents', 'kuyas': 'tab-kuyas' };
             document.getElementById(idMap[tabName]).classList.add("active");
@@ -161,7 +163,7 @@ l
             let newAlbum = {
                 id: Date.now(),
                 title: title,
-                link: "https://google.com" // Pwedeng i-link sa inyong Google Drive folder
+                link: "https://drive.google.com"
             };
 
             storageData[currentTab].push(newAlbum);
@@ -176,3 +178,6 @@ l
             if (!newTitle) return;
             album.title = newTitle;
             localStorage.setItem('familyLoveAlbums', JSON.stringify(storageData));
+            renderView();
+        }
+
