@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="tl">
 <head>
@@ -6,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>FamilyLOVE - Dashboard</title>
     <style>
-        body { font-family: Arial, sans-serif; background-color: #f8f9fa; margin: 0; padding: 0; }
+        body { font-family: Arial, sans-serif; background-color: #f8f9fa; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
         
         /* Main Layout */
         .header { background: white; padding: 15px 20px; box-shadow: 0 2px 4px rgba(0,0,0,0.02); display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #eceff1; }
@@ -15,7 +14,7 @@
         
         /* Navigation Tabs */
         .nav-tabs { display: flex; background: white; border-bottom: 1px solid #eceff1; overflow-x: auto; white-space: nowrap; }
-        .tab-btn { background: none; border: none; padding: 15px 20px; font-size: 14px; font-weight: bold; color: #666; cursor: pointer; border-bottom: 3px solid transparent; text-transform: uppercase; }
+        .tab-btn { background: none; border: none; padding: 15px 20px; font-size: 14px; font-weight: bold; color: #666; cursor: pointer; border-bottom: 3px solid transparent; text-transform: uppercase; display: inline-block; }
         .tab-btn.active { color: #0070f3; border-bottom-color: #0070f3; }
         
         /* Content Area */
@@ -24,7 +23,7 @@
         /* Header inside member tab */
         .tab-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; }
         .tab-header h2 { margin: 0; font-size: 18px; color: #333; text-transform: uppercase; }
-        .create-btn { background-color: #74b816; color: white; border: none; padding: 8px 15px; border-radius: 20px; font-weight: bold; font-size: 13px; cursor: pointer; }
+        .create-btn { background-color: #74b816; color: white; border: none; padding: 8px 15px; border-radius: 20px; font-weight: bold; font-size: 13px; cursor: pointer; display: inline-block; }
         
         /* Grid Display for Albums */
         .grid-display { display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px; }
@@ -38,12 +37,12 @@
         .mini-btn.open-btn { background: #e3f2fd; color: #0d47a1; }
         
         /* Empty State */
-        .empty-state { text-align: center; padding: 40px 20px; color: #868e96; background: white; border-radius: 12px; border: 1px solid #eceff1; }
+        .empty-state { text-align: center; padding: 40px 20px; color: #868e96; background: white; border-radius: 12px; border: 1px solid #eceff1; width: 100%; box-sizing: border-box; }
         
         /* Message Board Styles */
-        .message-box { background: white; border-radius: 12px; padding: 15px; border: 1px solid #eceff1; margin-bottom: 15px; }
-        .msg-input { width: 93%; padding: 10px; border: 1px solid #ddd; border-radius: 8px; margin-bottom: 10px; font-size: 14px; }
-        .msg-area { width: 93%; padding: 10px; border: 1px solid #ddd; border-radius: 8px; margin-bottom: 10px; font-size: 14px; resize: none; }
+        .message-box { background: white; border-radius: 12px; padding: 15px; border: 1px solid #eceff1; margin-bottom: 15px; text-align: center; }
+        .msg-input { width: 90%; padding: 10px; border: 1px solid #ddd; border-radius: 8px; margin-bottom: 10px; font-size: 14px; display: inline-block; }
+        .msg-area { width: 90%; padding: 10px; border: 1px solid #ddd; border-radius: 8px; margin-bottom: 10px; font-size: 14px; resize: none; display: inline-block; }
         .chat-list { display: flex; flex-direction: column; gap: 10px; max-height: 300px; overflow-y: auto; }
         .chat-bubble { background: white; padding: 12px 15px; border-radius: 12px; border: 1px solid #eceff1; text-align: left; position: relative; }
         .chat-name { font-weight: bold; color: #0070f3; font-size: 13px; margin-bottom: 3px; }
@@ -54,53 +53,50 @@
 </head>
 <body>
 
-    <!-- MAIN APP LAYOUT (DIPRETSO NA NATIN DITO) -->
-    <div>
-        <!-- Top Navbar -->
-        <div class="header">
-            <div class="logo">FamilyLOVE</div>
-            <div class="header-icons">
-                <span onclick="alert('Settings: Parating na ito sa susunod na update!')">⚙️</span>
-                <span onclick="alert('Naka-disable muna ang logout dahil inalis natin ang password screen!')">🚪</span>
+    <!-- MAIN APP LAYOUT -->
+    <div class="header">
+        <div class="logo">FamilyLOVE</div>
+        <div class="header-icons">
+            <span onclick="alert('Settings feature: Parating na sa susunod na update!')">⚙️</span>
+            <span onclick="alert('Naka-disable ang logout button pansamantala dahil tinanggal natin ang password screen.')">🚪</span>
+        </div>
+    </div>
+
+    <!-- Navigation Tabs -->
+    <div class="nav-tabs">
+        <button class="tab-btn active" id="tab-jhaneez" onclick="switchTab('jhaneez')">Jhaneez</button>
+        <button class="tab-btn" id="tab-message" onclick="switchTab('message')">Message</button>
+        <button class="tab-btn" id="tab-parents" onclick="switchTab('parents')">Parents</button>
+        <button class="tab-btn" id="tab-kuyas" onclick="switchTab('kuyas')">Kuya's</button>
+    </div>
+
+    <div class="feed-container">
+        
+        <!-- SECTION PARA SA ALBUMS -->
+        <div id="album-section" style="display: block;">
+            <div class="tab-header">
+                <h2 id="section-title">Jhaneez Space</h2>
+                <button class="create-btn" onclick="createNewAlbum()">✨ Create Album</button>
+            </div>
+            <div id="items-grid" class="grid-display"></div>
+            <div id="empty-view" class="empty-state" style="display: block;">
+                <div style="font-size: 40px; margin-bottom: 5px; opacity: 0.5;">📸</div>
+                <h3>No Album Yet</h3>
+                <p style="margin:5px 0 0 0; font-size:13px;">Pindutin ang "Create Album" sa itaas para mag-ayos ng mga alaala.</p>
             </div>
         </div>
 
-        <!-- Navigation Tabs -->
-        <div class="nav-tabs">
-            <button class="tab-btn active" id="tab-jhaneez" onclick="switchTab('jhaneez')">Jhaneez</button>
-            <button class="tab-btn" id="tab-message" onclick="switchTab('message')">Message</button>
-            <button class="tab-btn" id="tab-parents" onclick="switchTab('parents')">Parents</button>
-            <button class="tab-btn" id="tab-kuyas" onclick="switchTab('kuyas')">Kuya's</button>
+        <!-- SECTION PARA SA MESSAGE (Chat Section) -->
+        <div id="message-section" style="display: none;">
+            <div class="message-box">
+                <h3 style="margin-top:0; color:#333;">💬 Pampamilyang Kwentuhan</h3>
+                <input type="text" id="chat-name" class="msg-input" placeholder="Iyong Pangalan...">
+                <textarea id="chat-msg" class="msg-area" rows="2" placeholder="Sumulat ng mensahe para sa pamilya..."></textarea>
+                <button style="width:95%; padding:11px; background-color:#0070f3; color:white; border:none; border-radius:8px; font-weight:bold; cursor:pointer; font-size:15px;" onclick="addMessage()">I-send ang Mensahe</button>
+            </div>
+            <div id="chat-list" class="chat-list"></div>
         </div>
 
-        <div class="feed-container">
-            
-            <!-- SECTION PARA SA ALBUMS (Para sa Jhaneez, Parents, Kuya's) -->
-            <div id="album-section">
-                <div class="tab-header">
-                    <h2 id="section-title">Jhaneez Space</h2>
-                    <button class="create-btn" onclick="createNewAlbum()">✨ Create Album</button>
-                </div>
-                <div id="items-grid" class="grid-display"></div>
-                <div id="empty-view" class="empty-state">
-                    <div style="font-size: 40px; margin-bottom: 5px; opacity: 0.5;">📸</div>
-                    <h3>No Album Yet</h3>
-                    <p style="margin:5px 0 0 0; font-size:13px;">Pindutin ang "Create Album" sa itaas para mag-ayos ng mga alaala.</p>
-                </div>
-            </div>
-
-            <!-- SECTION PARA SA MESSAGE (Chat Board) -->
-            <div id="message-section" style="display: none;">
-                <div class="message-box">
-                    <h3 style="margin-top:0; color:#333;">💬 Pampamilyang Kwentuhan</h3>
-                    <input type="text" id="chat-name" class="msg-input" placeholder="Iyong Pangalan...">
-                    <textarea id="chat-msg" class="msg-area" rows="2" placeholder="Sumulat ng mensahe para sa pamilya..."></textarea>
-                    <button class="login-btn" style="width:100%; padding:10px; background-color:#0070f3; color:white; border:none; border-radius:8px; font-weight:bold; cursor:pointer;" onclick="addMessage()">I-send ang Mensahe</button>
-                </div>
-                <div id="chat-list" class="chat-list"></div>
-            </div>
-
-        </div>
     </div>
 
     <script>
@@ -111,20 +107,21 @@
         };
         let messagesData = JSON.parse(localStorage.getItem('familyLoveMessages')) || [];
 
-        // Awtomatikong pinapagana ang view pagkabukas ng site
-        window.onload = function() {
-            renderView();
-        };
+        // Pinapagana agad ang view pagka-load para sa mobile
+        renderView();
 
         function switchTab(tabName) {
             currentTab = tabName;
-            let tabs = document.getElementsByClassName("tab-btn");
-            for (let i = 0; i < tabs.length; i++) { 
-                tabs[i].classList.remove("active"); 
-            }
             
-            let idMap = { 'jhaneez': 'tab-jhaneez', 'message': 'tab-message', 'parents': 'tab-parents', 'kuyas': 'tab-kuyas' };
-            document.getElementById(idMap[tabName]).classList.add("active");
+            let btnIds = ['tab-jhaneez', 'tab-message', 'tab-parents', 'tab-kuyas'];
+            btnIds.forEach(id => {
+                let btn = document.getElementById(id);
+                if(btn) btn.classList.remove("active");
+            });
+            
+            let activeIdMap = { 'jhaneez': 'tab-jhaneez', 'message': 'tab-message', 'parents': 'tab-parents', 'kuyas': 'tab-kuyas' };
+            let activeBtn = document.getElementById(activeIdMap[tabName]);
+            if(activeBtn) activeBtn.classList.add("active");
             
             renderView();
         }
@@ -136,9 +133,10 @@
             let newAlbum = {
                 id: Date.now(),
                 title: title,
-                link: "https://drive.google.com"
+                link: "https://google.com" // Link kung saan pwede mag-upload (halimbawa, Google Drive)
             };
 
+            if (!storageData[currentTab]) storageData[currentTab] = [];
             storageData[currentTab].push(newAlbum);
             localStorage.setItem('familyLoveAlbums', JSON.stringify(storageData));
             renderView();
@@ -185,8 +183,4 @@
 
         function renderMessages() {
             let container = document.getElementById('chat-list');
-            container.innerHTML = '';
-            if (messagesData.length === 0) {
-                container.innerHTML = '<div class="empty-state" style="padding:20px;">Wala pang mensahe. Mag-iwan ng unang sulat!</div>';
-                return;
-            }
+            if(!container) return;
