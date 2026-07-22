@@ -3,20 +3,51 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Family Apps - Memories</title>
+    <title>Family Apps - Pribado</title>
     <style>
         body { font-family: Arial, sans-serif; background-color: #f4f4f9; text-align: center; margin: 0; padding: 20px; }
-        .container { max-width: 600px; margin: auto; background: white; padding: 20px; border-radius: 10px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); }
+        .container { max-width: 600px; margin: 50px auto; background: white; padding: 30px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); }
         h1 { color: #333; }
-        p { color: #666; }
-        .btn { display: inline-block; padding: 10px 20px; background-color: #0070f3; color: white; text-decoration: none; border-radius: 5px; margin-top: 15px; }
+        input[type="password"] { width: 80%; padding: 12px; margin: 15px 0; border: 1px solid #ccc; border-radius: 6px; font-size: 16px; text-align: center; }
+        .btn { width: 85%; padding: 12px; background-color: #0070f3; color: white; border: none; border-radius: 6px; font-size: 16px; cursor: pointer; font-weight: bold; }
+        .btn:hover { background-color: #0051b3; }
+        #error-msg { color: red; font-size: 14px; margin-top: 10px; display: none; }
+        #protected-content { display: none; }
     </style>
 </head>
 <body>
-    <div class="container">
-        <h1>Maligayang Pagdating sa FamilyApps! ❤️</h1>
-        <p>Ito ang magiging pribadong tambayan ng ating pamilya para sa mga larawan, video, at kwentuhan.</p>
-        <p><i>Under construction pa ang ating app, abangan ang susunod na update!</i></p>
+
+    <!-- 1. LOGIN SCREEN -->
+    <div id="login-box" class="container">
+        <h1>🔒 Pribadong Tambayan</h1>
+        <p>Ipasok ang password ng ating pamilya para makapasok:</p>
+        <input type="password" id="password-input" placeholder="I-type ang password dito...">
+        <br>
+        <button class="btn" onclick="checkPassword()">Pumasok</button>
+        <p id="error-msg">Mali ang password! Subukan muli.</p>
     </div>
+
+    <!-- 2. IPINAKITA LANG KAPAG TAMA ANG PASSWORD -->
+    <div id="protected-content" class="container">
+        <h1>Maligayang Pagdating sa FamilyApps! ❤️</h1>
+        <p>Ito ang pribadong espasyo ng ating pamilya.</p>
+        <hr style="border: 0; border-top: 1px solid #eee; margin: 20px 0;">
+        <p>📁 <i>Susunod na hakbang: Paggawa ng Upload Gallery para sa inyong mga larawan at video.</i></p>
+    </div>
+
+    <script>
+        function checkPassword() {
+            var input = document.getElementById("password-input").value;
+            // Ang password ninyo ay: pamilyako2026
+            var tamangPassword = "pamilyako2026"; 
+            
+            if (input === tamangPassword) {
+                document.getElementById("login-box").style.display = "none";
+                document.getElementById("protected-content").style.display = "block";
+            } else {
+                document.getElementById("error-msg").style.display = "block";
+            }
+        }
+    </script>
 </body>
 </html>
