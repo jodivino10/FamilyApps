@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="tl">
 <head>
@@ -5,14 +6,20 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Family Apps - Pribado</title>
     <style>
-        body { font-family: Arial, sans-serif; background-color: #f4f4f9; text-align: center; margin: 0; padding: 20px; }
-        .container { max-width: 600px; margin: 50px auto; background: white; padding: 30px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); }
-        h1 { color: #333; }
+        body { font-family: Arial, sans-serif; background-color: #f4f4f9; text-align: center; margin: 0; padding: 15px; }
+        .container { max-width: 600px; margin: 30px auto; background: white; padding: 25px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); }
+        h1 { color: #333; margin-bottom: 5px; }
         input[type="password"] { width: 80%; padding: 12px; margin: 15px 0; border: 1px solid #ccc; border-radius: 6px; font-size: 16px; text-align: center; }
         .btn { width: 85%; padding: 12px; background-color: #0070f3; color: white; border: none; border-radius: 6px; font-size: 16px; cursor: pointer; font-weight: bold; }
         .btn:hover { background-color: #0051b3; }
         #error-msg { color: red; font-size: 14px; margin-top: 10px; display: none; }
         #protected-content { display: none; }
+        
+        /* New Gallery Styles */
+        .upload-section { background: #eef2ff; border: 2px dashed #6366f1; padding: 20px; border-radius: 8px; margin-top: 20px; }
+        .upload-btn { background-color: #4f46e5; color: white; padding: 12px 20px; text-decoration: none; border-radius: 6px; display: inline-block; font-weight: bold; margin-top: 10px; width: 80%; }
+        .gallery { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; margin-top: 20px; }
+        .photo-card { background: #eee; border-radius: 8px; overflow: hidden; height: 120px; display: flex; align-items: center; justify-content: center; color: #888; font-size: 14px; border: 1px solid #ddd; font-weight: bold; }
     </style>
 </head>
 <body>
@@ -29,16 +36,32 @@
 
     <!-- 2. IPINAKITA LANG KAPAG TAMA ANG PASSWORD -->
     <div id="protected-content" class="container">
-        <h1>Maligayang Pagdating sa FamilyApps! ❤️</h1>
-        <p>Ito ang pribadong espasyo ng ating pamilya.</p>
-        <hr style="border: 0; border-top: 1px solid #eee; margin: 20px 0;">
-        <p>📁 <i>Susunod na hakbang: Paggawa ng Upload Gallery para sa inyong mga larawan at video.</i></p>
+        <h1>FamilyApps! ❤️</h1>
+        <p>Ang pribadong album at kwentuhan ng ating pamilya.</p>
+        
+        <!-- UPLOAD SECTION -->
+        <div class="upload-section">
+            <h3>📸 Mag-upload ng Larawan o Video</h3>
+            <p>I-click the button sa ibaba para magdagdag sa ating pampamilyang folder.</p>
+            <a href="https://google.com" target="_blank" class="upload-btn">📤 Pindutin para Mag-upload</a>
+        </div>
+
+        <hr style="border: 0; border-top: 1px solid #eee; margin: 25px 0;">
+
+        <!-- GALLERY SECTION -->
+        <h3>🖼️ Ang Ating Mga Alaala</h3>
+        <div class="gallery">
+            <div class="photo-card">Larawan 1<br>(Sample)</div>
+            <div class="photo-card">Larawan 2<br>(Sample)</div>
+            <div class="photo-card">Larawan 3<br>(Sample)</div>
+            <div class="photo-card">Larawan 4<br>(Sample)</div>
+        </div>
     </div>
 
     <script>
         function checkPassword() {
             var input = document.getElementById("password-input").value;
-            // Ang password ninyo ay: pamilyako2026
+            // Ang password ninyo ay nananatiling: pamilyako2026
             var tamangPassword = "pamilyako2026"; 
             
             if (input === tamangPassword) {
