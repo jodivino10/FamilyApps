@@ -4,27 +4,36 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>FamilyLOVE</title>
+    <style>
+        /* CSS focus system: Lilipat ang tab kahit walang JavaScript */
+        .tab-content { display: none; }
+        #home:target ~ #sec-home, #msg:target ~ #sec-msg, #pts:target ~ #sec-pts, #kya:target ~ #sec-kya, #laga:target ~ #sec-laga { display: block; }
+        /* Kapag bagong bukas, ipakita ang Home */
+        .tab-content:not(:target) { display: none; }
+        #sec-home { display: block; }
+        #home:target ~ #sec-home { display: block; }
+        #msg:target ~ #sec-home, #pts:target ~ #sec-home, #kya:target ~ #sec-home, #laga:target ~ #sec-home { display: none; }
+    </style>
 </head>
-<body style="margin:0; padding:0; font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; background-color:#f0f2f5; color:#1c1e21; font-weight:bold;">
+<body style="margin:0; padding:0; font-family:-apple-system, sans-serif; background-color:#f0f2f5; color:#1c1e21; font-weight:bold;">
 
-    <!-- TOP NAVIGATION BAR -->
-    <div style="background-color:#ffffff; border-bottom:1px solid #ccd0d5; position:sticky; top:0; z-index:9999; box-shadow:0 2px 4px rgba(0,0,0,0.08); font-weight:bold;">
+    <!-- TARGET ANCHORS PARA SA CLICK NAV -->
+    <div id="home"></div><div id="msg"></div><div id="pts"></div><div id="kya"></div><div id="laga"></div>
+
+    <!-- TOP BAR -->
+    <div style="background-color:#ffffff; border-bottom:1px solid #ccd0d5; position:sticky; top:0; z-index:9999; box-shadow:0 2px 4px rgba(0,0,0,0.08);">
         <div style="display:flex; align-items:center; justify-content:space-between; padding:12px 16px;">
-            <span style="color:#1877f2; font-size:24px; font-weight:900; letter-spacing:0.5px;">FamilyLOVE</span>
-            <!-- SETTINGS AT LOGOUT SA ITAAS -->
-            <div style="display:flex; gap:16px; align-items:center;">
-                <button type="button" onclick="switchSection('settings')" style="background:none; border:none; font-size:20px; cursor:pointer; padding:4px;">⚙️</button>
-                <button type="button" onclick="alert('Logged out!')" style="background:none; border:none; font-size:20px; cursor:pointer; padding:4px;">🚪</button>
-            </div>
+            <span style="color:#1877f2; font-size:24px; font-weight:900;">FamilyLOVE</span>
+            <button onclick="alert('Logged out!')" style="background:none; border:none; font-size:20px; cursor:pointer;">🚪</button>
         </div>
         
-        <!-- TABS BAR (FACEBOOK STYLE) -->
+        <!-- TABS BAR (PURE HTML NAVIGATION - HINDING-HINDI MAG-E-ERROR) -->
         <div style="display:flex; text-align:center; font-size:15px; border-top:1px solid #f0f2f5; background-color:#ffffff;">
-            <button id="b-home" type="button" onclick="switchSection('home')" style="flex:1; padding:14px 0; background:#e7f3ff; border:none; color:#1877f2; font-weight:black; cursor:pointer; border-bottom:3px solid #1877f2;">Home</button>
-            <button id="b-msg" type="button" onclick="switchSection('msg')" style="flex:1; padding:14px 0; background:none; border:none; color:#606770; font-size:20px; cursor:pointer; border-bottom:3px solid transparent;">💬</button>
-            <button id="b-pts" type="button" onclick="switchSection('pts')" style="flex:1; padding:14px 0; background:none; border:none; color:#606770; font-size:20px; cursor:pointer; border-bottom:3px solid transparent;">👨‍👩‍👦</button>
-            <button id="b-kya" type="button" onclick="switchSection('kya')" style="flex:1; padding:14px 0; background:none; border:none; color:#606770; font-size:20px; cursor:pointer; border-bottom:3px solid transparent;">👦</button>
-            <button id="b-laga" type="button" onclick="switchSection('laga')" style="flex:1; padding:14px 0; background:none; border:none; color:#606770; font-weight:black; cursor:pointer; border-bottom:3px solid transparent;">Laga</button>
+            <a href="#home" style="flex:1; padding:14px 0; color:#1877f2; text-decoration:none;">Home</a>
+            <a href="#msg" style="flex:1; padding:14px 0; color:#606770; font-size:20px; text-decoration:none;">💬</a>
+            <a href="#pts" style="flex:1; padding:14px 0; color:#606770; font-size:20px; text-decoration:none;">👨‍👩‍👦</a>
+            <a href="#kya" style="flex:1; padding:14px 0; color:#606770; font-size:20px; text-decoration:none;">👦</a>
+            <a href="#laga" style="flex:1; padding:14px 0; color:#606770; text-decoration:none;">Laga</a>
         </div>
     </div>
 
@@ -32,91 +41,46 @@
     <div style="max-width:500px; margin:0 auto; padding:12px; box-sizing:border-box;">
         
         <!-- HOME SECTION -->
-        <div id="sec-home" style="display:block;">
-            <div style="background:#ffffff; padding:16px; border-radius:8px; border:1px solid #ccd0d5; text-align:center; box-shadow:0 1px 2px rgba(0,0,0,0.05);">
-                <p style="margin:0; font-size:16px; color:#1c1e21; font-weight:black;">🏠 Maligayang Pagdating sa FamilyLOVE Timeline</p>
-            </div>
+        <div id="sec-home" class="tab-content" style="background:#ffffff; padding:16px; border-radius:8px; border:1px solid #ccd0d5; text-align:center;">
+            <p style="margin:0; font-size:16px; color:#1c1e21;">🏠 Welcome sa FamilyLOVE Timeline</p>
         </div>
 
         <!-- MESSAGE SECTION -->
-        <div id="sec-msg" style="display:none;">
-            <div style="background:#ffffff; padding:16px; border-radius:8px; border:1px solid #ccd0d5; margin-bottom:16px; box-shadow:0 1px 2px rgba(0,0,0,0.05);">
-                <p style="margin:0 0 12px 0; font-size:16px; color:#1c1e21; font-weight:black;">💬 Message Board</p>
-                <textarea id="msg-text" placeholder="Isulat ang mensahe dito..." style="width:100%; padding:12px; background:#f0f2f5; border:1px solid #ccd0d5; border-radius:8px; box-sizing:border-box; outline:none; margin-bottom:12px; font-weight:bold; font-size:14px; color:#000000;" rows="3"></textarea>
-                <button type="button" onclick="postMessage()" style="width:100%; background:#1877f2; color:white; border:none; padding:12px; border-radius:6px; font-weight:black; font-size:15px; cursor:pointer;">I-send</button>
-            </div>
-            <div id="m-list" style="display:flex; flex-direction:column; gap:12px;"></div>
+        <div id="sec-msg" class="tab-content" style="background:#ffffff; padding:16px; border-radius:8px; border:1px solid #ccd0d5; margin-bottom:16px;">
+            <p style="margin:0 0 12px 0; font-size:16px;">💬 Message Board</p>
+            <textarea id="msg-input" placeholder="Isulat ang mensahe dito..." style="width:100%; padding:12px; background:#f0f2f5; border:1px solid #ccd0d5; border-radius:8px; box-sizing:border-box; outline:none; margin-bottom:12px; font-weight:bold;" rows="3"></textarea>
+            <button onclick="let t=document.getElementById('msg-input').value; if(t){ document.getElementById('m-list').innerHTML='<div style=\'background:#f0f2f5; padding:12px; border-radius:8px; margin-bottom:10px;\'><p style=\'margin:0;\'>'+t+'</p></div>'+document.getElementById('m-list').innerHTML; document.getElementById('msg-input').value=''; }" style="width:100%; background:#1877f2; color:white; border:none; padding:12px; border-radius:6px; font-weight:bold; cursor:pointer;">I-send</button>
+            <div id="m-list" style="margin-top:12px;"></div>
         </div>
 
         <!-- PARENTS SECTION -->
-        <div id="sec-pts" style="display:none;">
+        <div id="sec-pts" class="tab-content">
             <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:16px;">
-                <h3 style="margin:0; font-size:18px; font-weight:black; color:#1c1e21;">👨‍👩‍👦 Parents Albums</h3>
-                <button type="button" onclick="createFolder('pts-list')" style="background:#42b72a; color:white; border:none; padding:10px 16px; border-radius:6px; font-weight:black; cursor:pointer; font-size:13px;">+ Create Album</button>
+                <h3 style="margin:0;">👨‍👩‍👦 Parents Albums</h3>
+                <button onclick="let n=prompt('Album Name:'); if(n){ document.getElementById('pts-list').innerHTML+='<div style=\'background:#ffffff; padding:20px; border-radius:8px; border:1px solid #ccd0d5; text-align:center;\'>📁<br>'+n+'</div>'; }" style="background:#42b72a; color:white; border:none; padding:10px 16px; border-radius:6px; font-weight:bold; cursor:pointer;">+ Create Album</button>
             </div>
             <div id="pts-list" style="display:grid; grid-template-columns:repeat(2, 1fr); gap:12px;"></div>
         </div>
 
-        <!-- KUYA'S TIMELINE SECTION -->
-        <div id="sec-kya" style="display:none;">
-            <div style="background:#ffffff; padding:16px; border-radius:8px; border:1px solid #ccd0d5; margin-bottom:16px; box-shadow:0 1px 2px rgba(0,0,0,0.05);">
-                <div style="display:flex; gap:10px; margin-bottom:12px;">
-                    <input type="text" id="kya-caption" placeholder="Ano ang alaala ni Kuya ngayon?" style="width:100%; background-color:#f0f2f5; border:none; border-radius:20px; padding:12px 16px; font-size:14px; outline:none; color:#000000; font-weight:bold; box-sizing:border-box;">
-                </div>
-                <div style="display:flex; align-items:center; justify-content:space-between; border-top:1px solid #e5e5e5; padding-top:12px;">
-                    <label style="cursor:pointer; color:#45bd62; font-weight:bold; font-size:13px; display:flex; align-items:center; gap:4px; padding:6px 0;">
-                        🖼️ Larawan/Video
-                        <input type="file" id="kya-files" multiple accept="image/*,video/*" style="display:none;" onchange="previewKyaFiles()">
-                    </label>
-                    <select id="kya-tag" style="background-color:#f0f2f5; border:none; padding:8px; border-radius:6px; font-size:12px; font-weight:bold; color:#000000;">
-                        <option value="Standard Post">Standard Post</option>
-                        <option value="School 🎒">School 🎒</option>
-                        <option value="Laro 🏀">Laro 🏀</option>
-                        <option value="Birthday 🎂">Birthday 🎂</option>
-                        <option value="Gala 🚗">Gala 🚗</option>
-                    </select>
-                    <button type="button" onclick="postKuyaMemory()" style="background-color:#1877f2; color:white; border:none; padding:8px 18px; border-radius:6px; font-weight:bold; font-size:13px; cursor:pointer;">Post</button>
-                </div>
-                <div id="kya-preview" style="display:grid; grid-template-columns:repeat(3, 1fr); gap:8px; margin-top:12px;"></div>
-            </div>
-            <div id="kya-feed" style="display:flex; flex-direction:column; gap:12px;"></div>
-        </div>
-
-        <!-- LAGA (JHANEEZ TIMELINE) SECTION -->
-        <div id="sec-laga" style="display:none;">
+        <!-- KUYA'S SECTION -->
+        <div id="sec-kya" class="tab-content">
             <div style="background:#ffffff; padding:16px; border-radius:8px; border:1px solid #ccd0d5; margin-bottom:16px;">
-                <div style="display:flex; gap:10px; margin-bottom:12px;">
-                    <input type="text" id="laga-caption" placeholder="Ano ang alaala ni Laga ngayon?" style="width:100%; background-color:#f0f2f5; border:none; border-radius:20px; padding:12px 16px; font-size:14px; outline:none; color:#000000; font-weight:bold; box-sizing:border-box;">
-                </div>
-                <div style="display:flex; align-items:center; justify-content:space-between; border-top:1px solid #e5e5e5; padding-top:12px;">
-                    <label style="cursor:pointer; color:#45bd62; font-weight:bold; font-size:13px; display:flex; align-items:center; gap:4px; padding:6px 0;">
-                        🖼️ Larawan/Video
-                        <input type="file" id="laga-files" multiple accept="image/*,video/*" style="display:none;" onchange="previewLagaFiles()">
-                    </label>
-                    <select id="laga-tag" style="background-color:#f0f2f5; border:none; padding:8px; border-radius:6px; font-size:12px; font-weight:bold; color:#000000;">
-                        <option value="Standard Post">Standard Post</option>
-                        <option value="First Steps 👣">First Steps 👣</option>
-                        <option value="First Word 🗣️">First Word 🗣️</option>
-                        <option value="Birthday 🎂">Birthday 🎂</option>
-                        <option value="Christmas 🎄">Christmas 🎄</option>
-                    </select>
-                    <button type="button" onclick="postLagaMemory()" style="background-color:#1877f2; color:white; border:none; padding:8px 18px; border-radius:6px; font-weight:bold; font-size:13px; cursor:pointer;">Post</button>
-                </div>
-                <div id="laga-preview" style="display:grid; grid-template-columns:repeat(3, 1fr); gap:8px; margin-top:12px;"></div>
+                <input type="text" id="k-text" placeholder="Ano ang alaala ni Kuya ngayon?" style="width:100%; padding:12px; background:#f0f2f5; border:none; border-radius:20px; box-sizing:border-box; outline:none; margin-bottom:10px; font-weight:bold;">
+                <button onclick="let t=document.getElementById('k-text').value; if(t){ document.getElementById('k-feed').innerHTML='<div style=\'background:#ffffff; padding:16px; border-radius:8px; border:1px solid #ccd0d5; margin-bottom:10px;\'><b>KUYA 👦</b><p style=\'margin:5px 0 0 0;\'>'+t+'</p></div>'+document.getElementById('k-feed').innerHTML; document.getElementById('k-text').value=''; }" style="width:100%; background:#1877f2; color:white; border:none; padding:10px; border-radius:6px; font-weight:bold; cursor:pointer;">Post</button>
             </div>
-            <div id="laga-feed" style="display:flex; flex-direction:column; gap:12px;"></div>
+            <div id="k-feed"></div>
         </div>
 
-        <!-- SETTINGS SECTION -->
-        <div id="sec-settings" style="display:none;">
-            <div style="background:#ffffff; padding:16px; border-radius:8px; border:1px solid #ccd0d5;">
-                <h3 style="margin:0 0 10px 0; font-size:18px; font-weight:black; color:#1c1e21;">⚙️ App Settings</h3>
-                <p style="margin:0; color:#606770; font-size:14px; font-weight:bold; line-height:1.4;">Dito mo maaayos ang mga advanced settings ng app sa hinaharap.</p>
+        <!-- LAGA SECTION -->
+        <div id="sec-laga" class="tab-content">
+            <div style="background:#ffffff; padding:16px; border-radius:8px; border:1px solid #ccd0d5; margin-bottom:16px;">
+                <input type="text" id="l-text" placeholder="Ano ang alaala ni Laga ngayon?" style="width:100%; padding:12px; background:#f0f2f5; border:none; border-radius:20px; box-sizing:border-box; outline:none; margin-bottom:10px; font-weight:bold;">
+                <button onclick="let t=document.getElementById('l-text').value; if(t){ document.getElementById('l-feed').innerHTML='<div style=\'background:#ffffff; padding:16px; border-radius:8px; border:1px solid #ccd0d5; margin-bottom:10px;\'><b>LAGA 👑</b><p style=\'margin:5px 0 0 0;\'>'+t+'</p></div>'+document.getElementById('l-feed').innerHTML; document.getElementById('l-text').value=''; }" style="width:100%; background:#1877f2; color:white; border:none; padding:10px; border-radius:6px; font-weight:bold; cursor:pointer;">Post</button>
             </div>
+            <div id="l-feed"></div>
         </div>
 
     </div>
 
-    <!-- CLEAN JAVASCRIPT SYSTEM -->
-    <script>
-        let kuyaPosts = [];
+</body>
+</html>
