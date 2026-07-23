@@ -2,364 +2,60 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-
-<title>Family Media & Memory</title>
-
-<style>
-
-*{
-margin:0;
-padding:0;
-box-sizing:border-box;
-font-family:Arial,Helvetica,sans-serif;
-}
-
-body{
-background:#f0f2f5;
-}
-
-.header{
-background:#1877f2;
-color:#fff;
-padding:14px;
-font-size:18px;
-font-weight:bold;
-text-align:center;
-position:sticky;
-top:0;
-z-index:1000;
-}
-
-.tabs{
-display:flex;
-background:#fff;
-border-bottom:1px solid #ddd;
-}
-
-.tab{
-flex:1;
-padding:10px 2px;
-font-size:12px;
-font-weight:bold;
-text-align:center;
-cursor:pointer;
-color:#666;
-}
-
-.tab.active{
-color:#1877f2;
-border-bottom:3px solid #1877f2;
-}
-
-.page{
-display:none;
-padding:12px;
-}
-
-.page.active{
-display:block;
-}
-
-.card{
-background:#fff;
-padding:12px;
-border-radius:10px;
-margin-bottom:12px;
-box-shadow:0 1px 4px rgba(0,0,0,.15);
-}
-
-input,
-textarea,
-select{
-width:100%;
-padding:10px;
-margin-top:10px;
-border:1px solid #ccc;
-border-radius:8px;
-font-size:14px;
-}
-
-button{
-width:100%;
-padding:11px;
-margin-top:10px;
-background:#1877f2;
-color:#fff;
-border:none;
-border-radius:8px;
-font-weight:bold;
-}
-
-.preview{
-display:flex;
-flex-wrap:wrap;
-gap:8px;
-margin-top:10px;
-}
-
-.preview img{
-width:80px;
-height:80px;
-object-fit:cover;
-border-radius:8px;
-}
-
-.post{
-background:#fff;
-padding:12px;
-border-radius:10px;
-margin-top:12px;
-box-shadow:0 1px 4px rgba(0,0,0,.15);
-}
-
-.post img{
-width:100%;
-margin-top:8px;
-border-radius:8px;
-}
-
-</style>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Family Connect</title>
+<link rel="stylesheet" href="style.css">
 </head>
 
 <body>
 
-<div class="header">
-Family Media & Memory
-</div>
+<header>
+    <h1>Family Connect</h1>
+    <nav>
+        <button>Home</button>
+        <button>Profile</button>
+        <button>Messages</button>
+    </nav>
+</header>
 
-<div class="tabs">
-<div class="tab active" data-page="home">Home</div>
-<div class="tab" data-page="message">Message</div>
-<div class="tab" data-page="parents">Parents</div>
-<div class="tab" data-page="kuya">Kuya's</div>
-<div class="tab" data-page="laga">Laga</div>
-</div>
 
-<div id="home" class="page active">
+<section class="profile">
+    <img src="https://via.placeholder.com/100" alt="Profile">
+    <h2>My Family</h2>
+    <p>Welcome to our private family social app</p>
+</section>
 
-<div class="card">
 
-<h2>🏠 Home</h2>
+<section class="post-box">
+    <textarea placeholder="What's happening in the family?"></textarea>
+    <button class="post-btn">Post</button>
+</section>
 
-<p>Welcome to our family memories.</p>
 
-</div>
+<section class="feed">
 
-<div id="feed"></div>
+    <div class="post">
+        <h3>Family Member</h3>
+        <p>Welcome to our new family app ❤️</p>
+        <small>Just now</small>
+    </div>
 
-</div>
 
-<div id="message" class="page">
+    <div class="post">
+        <h3>Mom</h3>
+        <p>Happy family day everyone!</p>
+        <small>Today</small>
+    </div>
 
-<div class="card">
+</section>
 
-<h2>Create Post</h2>
 
-<select id="receiver">
+<footer>
+    <p>© 2026 Family Connect</p>
+</footer>
 
-<option>Papa</option>
 
-<option>Mama</option>
-
-<option>Kuya</option>
-
-</select>
-
-<textarea
-id="text"
-rows="4"
-placeholder="Write something..."></textarea>
-
-<input
-type="file"
-id="photos"
-multiple
-accept="image/*">
-
-<div
-class="preview"
-id="preview"></div>
-
-<button id="postBtn">
-
-POST
-
-</button>
-
-</div>
-
-</div>
-
-<div id="parents" class="page">
-
-<div class="card">
-
-<h2>Parents</h2>
-
-<p>Papa & Mama memories.</p>
-
-</div>
-
-</div>
-
-<div id="kuya" class="page">
-
-<div class="card">
-
-<h2>Kuya's</h2>
-
-<p>Kuya memories.</p>
-
-</div>
-
-</div>
-
-<div id="laga" class="page">
-
-<div class="card">
-
-<h2>Laga</h2>
-
-<p>Laga gallery.</p>
-
-</div>
-
-</div><script>
-
-const tabs=document.querySelectorAll(".tab");
-const pages=document.querySelectorAll(".page");
-
-tabs.forEach(tab=>{
-tab.onclick=function(){
-
-tabs.forEach(t=>t.classList.remove("active"));
-pages.forEach(p=>p.classList.remove("active"));
-
-this.classList.add("active");
-
-document
-.getElementById(this.dataset.page)
-.classList.add("active");
-
-};
-});
-
-const photos=document.getElementById("photos");
-const preview=document.getElementById("preview");
-
-let imageList=[];
-
-photos.onchange=function(){
-
-preview.innerHTML="";
-imageList=[];
-
-Array.from(this.files).forEach(file=>{
-
-const reader=new FileReader();
-
-reader.onload=function(e){
-
-imageList.push(e.target.result);
-
-const img=document.createElement("img");
-
-img.src=e.target.result;
-
-preview.appendChild(img);
-
-};
-
-reader.readAsDataURL(file);
-
-});
-
-};
-
-</script><script>
-
-/* ===== POST + LOCAL STORAGE ===== */
-
-const feed=document.getElementById("feed");
-const postBtn=document.getElementById("postBtn");
-const text=document.getElementById("text");
-const receiver=document.getElementById("receiver");
-
-loadPosts();
-
-postBtn.onclick=function(){
-
-if(text.value.trim()==="" && imageList.length===0){
-
-alert("Write a message or select image.");
-return;
-
-}
-
-const post={
-
-receiver:receiver.value,
-
-text:text.value,
-
-images:imageList,
-
-time:new Date().toLocaleString()
-
-};
-
-let posts=JSON.parse(localStorage.getItem("familyPosts")||"[]");
-
-posts.unshift(post);
-
-localStorage.setItem("familyPosts",JSON.stringify(posts));
-
-showPosts();
-
-text.value="";
-photos.value="";
-preview.innerHTML="";
-imageList=[];
-
-};
-
-function loadPosts(){
-
-showPosts();
-
-}
-
-function showPosts(){
-
-let posts=JSON.parse(localStorage.getItem("familyPosts")||"[]");
-
-feed.innerHTML="";
-
-posts.forEach(post=>{
-
-let html=`
-<div class="post">
-<b>To: ${post.receiver}</b><br>
-<small>${post.time}</small>
-<p>${post.text}</p>
-`;
-
-post.images.forEach(img=>{
-
-html+=`<img src="${img}">`;
-
-});
-
-html+="</div>";
-
-feed.innerHTML+=html;
-
-});
-
-}
-
-</script>
+<script src="script.js"></script>
 
 </body>
 </html>
