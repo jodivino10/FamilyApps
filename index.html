@@ -5,71 +5,50 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>FamilyLOVE</title>
 </head>
-<body style="margin: 0; padding: 0; font-family: -apple-system, sans-serif; background-color: #f0f2f5; color: #1c1e21;">
-    <div id="navbar" style="background-color: #ffffff; border-bottom: 1px solid #e5e5e5; position: sticky; top: 0; z-index: 9999;">
-        <div style="display: flex; align-items: center; justify-content: space-between; padding: 12px 16px;">
-            <span style="color: #1877f2; font-size: 24px; font-weight: 900;">JHANEEZ</span>
-            <button type="button" onclick="toggleDarkMode()" style="background: #f0f2f5; border: none; padding: 8px 12px; border-radius: 6px; font-weight: bold; cursor: pointer;">🌙 Mode</button>
-        </div>
-        <div style="display: flex; border-top: 1px solid #f0f2f5; text-align: center; font-size: 13px; font-weight: bold;">
-            <button type="button" id="tab-jhaneez" onclick="showTab('jhaneez')" style="flex: 1; padding: 16px 0; background-color: #e7f3ff; border: none; border-bottom: 3px solid #1877f2; color: #1877f2; font-weight: bold;">JHANEEZ</button>
-            <button type="button" id="tab-message" onclick="showTab('message')" style="flex: 1; padding: 16px 0; background: none; border: none; border-bottom: 3px solid transparent; color: #606770;">MESSAGE</button>
-            <button type="button" id="tab-parents" onclick="showTab('parents')" style="flex: 1; padding: 16px 0; background: none; border: none; border-bottom: 3px solid transparent; color: #606770;">PARENTS</button>
-            <button type="button" id="tab-kuya" onclick="showTab('kuya')" style="flex: 1; padding: 16px 0; background: none; border: none; border-bottom: 3px solid transparent; color: #606770;">KUYA'S</button>
-            <button type="button" id="tab-reels" onclick="showTab('reels')" style="flex: 1; padding: 16px 0; background: none; border: none; border-bottom: 3px solid transparent; color: #f02849;">🎬 REELS</button>
+<body style="margin:0; padding:0; font-family:sans-serif; background-color:#f0f2f5;">
+
+    <!-- NAVBAR & TABS -->
+    <div style="background-color:#ffffff; border-bottom:1px solid #e5e5e5; position:sticky; top:0; z-index:9999; text-align:center;">
+        <h1 style="color:#1877f2; margin:10px 0 5px 0; font-size:24px;">JHANEEZ</h1>
+        <div style="display:flex; font-size:12px; font-weight:bold; border-top:1px solid #f0f2f5;">
+            <button onclick="document.getElementById('c-jh').style.display='block'; document.getElementById('c-msg').style.display='none'; document.getElementById('c-alb').style.display='none';" style="flex:1; padding:15px 0; background:#e7f3ff; border:none; color:#1877f2; font-weight:bold; cursor:pointer;">JHANEEZ</button>
+            <button onclick="document.getElementById('c-jh').style.display='none'; document.getElementById('c-msg').style.display='block'; document.getElementById('c-alb').style.display='none';" style="flex:1; padding:15px 0; background:none; border:none; color:#606770; font-weight:bold; cursor:pointer;">MESSAGE</button>
+            <button onclick="document.getElementById('c-jh').style.display='none'; document.getElementById('c-msg').style.display='none'; document.getElementById('c-alb').style.display='block';" style="flex:1; padding:15px 0; background:none; border:none; color:#606770; font-weight:bold; cursor:pointer;">ALBUMS</button>
         </div>
     </div>
-    <div style="max-width: 500px; margin: 0 auto; padding: 16px; box-sizing: border-box;">
-        <div id="content-jhaneez" class="tab-content" style="display: block;">
-            <div class="card-bg" style="background-color: #ffffff; padding: 16px; border-radius: 8px; border: 1px solid #e5e5e5; margin-bottom: 16px;">
-                <div style="display: flex; gap: 10px; margin-bottom: 12px;">
-                    <input type="text" id="feed-caption" placeholder="Ano ang alaala ni Jhaneez ngayon?" style="flex: 1; background-color: #f0f2f5; border: none; border-radius: 20px; padding: 12px 16px; outline: none;">
-                </div>
-                <div style="display: flex; align-items: center; justify-content: space-between;">
-                    <label style="cursor: pointer; color: #45bd62; font-weight: bold; font-size: 13px;">🖼️ Larawan <input type="file" id="feed-files" multiple accept="image/*,video/*" style="display: none;" onchange="previewFiles()"></label>
-                    <button type="button" onclick="postToFeed()" style="background-color: #1877f2; color: white; border: none; padding: 8px 18px; border-radius: 6px; font-weight: bold; cursor: pointer;">Post</button>
-                </div>
-                <div id="feed-preview" style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-top: 12px;"></div>
+
+    <!-- MAIN BOX -->
+    <div style="max-width:500px; margin:0 auto; padding:16px; box-sizing:border-box;">
+        
+        <!-- JHANEEZ TAB -->
+        <div id="c-jh" style="display:block;">
+            <div style="background:#ffffff; padding:16px; border-radius:8px; border:1px solid #e5e5e5; margin-bottom:16px;">
+                <input type="text" id="post-text" placeholder="Ano ang alaala ni Jhaneez ngayon?" style="width:100%; padding:12px; background:#f0f2f5; border:none; border-radius:20px; box-sizing:border-box; outline:none; margin-bottom:10px;">
+                <button onclick="let t=document.getElementById('post-text').value; if(t){ document.getElementById('feed').innerHTML='<div style=\'background:#ffffff; padding:16px; border-radius:8px; border:1px solid #e5e5e5; margin-bottom:10px;\'><b>JHANEEZ ⭐</b><p style=\'margin:5px 0 0 0;\'>'+t+'</p></div>'+document.getElementById('feed').innerHTML; document.getElementById('post-text').value=''; }" style="width:100%; background:#1877f2; color:white; border:none; padding:10px; border-radius:6px; font-weight:bold; cursor:pointer;">I-post ang Alaala</button>
             </div>
-            <div id="jhaneez-feed" style="display: flex; flex-direction: column; gap: 16px;"></div>
+            <div id="feed"></div>
         </div>
-        <div id="content-message" class="tab-content" style="display: none;">
-            <div class="card-bg" style="background-color: #ffffff; padding: 16px; border-radius: 8px; border: 1px solid #e5e5e5; margin-bottom: 16px;">
-                <select id="msg-sender" style="width: 100%; padding: 12px; background-color: #f0f2f5; border: none; border-radius: 6px; font-weight: bold; margin-bottom: 12px;"><option value="Papa 👨">Papa 👨</option><option value="Mama 👩">Mama 👩</option><option value="Kuya 👦">Kuya 👦</option></select>
-                <textarea id="msg-text" placeholder="Isulat ang mensahe para kay Jhaneez..." style="width: 100%; padding: 12px; background-color: #f0f2f5; border: none; border-radius: 6px; margin-bottom: 12px;" rows="3"></textarea>
-                <button type="button" onclick="postMessage()" style="width: 100%; background-color: #1877f2; color: white; border: none; padding: 12px; border-radius: 6px; font-weight: bold; cursor: pointer;">I-send ang Mensahe</button>
+
+        <!-- MESSAGE TAB -->
+        <div id="c-msg" style="display:none;">
+            <div style="background:#ffffff; padding:16px; border-radius:8px; border:1px solid #e5e5e5; margin-bottom:16px;">
+                <select id="sender" style="width:100%; padding:10px; background:#f0f2f5; border:none; border-radius:6px; font-weight:bold; margin-bottom:10px;"><option>Papa 👨</option><option>Mama 👩</option><option>Kuya 👦</option></select>
+                <textarea id="msg-text" placeholder="Isulat ang mensahe..." style="width:100%; padding:12px; background:#f0f2f5; border:none; border-radius:6px; box-sizing:border-box; outline:none; margin-bottom:10px;" rows="3"></textarea>
+                <button onclick="let s=document.getElementById('sender').value; let m=document.getElementById('msg-text').value; if(m){ document.getElementById('m-list').innerHTML='<div style=\'background:#ffffff; padding:16px; border-radius:8px; border:1px solid #e5e5e5; margin-bottom:10px;\'><b style=\'color:#8a3ab9;\'>'+s+' 📝</b><p style=\'margin:5px 0 0 0;\'>'+m+'</p></div>'+document.getElementById('m-list').innerHTML; document.getElementById('msg-text').value=''; }" style="width:100%; background:#1877f2; color:white; border:none; padding:10px; border-radius:6px; font-weight:bold; cursor:pointer;">I-send ang Mensahe</button>
             </div>
-            <div id="message-list" style="display: flex; flex-direction: column; gap: 12px;"></div>
+            <div id="m-list"></div>
         </div>
-        <div id="content-parents" class="tab-content" style="display: none;">
-            <div style="display: flex; justify-content: space-between; margin-bottom: 16px;"><h2>Parents Albums</h2><button type="button" onclick="createAlbum('parents')" style="background-color: #42b72a; color: white; border: none; padding: 8px 16px; border-radius: 6px; font-weight: bold;">+ Create Album</button></div>
-            <div id="parents-albums" style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px;"></div>
+
+        <!-- ALBUMS TAB -->
+        <div id="c-alb" style="display:none;">
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:16px;">
+                <h3 style="margin:0;">Family Folders</h3>
+                <button onclick="let n=prompt('Album Name:'); if(n){ document.getElementById('a-list').innerHTML+='<div style=\'background:#ffffff; padding:20px; border-radius:8px; border:2px solid #f1c40f; text-align:center; font-weight:bold;\'>📁<br>'+n+'</div>'; }" style="background:#42b72a; color:white; border:none; padding:8px 16px; border-radius:6px; font-weight:bold; cursor:pointer;">+ Create Album</button>
+            </div>
+            <div id="a-list" style="display:grid; grid-template-columns:repeat(2, 1fr); gap:12px;"></div>
         </div>
-        <div id="content-kuya" class="tab-content" style="display: none;">
-            <div style="display: flex; justify-content: space-between; margin-bottom: 16px;"><h2>Kuya's Albums</h2><button type="button" onclick="createAlbum('kuya')" style="background-color: #42b72a; color: white; border: none; padding: 8px 16px; border-radius: 6px; font-weight: bold;">+ Create Album</button></div>
-            <div id="kuya-albums" style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px;"></div>
-        </div>
-        <div id="content-reels" class="tab-content" style="display: none;">
-            <div class="card-bg" style="background-color: #ffffff; padding: 20px; border-radius: 8px; border: 1px solid #e5e5e5; text-align: center;"><p style="font-weight: bold;">Family Reels 🎬</p><label style="background-color: #f02849; color: white; padding: 10px 16px; border-radius: 6px; cursor: pointer; display: inline-block;">+ Video<input type="file" accept="video/*" style="display: none;" onchange="uploadReel(event)"></label></div>
-            <div id="reels-feed" style="display: flex; flex-direction: column; gap: 20px; margin-top: 16px;"></div>
-        </div>
+
     </div>
-    <script>
-        let posts = []; let messages = []; let albums = { parents: [], kuya: [] }; let reels = []; let isDark = false;
-        function showTab(tabName) {
-            ['jhaneez', 'message', 'parents', 'kuya', 'reels'].forEach(t => {
-                const el = document.getElementById('content-' + t);
-                if (el) el.style.display = t === tabName ? 'block' : 'none';
-                const btn = document.getElementById('tab-' + t);
-                if (btn) {
-                    btn.style.color = t === tabName ? (t === 'reels' ? '#f02849' : '#1877f2') : '#606770';
-                    btn.style.backgroundColor = t === tabName ? '#e7f3ff' : 'transparent';
-                    btn.style.borderBottom = t === tabName ? `3px solid ${t === 'reels' ? '#f02849' : '#1877f2'}` : '3px solid transparent';
-                }
-            });
-        }
-        function toggleDarkMode() { isDark = !isDark; document.body.style.backgroundColor = isDark ? '#18191a' : '#f0f2f5'; document.body.style.color = isDark ? '#e4e6eb' : '#1c1e21'; document.getElementById('navbar').style.backgroundColor = isDark ? '#242526' : '#ffffff'; document.querySelectorAll('.card-bg').forEach(el => el.style.backgroundColor = isDark ? '#242526' : '#ffffff'); }
-        function previewFiles() { const files = document.getElementById('feed-files').files; const preview = document.getElementById('feed-preview'); preview.innerHTML = ''; for(let f of files) { preview.innerHTML += `<img src="${URL.createObjectURL(f)}" style="width: 100%; height: 80px; object-fit: cover; border-radius: 6px;">`; } }
-        function postToFeed() { const cap = document.getElementById('feed-caption').value; const fileInput = document.getElementById('feed-files'); let imgs = []; if(fileInput.files) { for(let f of fileInput.files) { imgs.push(URL.createObjectURL(f)); } } posts.unshift({ caption: cap, media: imgs, date: new Date().toLocaleDateString(), likes: 0 }); document.getElementById('feed-caption').value = ''; document.getElementById('feed-files').value = ''; document.getElementById('feed-preview').innerHTML = ''; renderFeed(); }
-        function renderFeed() { const feed = document.getElementById('jhaneez-feed'); feed.innerHTML = posts.length === 0 ? '<p style="text-align: center; color: #606770; padding: 24px 0;">Wala pang naka-post.</p>' : ''; posts.forEach((p, idx) => { let mHtml = ''; p.media.forEach(m => { mHtml += `<img src="${m}" style="width: 100%; border-radius: 6px; margin-bottom: 6px; max-height: 300px; object-fit: cover;">`; }); feed.innerHTML += `<div class="card-bg" style="background-color: ${isDark ? '#242526' : '#ffffff'}; padding: 16px; border-radius: 8px; border: 1px solid #e5e5e5;"><div style="display: flex; justify-content: space-between; font-size: 12px; color: #606770; margin-bottom: 8px;"><b>JHANEEZ ⭐</b><span>${p.date}</span></div><p style="font-size: 14px; margin: 0 0 10px 0;">${p.caption}</p>${mHtml}<div style="border-top:1px solid #e5e5e5; padding-top:8px; font-size:13px;"><button onclick="posts[${idx}].likes++; renderFeed();" style="background:none; border:none; color:#606770; font-weight:bold; cursor:pointer;">👍 Like (${p.likes})</button></div></div>`; }); }
-        function postMessage() { const sender = document.getElementById('msg-sender').value; const text = document.getElementById('msg-text').value; if(!text) return; messages.unshift({ sender, text, likes: 0 }); document.getElementById('msg-text').value = ''; renderMessages(); }
+
+</body>
+</html>
