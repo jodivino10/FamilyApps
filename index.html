@@ -4,284 +4,87 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>FamilyLOVE</title>
-    <script src="https://tailwindcss.com"></script>
-    <link rel="stylesheet" href="https://cloudflare.com">
-    <style>
-        .dark-mode { background-color: #18191a; color: #e4e6eb; }
-        .dark-card { background-color: #242526; border-color: #3a3b3c; }
-        .tab-active { border-bottom: 3px solid #1877f2; color: #1877f2; }
-    </style>
 </head>
-<body class="bg-[#f0f2f5] font-sans transition-colors duration-200">
+<body style="margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; background-color: #f0f2f5; color: #1c1e21;">
 
     <!-- LOGIN SCREEN -->
-    <div id="login-page" class="fixed inset-0 bg-[#1877f2] flex flex-col items-center justify-center p-4 z-50">
-        <h1 class="text-white text-5xl font-bold mb-6 tracking-wide">FamilyLOVE</h1>
-        <div class="bg-white p-6 rounded-lg shadow-xl w-full max-w-sm">
-            <input type="text" id="username" placeholder="Username o Email" class="w-full p-3 mb-3 border border-gray-300 rounded text-black focus:outline-blue-500">
-            <div class="relative mb-4">
-                <input type="password" id="password" placeholder="Password" class="w-full p-3 border border-gray-300 rounded text-black focus:outline-blue-500">
-                <button onclick="togglePassword()" class="absolute right-3 top-3.5 text-gray-500">
-                    <i id="eye-icon" class="fa-solid fa-eye"></i>
-                </button>
+    <div id="login-page" style="position: fixed; top: 0; left: 0; right: 0; bottom: 0; background-color: #1877f2; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 20px; z-index: 9999;">
+        <h1 style="color: #ffffff; font-size: 42px; font-weight: bold; margin-bottom: 24px; letter-spacing: 1px;">FamilyLOVE</h1>
+        <div style="background-color: #ffffff; padding: 24px; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.15); width: 100%; max-w: 340px; box-sizing: border-box;">
+            <input type="text" id="username" placeholder="Username o Email" style="width: 100%; padding: 12px; margin-bottom: 12px; border: 1px solid #ccd0d5; border-radius: 6px; font-size: 15px; box-sizing: border-box; outline: none;">
+            <div style="position: relative; margin-bottom: 16px;">
+                <input type="password" id="password" placeholder="Password" style="width: 100%; padding: 12px; border: 1px solid #ccd0d5; border-radius: 6px; font-size: 15px; box-sizing: border-box; outline: none;">
+                <button onclick="togglePassword()" style="position: absolute; right: 12px; top: 12px; background: none; border: none; color: #606770; font-size: 14px; cursor: pointer; font-weight: bold;">👀</button>
             </div>
-            <button onclick="checkLogin()" class="w-full bg-[#1877f2] text-white p-3 rounded font-bold text-lg hover:bg-blue-600">Log In</button>
+            <button onclick="checkLogin()" style="width: 100%; background-color: #1877f2; color: #ffffff; padding: 12px; border: none; border-radius: 6px; font-size: 18px; font-weight: bold; cursor: pointer;">Log In</button>
         </div>
     </div>
 
     <!-- MAIN APP SCREEN (HIDDEN BY DEFAULT) -->
-    <div id="app-page" class="hidden min-h-screen pb-12">
-        <!-- TOP NAVIGATION BAR (FB LITE STYLE) -->
-        <div id="navbar" class="bg-white border-b border-gray-200 sticky top-0 z-40 shadow-sm transition-colors duration-200">
-            <div class="flex items-center justify-between px-4 py-2">
-                <span class="text-[#1877f2] text-2xl font-black tracking-wider">JHANEEZ</span>
-                <div class="flex items-center gap-4">
-                    <button onclick="toggleDarkMode()" class="text-xl p-2"><i id="dark-icon" class="fa-solid fa-moon"></i></button>
-                    <button onclick="showTab('admin')" class="text-gray-600 text-lg"><i class="fa-solid fa-user-gear"></i></button>
-                    <button onclick="logout()" class="text-red-500 font-bold text-sm">Logout</button>
+    <div id="app-page" style="display: none; padding-bottom: 50px;">
+        <!-- TOP NAVIGATION BAR -->
+        <div id="navbar" style="background-color: #ffffff; border-bottom: 1px solid #e5e5e5; position: sticky; top: 0; z-index: 1000; box-shadow: 0 2px 4px rgba(0,0,0,0.05);">
+            <div style="display: flex; align-items: center; justify-content: space-between; padding: 10px 16px;">
+                <span style="color: #1877f2; font-size: 24px; font-weight: 900; letter-spacing: 1px;">JHANEEZ</span>
+                <div style="display: flex; align-items: center; gap: 12px;">
+                    <button onclick="toggleDarkMode()" style="background: #f0f2f5; border: none; padding: 6px 10px; border-radius: 6px; font-size: 14px; cursor: pointer;">🌙 Mode</button>
+                    <button onclick="showTab('admin')" style="background: #f0f2f5; border: none; padding: 6px 10px; border-radius: 6px; font-size: 14px; cursor: pointer;">⚙️ Admin</button>
+                    <button onclick="logout()" style="color: #f02849; background: none; border: none; font-weight: bold; font-size: 14px; cursor: pointer;">Logout</button>
                 </div>
             </div>
             <!-- TABS -->
-            <div class="flex text-center font-bold text-gray-500 border-t border-gray-100 text-xs sm:text-sm">
-                <button id="tab-jhaneez" onclick="showTab('jhaneez')" class="flex-1 py-3 tab-active">JHANEEZ</button>
-                <button id="tab-message" onclick="showTab('message')" class="flex-1 py-3">MESSAGE</button>
-                <button id="tab-parents" onclick="showTab('parents')" class="flex-1 py-3">PARENTS</button>
-                <button id="tab-kuya" onclick="showTab('kuya')" class="flex-1 py-3">KUYA'S</button>
-                <button id="tab-reels" onclick="showTab('reels')" class="flex-1 py-3 text-red-500"><i class="fa-solid fa-video mr-1"></i>REELS</button>
+            <div style="display: flex; border-top: 1px solid #f0f2f5; text-align: center; font-size: 13px; font-weight: bold;">
+                <button id="tab-jhaneez" onclick="showTab('jhaneez')" style="flex: 1; padding: 12px 0; background: none; border: none; border-bottom: 3px solid #1877f2; color: #1877f2; font-weight: bold; cursor: pointer;">JHANEEZ</button>
+                <button id="tab-message" onclick="showTab('message')" style="flex: 1; padding: 12px 0; background: none; border: none; border-bottom: 3px solid transparent; color: #606770; font-weight: bold; cursor: pointer;">MESSAGE</button>
+                <button id="tab-parents" onclick="showTab('parents')" style="flex: 1; padding: 12px 0; background: none; border: none; border-bottom: 3px solid transparent; color: #606770; font-weight: bold; cursor: pointer;">PARENTS</button>
+                <button id="tab-kuya" onclick="showTab('kuya')" style="flex: 1; padding: 12px 0; background: none; border: none; border-bottom: 3px solid transparent; color: #606770; font-weight: bold; cursor: pointer;">KUYA'S</button>
+                <button id="tab-reels" onclick="showTab('reels')" style="flex: 1; padding: 12px 0; background: none; border: none; border-bottom: 3px solid transparent; color: #f02849; font-weight: bold; cursor: pointer;">🎬 REELS</button>
             </div>
         </div>
 
-        <!-- MAIN CONTENT CONTAINER -->
-        <div class="max-w-xl mx-auto p-4">
-            
+        <!-- CONTENT CONTAINER -->
+        <div style="max-width: 500px; margin: 0 auto; padding: 16px; box-sizing: border-box;">
             <!-- JHANEEZ TAB -->
             <div id="content-jhaneez" class="tab-content">
-                <!-- MULTIPLE UPLOAD BOX -->
-                <div class="bg-white p-4 rounded-lg shadow border border-gray-200 mb-4 transition-colors duration-200 container-card">
-                    <div class="flex gap-2 mb-3">
-                        <div class="w-10 h-10 bg-blue-500 rounded-full flex items-center justify-center text-white font-bold">P</div>
-                        <input type="text" id="feed-caption" placeholder="Ano ang alaala ni Jhaneez ngayon?" class="flex-1 bg-gray-100 rounded-full px-4 text-sm focus:outline-none text-black">
+                <div class="card-bg" style="background-color: #ffffff; padding: 16px; border-radius: 8px; border: 1px solid #e5e5e5; margin-bottom: 16px; box-shadow: 0 1px 2px rgba(0,0,0,0.05);">
+                    <div style="display: flex; gap: 10px; margin-bottom: 12px;">
+                        <div style="height: 36px; width: 36px; background-color: #1877f2; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-weight: bold;">P</div>
+                        <input type="text" id="feed-caption" placeholder="Ano ang alaala ni Jhaneez ngayon?" style="flex: 1; background-color: #f0f2f5; border: none; border-radius: 20px; padding: 0 16px; font-size: 14px; outline: none; color: #000000;">
                     </div>
-                    <div class="flex items-center justify-between border-t pt-3 text-gray-500 text-sm">
-                        <label class="cursor-pointer hover:text-blue-500 font-semibold flex items-center gap-1">
-                            <i class="fa-solid fa-images text-green-500 text-lg"></i> Photo/Video
-                            <input type="file" id="feed-files" multiple accept="image/*,video/*" class="hidden" onchange="previewFiles('feed-preview')">
-                        </label>
-                        <select id="milestone-tag" class="bg-gray-100 p-1 rounded text-black text-xs font-semibold">
-                            <option value="Standard">Standard Post</option>
-                            <option value="First Steps">First Steps 👣</option>
-                            <option value="First Word">First Word 🗣️</option>
-                            <option value="Birthday">Birthday 🎂</option>
-                            <option value="Christmas">Christmas 🎄</option>
-                        </select>
-                        <button onclick="postToFeed()" class="bg-[#1877f2] text-white px-4 py-1 rounded font-bold">Post</button>
+                    <div style="display: flex; align-items: center; justify-content: space-between; border-top: 1px solid #e5e5e5; padding-top: 12px;">
+                        <label style="cursor: pointer; color: #45bd62; font-weight: bold; font-size: 13px; display: flex; align-items: center; gap: 4px;">🖼️ Larawan/Video <input type="file" id="feed-files" multiple accept="image/*,video/*" style="display: none;" onchange="previewFiles('feed-preview')"></label>
+                        <select id="milestone-tag" style="background-color: #f0f2f5; border: none; padding: 6px; border-radius: 6px; font-size: 12px; font-weight: bold; color: #000000;"><option value="Standard">Standard Post</option><option value="First Steps">First Steps 👣</option><option value="First Word">First Word 🗣️</option><option value="Birthday">Birthday 🎂</option><option value="Christmas">Christmas 🎄</option></select>
+                        <button onclick="postToFeed()" style="background-color: #1877f2; color: white; border: none; padding: 6px 16px; border-radius: 6px; font-weight: bold; font-size: 13px; cursor: pointer;">Post</button>
                     </div>
-                    <div id="feed-preview" class="grid grid-cols-3 gap-2 mt-3"></div>
+                    <div id="feed-preview" style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-top: 12px;"></div>
                 </div>
-                <!-- FILTER BAR -->
-                <div class="flex gap-2 mb-4 text-xs font-bold">
-                    <select id="filter-year" onchange="filterTimeline()" class="bg-white p-2 rounded shadow border flex-1 text-black"><option value="All">All Years</option><option value="2026">2026</option></select>
-                    <select id="filter-milestone" onchange="filterTimeline()" class="bg-white p-2 rounded shadow border flex-1 text-black"><option value="All">All Milestones</option><option value="Standard">Standard</option><option value="First Steps">First Steps</option><option value="First Word">First Word</option><option value="Birthday">Birthday</option><option value="Christmas">Christmas</option></select>
-                </div>
-                <!-- TIMELINE FEED -->
-                <div id="jhaneez-feed" class="space-y-4"></div>
+                <div id="jhaneez-feed" style="display: flex; flex-direction: column; gap: 16px;"></div>
             </div>
 
             <!-- MESSAGE TAB -->
-            <div id="content-message" class="tab-content hidden">
-                <div class="bg-white p-4 rounded-lg shadow border border-gray-200 mb-4 transition-colors duration-200 container-card">
-                    <span class="font-bold text-gray-700 block mb-2 container-text">Sino ang sumusulat?</span>
-                    <select id="msg-sender" class="w-full p-2 mb-3 bg-gray-100 rounded text-black font-semibold">
-                        <option value="Papa">Papa 👨</option>
-                        <option value="Mama">Mama 👩</option>
-                        <option value="Kuya">Kuya 👦</option>
-                    </select>
-                    <textarea id="msg-text" placeholder="Isulat ang mensahe para sa kinabukasan ni Jhaneez..." class="w-full p-3 bg-gray-100 rounded text-black focus:outline-none text-sm mb-3" rows="3"></textarea>
-                    
-                    <!-- TIME CAPSULE LOCK -->
-                    <div class="flex items-center justify-between mb-3 border-t pt-2 text-xs font-semibold text-gray-500">
-                        <label class="flex items-center gap-1">
-                            <input type="checkbox" id="capsule-lock" onchange="toggleCapsuleDate()"> 🔒 Time Capsule Lock
-                        </label>
-                        <input type="date" id="unlock-date" class="hidden bg-gray-100 p-1 rounded text-black">
+            <div id="content-message" class="tab-content" style="display: none;">
+                <div class="card-bg" style="background-color: #ffffff; padding: 16px; border-radius: 8px; border: 1px solid #e5e5e5; margin-bottom: 16px;">
+                    <label style="font-weight: bold; font-size: 14px; color: #606770; display: block; margin-bottom: 6px;">Sino ang sumusulat?</label>
+                    <select id="msg-sender" style="width: 100%; padding: 10px; background-color: #f0f2f5; border: none; border-radius: 6px; font-weight: bold; margin-bottom: 12px; color: #000000;"><option value="Papa">Papa 👨</option><option value="Mama">Mama 👩</option><option value="Kuya">Kuya 👦</option></select>
+                    <textarea id="msg-text" placeholder="Isulat ang mensahe para sa kinabukasan ni Jhaneez..." style="width: 100%; padding: 12px; background-color: #f0f2f5; border: none; border-radius: 6px; font-size: 14px; box-sizing: border-box; outline: none; margin-bottom: 12px; color: #000000;" rows="3"></textarea>
+                    <div style="display: flex; align-items: center; justify-content: space-between; border-top: 1px solid #e5e5e5; padding-top: 12px; margin-bottom: 12px; font-size: 13px; color: #606770;">
+                        <label style="font-weight: bold;"><input type="checkbox" id="capsule-lock" onchange="toggleCapsuleDate()"> 🔒 Time Capsule Lock</label>
+                        <input type="date" id="unlock-date" style="display: none; background-color: #f0f2f5; border: none; padding: 4px; border-radius: 4px; color: #000000;">
                     </div>
-
-                    <div class="flex justify-between items-center border-t pt-3">
-                        <button onclick="startVoiceRecord()" class="text-red-500 font-bold text-sm"><i class="fa-solid fa-microphone mr-1"></i>Voice Note</button>
-                        <button onclick="postMessage()" class="bg-[#1877f2] text-white px-5 py-1 rounded font-bold text-sm">I-send</button>
-                    </div>
+                    <button onclick="postMessage()" style="width: 100%; background-color: #1877f2; color: white; border: none; padding: 10px; border-radius: 6px; font-weight: bold; font-size: 14px; cursor: pointer;">I-send ang Mensahe</button>
                 </div>
-                <div id="message-list" class="space-y-4"></div>
+                <div id="message-list" style="display: flex; flex-direction: column; gap: 12px;"></div>
             </div>
 
             <!-- PARENTS TAB -->
-            <div id="content-parents" class="tab-content hidden">
-                <div class="flex justify-between items-center mb-4">
-                    <h2 class="text-xl font-bold">Parents Albums</h2>
-                    <button onclick="createAlbum('parents')" class="bg-green-500 text-white px-3 py-1 rounded font-bold text-xs">+ Create Album</button>
+            <div id="content-parents" class="tab-content" style="display: none;">
+                <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 16px;">
+                    <h2 style="margin: 0; font-size: 18px; font-weight: bold;">Parents Albums</h2>
+                    <button onclick="createAlbum('parents')" style="background-color: #42b72a; color: white; border: none; padding: 6px 12px; border-radius: 6px; font-weight: bold; font-size: 12px; cursor: pointer;">+ Create Album</button>
                 </div>
-                <div id="parents-albums" class="grid grid-cols-2 gap-4"></div>
+                <div id="parents-albums" style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px;"></div>
             </div>
 
             <!-- KUYA'S TAB -->
-            <div id="content-kuya" class="tab-content hidden">
-                <div class="flex justify-between items-center mb-4">
-                    <h2 class="text-xl font-bold">Kuya's Albums</h2>
-                    <button onclick="createAlbum('kuya')" class="bg-green-500 text-white px-3 py-1 rounded font-bold text-xs">+ Create Album</button>
-                </div>
-                <div id="kuya-albums" class="grid grid-cols-2 gap-4"></div>
-            </div>
-
-            <!-- REELS TAB -->
-            <div id="content-reels" class="tab-content hidden space-y-4">
-                <div class="bg-white p-4 rounded-lg shadow border text-center transition-colors duration-200 container-card">
-                    <p class="font-bold mb-2">Manood o Mag-upload ng Family Reels 🎬</p>
-                    <label class="bg-red-500 text-white px-4 py-2 rounded font-bold text-sm cursor-pointer inline-block">
-                        + Mag-upload ng Short Video
-                        <input type="file" accept="video/*" class="hidden" onchange="uploadReel(event)">
-                    </label>
-                </div>
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>FamilyLOVE</title>
-    <script src="https://tailwindcss.com"></script>
-    <link rel="stylesheet" href="https://cloudflare.com">
-    <style>
-        .dark-mode { background-color: #18191a; color: #e4e6eb; }
-        .dark-card { background-color: #242526; border-color: #3a3b3c; }
-        .tab-active { border-bottom: 3px solid #1877f2; color: #1877f2; }
-    </style>
-</head>
-<body class="bg-[#f0f2f5] font-sans transition-colors duration-200">
-
-    <!-- LOGIN SCREEN -->
-    <div id="login-page" class="fixed inset-0 bg-[#1877f2] flex flex-col items-center justify-center p-4 z-50">
-        <h1 class="text-white text-5xl font-bold mb-6 tracking-wide">FamilyLOVE</h1>
-        <div class="bg-white p-6 rounded-lg shadow-xl w-full max-w-sm">
-            <input type="text" id="username" placeholder="Username o Email" class="w-full p-3 mb-3 border border-gray-300 rounded text-black focus:outline-blue-500">
-            <div class="relative mb-4">
-                <input type="password" id="password" placeholder="Password" class="w-full p-3 border border-gray-300 rounded text-black focus:outline-blue-500">
-                <button onclick="togglePassword()" class="absolute right-3 top-3.5 text-gray-500">
-                    <i id="eye-icon" class="fa-solid fa-eye"></i>
-                </button>
-            </div>
-            <button onclick="checkLogin()" class="w-full bg-[#1877f2] text-white p-3 rounded font-bold text-lg hover:bg-blue-600">Log In</button>
-        </div>
-    </div>
-
-    <!-- MAIN APP SCREEN (HIDDEN BY DEFAULT) -->
-    <div id="app-page" class="hidden min-h-screen pb-12">
-        <!-- TOP NAVIGATION BAR (FB LITE STYLE) -->
-        <div id="navbar" class="bg-white border-b border-gray-200 sticky top-0 z-40 shadow-sm transition-colors duration-200">
-            <div class="flex items-center justify-between px-4 py-2">
-                <span class="text-[#1877f2] text-2xl font-black tracking-wider">JHANEEZ</span>
-                <div class="flex items-center gap-4">
-                    <button onclick="toggleDarkMode()" class="text-xl p-2"><i id="dark-icon" class="fa-solid fa-moon"></i></button>
-                    <button onclick="showTab('admin')" class="text-gray-600 text-lg"><i class="fa-solid fa-user-gear"></i></button>
-                    <button onclick="logout()" class="text-red-500 font-bold text-sm">Logout</button>
-                </div>
-            </div>
-            <!-- TABS -->
-            <div class="flex text-center font-bold text-gray-500 border-t border-gray-100 text-xs sm:text-sm">
-                <button id="tab-jhaneez" onclick="showTab('jhaneez')" class="flex-1 py-3 tab-active">JHANEEZ</button>
-                <button id="tab-message" onclick="showTab('message')" class="flex-1 py-3">MESSAGE</button>
-                <button id="tab-parents" onclick="showTab('parents')" class="flex-1 py-3">PARENTS</button>
-                <button id="tab-kuya" onclick="showTab('kuya')" class="flex-1 py-3">KUYA'S</button>
-                <button id="tab-reels" onclick="showTab('reels')" class="flex-1 py-3 text-red-500"><i class="fa-solid fa-video mr-1"></i>REELS</button>
-            </div>
-        </div>
-
-        <!-- MAIN CONTENT CONTAINER -->
-        <div class="max-w-xl mx-auto p-4">
-            
-            <!-- JHANEEZ TAB -->
-            <div id="content-jhaneez" class="tab-content">
-                <!-- MULTIPLE UPLOAD BOX -->
-                <div class="bg-white p-4 rounded-lg shadow border border-gray-200 mb-4 transition-colors duration-200 container-card">
-                    <div class="flex gap-2 mb-3">
-                        <div class="w-10 h-10 bg-blue-500 rounded-full flex items-center justify-center text-white font-bold">P</div>
-                        <input type="text" id="feed-caption" placeholder="Ano ang alaala ni Jhaneez ngayon?" class="flex-1 bg-gray-100 rounded-full px-4 text-sm focus:outline-none text-black">
-                    </div>
-                    <div class="flex items-center justify-between border-t pt-3 text-gray-500 text-sm">
-                        <label class="cursor-pointer hover:text-blue-500 font-semibold flex items-center gap-1">
-                            <i class="fa-solid fa-images text-green-500 text-lg"></i> Photo/Video
-                            <input type="file" id="feed-files" multiple accept="image/*,video/*" class="hidden" onchange="previewFiles('feed-preview')">
-                        </label>
-                        <select id="milestone-tag" class="bg-gray-100 p-1 rounded text-black text-xs font-semibold">
-                            <option value="Standard">Standard Post</option>
-                            <option value="First Steps">First Steps 👣</option>
-                            <option value="First Word">First Word 🗣️</option>
-                            <option value="Birthday">Birthday 🎂</option>
-                            <option value="Christmas">Christmas 🎄</option>
-                        </select>
-                        <button onclick="postToFeed()" class="bg-[#1877f2] text-white px-4 py-1 rounded font-bold">Post</button>
-                    </div>
-                    <div id="feed-preview" class="grid grid-cols-3 gap-2 mt-3"></div>
-                </div>
-                <!-- FILTER BAR -->
-                <div class="flex gap-2 mb-4 text-xs font-bold">
-                    <select id="filter-year" onchange="filterTimeline()" class="bg-white p-2 rounded shadow border flex-1 text-black"><option value="All">All Years</option><option value="2026">2026</option></select>
-                    <select id="filter-milestone" onchange="filterTimeline()" class="bg-white p-2 rounded shadow border flex-1 text-black"><option value="All">All Milestones</option><option value="Standard">Standard</option><option value="First Steps">First Steps</option><option value="First Word">First Word</option><option value="Birthday">Birthday</option><option value="Christmas">Christmas</option></select>
-                </div>
-                <!-- TIMELINE FEED -->
-                <div id="jhaneez-feed" class="space-y-4"></div>
-            </div>
-
-            <!-- MESSAGE TAB -->
-            <div id="content-message" class="tab-content hidden">
-                <div class="bg-white p-4 rounded-lg shadow border border-gray-200 mb-4 transition-colors duration-200 container-card">
-                    <span class="font-bold text-gray-700 block mb-2 container-text">Sino ang sumusulat?</span>
-                    <select id="msg-sender" class="w-full p-2 mb-3 bg-gray-100 rounded text-black font-semibold">
-                        <option value="Papa">Papa 👨</option>
-                        <option value="Mama">Mama 👩</option>
-                        <option value="Kuya">Kuya 👦</option>
-                    </select>
-                    <textarea id="msg-text" placeholder="Isulat ang mensahe para sa kinabukasan ni Jhaneez..." class="w-full p-3 bg-gray-100 rounded text-black focus:outline-none text-sm mb-3" rows="3"></textarea>
-                    
-                    <!-- TIME CAPSULE LOCK -->
-                    <div class="flex items-center justify-between mb-3 border-t pt-2 text-xs font-semibold text-gray-500">
-                        <label class="flex items-center gap-1">
-                            <input type="checkbox" id="capsule-lock" onchange="toggleCapsuleDate()"> 🔒 Time Capsule Lock
-                        </label>
-                        <input type="date" id="unlock-date" class="hidden bg-gray-100 p-1 rounded text-black">
-                    </div>
-
-                    <div class="flex justify-between items-center border-t pt-3">
-                        <button onclick="startVoiceRecord()" class="text-red-500 font-bold text-sm"><i class="fa-solid fa-microphone mr-1"></i>Voice Note</button>
-                        <button onclick="postMessage()" class="bg-[#1877f2] text-white px-5 py-1 rounded font-bold text-sm">I-send</button>
-                    </div>
-                </div>
-                <div id="message-list" class="space-y-4"></div>
-            </div>
-
-            <!-- PARENTS TAB -->
-            <div id="content-parents" class="tab-content hidden">
-                <div class="flex justify-between items-center mb-4">
-                    <h2 class="text-xl font-bold">Parents Albums</h2>
-                    <button onclick="createAlbum('parents')" class="bg-green-500 text-white px-3 py-1 rounded font-bold text-xs">+ Create Album</button>
-                </div>
-                <div id="parents-albums" class="grid grid-cols-2 gap-4"></div>
-            </div>
-
-            <!-- KUYA'S TAB -->
-            <div id="content-kuya" class="tab-content hidden">
-                <div class="flex justify-between items-center mb-4">
-                    <h2 class="text-xl font-bold">Kuya's Albums</h2>
-                    <button onclick="createAlbum('kuya')" class="bg-green-500 text-white px-3 py-1 rounded font-bold text-xs">+ Create Album</button>
-                </div>
-                <div id="kuya-albums" class="grid grid-cols-2 gap-4"></div>
-            </div>
-
-            <!-- REELS TAB -->
-            <div id="content-reels" class="tab-content hidden space-y-4">
-                <div class="bg-white p-4 rounded-lg shadow border text-center transition-colors duration-200 container-card">
-                    <p class="font-bold mb-2">Manood o Mag-upload ng Family Reels 🎬</p>
-                    <label class="bg-red-500 text-white px-4 py-2 rounded font-bold text-sm cursor-pointer inline-block">
-                        + Mag-upload ng Short Video
-                        <input type="file" accept="video/*" class="hidden" onchange="uploadReel(event)">
-                    </label>
-                </div>
-                
+            <div id="content-kuya" class="tab-content" style="display: none;">
+                <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 16px;">
