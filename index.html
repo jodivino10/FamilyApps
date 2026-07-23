@@ -3,39 +3,122 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>FamilyLOVE - Kuya's Tab</title>
+    <title>FamilyLOVE</title>
 </head>
-<body style="margin:0; padding:0; font-family:sans-serif; background-color:#f0f2f5;">
+<body style="margin:0; padding:0; font-family:sans-serif; background-color:#f0f2f5; color:#1c1e21;">
 
-    <!-- TOP BAR -->
-    <div style="background-color:#ffffff; border-bottom:1px solid #e5e5e5; padding:15px; text-align:center;">
-        <h1 style="color:#1877f2; margin:0; font-size:24px;">FamilyLOVE</h1>
-        <p style="margin:5px 0 0 0; font-size:14px; font-weight:bold; color:#606770;">👦 KUYA'S TAB</p>
-    </div>
-
-    <!-- MAIN BOX -->
-    <div style="max-width:500px; margin:0 auto; padding:16px; box-sizing:border-box;">
-        
-        <!-- KUYA'S ALBUM CONTAINER -->
-        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:16px;">
-            <h3 style="margin:0;">Kuya's Albums</h3>
-            <button onclick="createKuyaAlbum()" style="background:#42b72a; color:white; border:none; padding:10px 16px; border-radius:6px; font-weight:bold; cursor:pointer; font-size:14px;">+ Create Album</button>
+    <!-- TOP NAVIGATION BAR -->
+    <div style="background-color:#ffffff; border-bottom:1px solid #e5e5e5; position:sticky; top:0; z-index:9999; box-shadow:0 2px 4px rgba(0,0,0,0.05);">
+        <div style="display:flex; align-items:center; justify-content:space-between; padding:12px 16px;">
+            <span style="color:#1877f2; font-size:22px; font-weight:900; letter-spacing:0.5px;">FamilyLOVE</span>
+            <!-- SETTINGS AT LOGOUT ICONS MAGKATABI SA TAAS -->
+            <div style="display:flex; gap:12px; align-items:center;">
+                <button onclick="switchSection('settings')" style="background:none; border:none; font-size:18px; cursor:pointer; padding:4px;">⚙️</button>
+                <button onclick="alert('Logged out!')" style="background:none; border:none; font-size:18px; cursor:pointer; padding:4px;">🚪</button>
+            </div>
         </div>
         
-        <!-- MGA FOLDER NA LALABAS -->
-        <div id="kuya-list" style="display:grid; grid-template-columns:repeat(2, 1fr); gap:12px;"></div>
+        <!-- TABS BAR (WORDS FOR HOME & LAGA, ICONS FOR MIDDLE TABS) -->
+        <div style="display:flex; text-align:center; font-size:14px; font-weight:bold; border-top:1px solid #f0f2f5; background-color:#ffffff;">
+            <button id="b-home" onclick="switchSection('home')" style="flex:1; padding:14px 0; background:#e7f3ff; border:none; color:#1877f2; font-weight:bold; cursor:pointer;">Home</button>
+            <button id="b-msg" onclick="switchSection('msg')" style="flex:1; padding:14px 0; background:none; border:none; color:#606770; font-size:18px; cursor:pointer;">💬</button>
+            <button id="b-pts" onclick="switchSection('pts')" style="flex:1; padding:14px 0; background:none; border:none; color:#606770; font-size:18px; cursor:pointer;">👨‍👩‍👦</button>
+            <button id="b-kya" onclick="switchSection('kya')" style="flex:1; padding:14px 0; background:none; border:none; color:#606770; font-size:18px; cursor:pointer;">👦</button>
+            <button id="b-laga" onclick="switchSection('laga')" style="flex:1; padding:14px 0; background:none; border:none; color:#606770; font-weight:bold; cursor:pointer;">Laga</button>
+        </div>
+    </div>
+
+    <!-- MAIN CONTAINER -->
+    <div style="max-width:500px; margin:0 auto; padding:16px; box-sizing:border-box;">
+        
+        <!-- HOME SECTION -->
+        <div id="sec-home" style="display:block;">
+            <div style="background:#ffffff; padding:16px; border-radius:8px; border:1px solid #e5e5e5; text-align:center;">
+                <p style="margin:0; font-weight:bold; color:#606770;">🏠 Maligayang Pagdating sa FamilyLOVE</p>
+            </div>
+        </div>
+
+        <!-- MESSAGE SECTION -->
+        <div id="sec-msg" style="display:none;">
+            <div style="background:#ffffff; padding:16px; border-radius:8px; border:1px solid #e5e5e5; margin-bottom:16px;">
+                <p style="margin:0 0 10px 0; font-weight:bold; color:#606770;">💬 Message Board</p>
+                <textarea placeholder="Isulat ang mensahe dito..." style="width:100%; padding:10px; background:#f0f2f5; border:none; border-radius:6px; box-sizing:border-box; outline:none; margin-bottom:10px;" rows="2"></textarea>
+                <button style="width:100%; background:#1877f2; color:white; border:none; padding:10px; border-radius:6px; font-weight:bold; cursor:pointer;">I-send</button>
+            </div>
+        </div>
+
+        <!-- PARENTS SECTION -->
+        <div id="sec-pts" style="display:none;">
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:16px;">
+                <h3 style="margin:0;">👨‍👩‍👦 Parents Albums</h3>
+                <button onclick="createFolder('pts-list')" style="background:#42b72a; color:white; border:none; padding:8px 14px; border-radius:6px; font-weight:bold; cursor:pointer; font-size:12px;">+ Create Album</button>
+            </div>
+            <div id="pts-list" style="display:grid; grid-template-columns:repeat(2, 1fr); gap:12px;"></div>
+        </div>
+
+        <!-- KUYA'S SECTION -->
+        <div id="sec-kya" style="display:none;">
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:16px;">
+                <h3 style="margin:0;">👦 Kuya's Albums</h3>
+                <button onclick="createFolder('kya-list')" style="background:#42b72a; color:white; border:none; padding:8px 14px; border-radius:6px; font-weight:bold; cursor:pointer; font-size:12px;">+ Create Album</button>
+            </div>
+            <div id="kya-list" style="display:grid; grid-template-columns:repeat(2, 1fr); gap:12px;"></div>
+        </div>
+
+        <!-- LAGA (JHANEEZ TIMELINE) SECTION -->
+        <div id="sec-laga" style="display:none;">
+            <div style="background:#ffffff; padding:16px; border-radius:8px; border:1px solid #e5e5e5; margin-bottom:16px; text-align:center;">
+                <p style="margin:0; font-weight:bold; color:#1877f2;">⭐ Ang Timeline ng Aking Laga (Jhaneez) ⭐</p>
+            </div>
+        </div>
+
+        <!-- SETTINGS SECTION -->
+        <div id="sec-settings" style="display:none;">
+            <div style="background:#ffffff; padding:16px; border-radius:8px; border:1px solid #e5e5e5;">
+                <h3 style="margin:0 0 10px 0;">⚙️ App Settings</h3>
+                <p style="margin:0; color:#606770; font-size:14px;">Dito mo maaayos ang mga advanced settings ng app sa hinaharap.</p>
+            </div>
+        </div>
 
     </div>
 
+    <!-- MAIN LIGHTWEIGHT NAVIGATION LOGIC -->
     <script>
-        function createKuyaAlbum() {
-            const name = prompt('Ilagay ang pangalan ng Album para kay Kuya:');
+        function switchSection(sectionId) {
+            const list = ['home', 'msg', 'pts', 'kya', 'laga', 'settings'];
+            
+            list.forEach(s => {
+                const block = document.getElementById('sec-' + s);
+                if (block) block.style.display = 'none';
+                
+                const btn = document.getElementById('b-' + s);
+                if (btn) {
+                    btn.style.background = 'none';
+                    btn.style.color = '#606770';
+                    btn.style.borderBottom = '3px solid transparent';
+                }
+            });
+            
+            const activeBlock = document.getElementById('sec-' + sectionId);
+            if (activeBlock) activeBlock.style.display = 'block';
+            
+            const activeBtn = document.getElementById('b-' + sectionId);
+            if (activeBtn) {
+                activeBtn.style.background = '#e7f3ff';
+                activeBtn.style.color = '#1877f2';
+                if (sectionId === 'home' || sectionId === 'laga') {
+                    activeBtn.style.borderBottom = '3px solid #1877f2';
+                }
+            }
+        }
+
+        function createFolder(containerId) {
+            const name = prompt('Ilagay ang pangalan ng Folder/Album:');
             if(name) {
-                const list = document.getElementById('kuya-list');
-                list.innerHTML += `
-                    <div style="background:#ffffff; padding:20px; border-radius:8px; border:2px solid #f1c40f; text-align:center; font-weight:bold; box-shadow:0 1px 2px rgba(0,0,0,0.05);">
+                document.getElementById(containerId).innerHTML += `
+                    <div style="background:#ffffff; padding:20px; border-radius:8px; border:2px solid #f1c40f; text-align:center; font-weight:bold; box-shadow:0 1px 2px rgba(0,0,0,0.05); cursor:pointer;">
                         <span style="font-size:32px;">📁</span><br>
-                        <span style="font-size:14px; color:#1c1e21;">${name}</span>
+                        <span style="font-size:13px; color:#1c1e21;">${name}</span>
                     </div>`;
             }
         }
