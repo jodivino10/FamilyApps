@@ -3,171 +3,42 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>FamilyLOVE</title>
+    <title>FamilyLOVE - Kuya's Tab</title>
 </head>
 <body style="margin:0; padding:0; font-family:sans-serif; background-color:#f0f2f5;">
 
-    <!-- NAVBAR & TABS -->
-    <div style="background-color:#ffffff; border-bottom:1px solid #e5e5e5; position:sticky; top:0; z-index:9999; text-align:center;">
-        <h1 style="color:#1877f2; margin:10px 0 5px 0; font-size:24px;">JHANEEZ</h1>
-        <div style="display:flex; font-size:12px; font-weight:bold; border-top:1px solid #f0f2f5;">
-            <button id="b-jh" onclick="changeTab('jh')" style="flex:1; padding:15px 0; background:#e7f3ff; border:none; color:#1877f2; font-weight:bold; cursor:pointer;">JHANEEZ</button>
-            <button id="b-msg" onclick="changeTab('msg')" style="flex:1; padding:15px 0; background:none; border:none; color:#606770; font-weight:bold; cursor:pointer;">MESSAGE</button>
-            <button id="b-alb" onclick="changeTab('alb')" style="flex:1; padding:15px 0; background:none; border:none; color:#606770; font-weight:bold; cursor:pointer;">ALBUMS</button>
-        </div>
+    <!-- TOP BAR -->
+    <div style="background-color:#ffffff; border-bottom:1px solid #e5e5e5; padding:15px; text-align:center;">
+        <h1 style="color:#1877f2; margin:0; font-size:24px;">FamilyLOVE</h1>
+        <p style="margin:5px 0 0 0; font-size:14px; font-weight:bold; color:#606770;">👦 KUYA'S TAB</p>
     </div>
 
-    <!-- MAIN CONTAINER -->
+    <!-- MAIN BOX -->
     <div style="max-width:500px; margin:0 auto; padding:16px; box-sizing:border-box;">
         
-        <!-- JHANEEZ TIMELINE TAB -->
-        <div id="c-jh" style="display:block;">
-            <div style="background:#ffffff; padding:16px; border-radius:8px; border:1px solid #e5e5e5; margin-bottom:16px;">
-                <input type="text" id="post-text" placeholder="Ano ang alaala ni Jhaneez ngayon?" style="width:100%; padding:12px; background:#f0f2f5; border:none; border-radius:20px; box-sizing:border-box; outline:none; margin-bottom:10px; color:#000000;">
-                
-                <!-- MULTIPLE PHOTO SELECTION BOX -->
-                <div style="margin-bottom:12px;">
-                    <label style="cursor:pointer; color:#45bd62; font-weight:bold; font-size:14px; display:inline-block; padding:6px 0;">
-                        🖼️ Larawan/Video (Pumili ng Marami)
-                        <input type="file" id="post-files" multiple accept="image/*,video/*" style="display:none;" onchange="previewImages()">
-                    </label>
-                    <div id="img-preview" style="display:grid; grid-template-columns:repeat(3, 1fr); gap:8px; margin-top:8px;"></div>
-                </div>
-
-                <button onclick="postMemory()" style="width:100%; background:#1877f2; color:white; border:none; padding:12px; border-radius:6px; font-weight:bold; cursor:pointer; font-size:14px;">I-post ang Alaala</button>
-            </div>
-            <!-- FIXED FEED POSITION (PARA LAGING NASA IBABA NG INPUT BOX ANG POSTS) -->
-            <div id="feed" style="display:flex; flex-direction:column; gap:12px;"></div>
+        <!-- KUYA'S ALBUM CONTAINER -->
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:16px;">
+            <h3 style="margin:0;">Kuya's Albums</h3>
+            <button onclick="createKuyaAlbum()" style="background:#42b72a; color:white; border:none; padding:10px 16px; border-radius:6px; font-weight:bold; cursor:pointer; font-size:14px;">+ Create Album</button>
         </div>
-
-        <!-- MESSAGE TAB -->
-        <div id="c-msg" style="display:none;">
-            <div style="background:#ffffff; padding:16px; border-radius:8px; border:1px solid #e5e5e5; margin-bottom:16px;">
-                <label style="font-weight:bold; font-size:13px; color:#606770; display:block; margin-bottom:6px;">Sino ang sumusulat?</label>
-                <select id="sender" style="width:100%; padding:12px; background:#f0f2f5; border:none; border-radius:6px; font-weight:bold; margin-bottom:12px; color:#000000;"><option>Papa 👨</option><option>Mama 👩</option><option>Kuya 👦</option></select>
-                <textarea id="msg-text" placeholder="Isulat ang mensahe para sa kinabukasan ni Jhaneez..." style="width:100%; padding:12px; background:#f0f2f5; border:none; border-radius:6px; box-sizing:border-box; outline:none; margin-bottom:12px; color:#000000;" rows="3"></textarea>
-                <button onclick="sendMessage()" style="width:100%; background:#1877f2; color:white; border:none; padding:12px; border-radius:6px; font-weight:bold; cursor:pointer; font-size:14px;">I-send ang Mensahe</button>
-            </div>
-            <div id="m-list" style="display:flex; flex-direction:column; gap:12px;"></div>
-        </div>
-
-        <!-- ALBUMS TAB -->
-        <div id="c-alb" style="display:none;">
-            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:16px;">
-                <h3 style="margin:0;">Family Folders</h3>
-                <button onclick="createFolder()" style="background:#42b72a; color:white; border:none; padding:10px 16px; border-radius:6px; font-weight:bold; cursor:pointer; font-size:13px;">+ Create Album</button>
-            </div>
-            <div id="a-list" style="display:grid; grid-template-columns:repeat(2, 1fr); gap:12px;"></div>
-        </div>
+        
+        <!-- MGA FOLDER NA LALABAS -->
+        <div id="kuya-list" style="display:grid; grid-template-columns:repeat(2, 1fr); gap:12px;"></div>
 
     </div>
 
-    <!-- JAVASCRIPT FIXED SYSTEM -->
     <script>
-        let postsData = [];
-        let messagesData = [];
-
-        function changeTab(tab) {
-            document.getElementById('c-jh').style.display = 'none';
-            document.getElementById('c-msg').style.display = 'none';
-            document.getElementById('c-alb').style.display = 'none';
-            
-            document.getElementById('c-' + tab).style.display = 'block';
-            
-            document.getElementById('b-jh').style.background = 'none'; document.getElementById('b-jh').style.color = '#606770';
-            document.getElementById('b-msg').style.background = 'none'; document.getElementById('b-msg').style.color = '#606770';
-            document.getElementById('b-alb').style.background = 'none'; document.getElementById('b-alb').style.color = '#606770';
-            
-            document.getElementById('b-' + tab).style.background = '#e7f3ff';
-            document.getElementById('b-' + tab).style.color = '#1877f2';
-        }
-
-        function previewImages() {
-            const files = document.getElementById('post-files').files;
-            const preview = document.getElementById('img-preview');
-            preview.innerHTML = '';
-            for(let f of files) {
-                preview.innerHTML += `<img src="${URL.createObjectURL(f)}" style="width:100%; height:75px; object-fit:cover; border-radius:6px; border:1px solid #ccd0d5;">`;
-            }
-        }
-
-        function postMemory() {
-            const txt = document.getElementById('post-text').value;
-            const fileInput = document.getElementById('post-files');
-            let imgsHtml = '';
-            
-            if(fileInput.files) {
-                for(let f of fileInput.files) {
-                    imgsHtml += `<img src="${URL.createObjectURL(f)}" style="width:100%; border-radius:6px; margin-top:10px; max-height:350px; object-fit:cover;">`;
-                }
-            }
-            
-            if(txt || fileInput.files.length > 0) {
-                const postId = Date.now();
-                postsData.unshift({ id: postId, text: txt, htmlMedia: imgsHtml, likes: 0 });
-                renderFeed();
-                
-                document.getElementById('post-text').value = '';
-                document.getElementById('post-files').value = '';
-                document.getElementById('img-preview').innerHTML = '';
-            }
-        }
-
-        function renderFeed() {
-            const feed = document.getElementById('feed');
-            feed.innerHTML = '';
-            postsData.forEach(p => {
-                feed.innerHTML += `
-                    <div style="background:#ffffff; padding:16px; border-radius:8px; border:1px solid #e5e5e5; box-shadow:0 1px 2px rgba(0,0,0,0.05);">
-                        <b style="color:#1877f2; font-size:14px;">JHANEEZ ⭐</b>
-                        <p style="margin:6px 0; font-size:14px; line-height:1.4; color:#000000;">${p.text}</p>
-                        ${p.htmlMedia}
-                        <div style="border-top:1px solid #f0f2f5; margin-top:10px; padding-top:8px; font-size:13px; color:#606770; font-weight:bold;">
-                            <button onclick="likePost(${p.id})" style="background:none; border:none; font-weight:bold; color:#1877f2; cursor:pointer; padding:5px 0;">👍 Like (${p.likes})</button>
-                        </div>
-                    </div>`;
-            });
-        }
-
-        function likePost(id) {
-            const post = postsData.find(p => p.id === id);
-            if(post) {
-                post.likes++;
-                renderFeed();
-            }
-        }
-
-        function sendMessage() {
-            const s = document.getElementById('sender').value;
-            const m = document.getElementById('msg-text').value;
-            if(m) {
-                const msgId = Date.now();
-                messagesData.unshift({ id: msgId, sender: s, text: m, likes: 0 });
-                renderMessages();
-                document.getElementById('msg-text').value = '';
-            }
-        }
-
-        function renderMessages() {
-            const list = document.getElementById('m-list');
-            list.innerHTML = '';
-            messagesData.forEach(msg => {
+        function createKuyaAlbum() {
+            const name = prompt('Ilagay ang pangalan ng Album para kay Kuya:');
+            if(name) {
+                const list = document.getElementById('kuya-list');
                 list.innerHTML += `
-                    <div style="background:#ffffff; padding:16px; border-radius:8px; border:1px solid #e5e5e5; box-shadow:0 1px 2px rgba(0,0,0,0.05);">
-                        <b style="color:#8a3ab9; font-size:14px;">${msg.sender} 📝</b>
-                        <p style="margin:6px 0; font-size:14px; line-height:1.4; color:#000000;">${msg.text}</p>
-                        <div style="border-top:1px solid #f0f2f5; margin-top:10px; padding-top:8px; font-size:12px; color:#606770; font-weight:bold;">
-                            <button onclick="likeMessage(${msg.id})" style="background:none; border:none; font-weight:bold; color:#1877f2; cursor:pointer;">👍 Like (${msg.likes})</button>
-                        </div>
+                    <div style="background:#ffffff; padding:20px; border-radius:8px; border:2px solid #f1c40f; text-align:center; font-weight:bold; box-shadow:0 1px 2px rgba(0,0,0,0.05);">
+                        <span style="font-size:32px;">📁</span><br>
+                        <span style="font-size:14px; color:#1c1e21;">${name}</span>
                     </div>`;
-            });
-        }
-
-        function likeMessage(id) {
-            const msg = messagesData.find(m => m.id === id);
-            if(msg) {
-                msg.likes++;
-                renderMessages();
             }
         }
-
+    </script>
+</body>
+</html>
