@@ -8,41 +8,45 @@
 <body style="margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; background-color: #f0f2f5; color: #1c1e21;">
 
     <!-- TOP NAVIGATION BAR -->
-    <div id="navbar" style="background-color: #ffffff; border-bottom: 1px solid #e5e5e5; position: sticky; top: 0; z-index: 1000; box-shadow: 0 2px 4px rgba(0,0,0,0.05);">
-        <div style="display: flex; align-items: center; justify-content: space-between; padding: 10px 16px;">
+    <div id="navbar" style="background-color: #ffffff; border-bottom: 1px solid #e5e5e5; position: sticky; top: 0; z-index: 9999; box-shadow: 0 2px 4px rgba(0,0,0,0.05);">
+        <div style="display: flex; align-items: center; justify-content: space-between; padding: 12px 16px;">
             <span style="color: #1877f2; font-size: 24px; font-weight: 900; letter-spacing: 1px;">JHANEEZ</span>
-            <div style="display: flex; align-items: center; gap: 12px;">
-                <button type="button" onclick="toggleDarkMode()" style="background: #f0f2f5; border: none; padding: 6px 10px; border-radius: 6px; font-size: 14px; cursor: pointer; font-weight: bold;">🌙 Mode</button>
-                <button type="button" onclick="showTab('admin')" style="background: #f0f2f5; border: none; padding: 6px 10px; border-radius: 6px; font-size: 14px; cursor: pointer; font-weight: bold;">⚙️ Admin</button>
-            </div>
+            <button type="button" onclick="toggleDarkMode()" style="background: #f0f2f5; border: none; padding: 8px 12px; border-radius: 6px; font-size: 14px; font-weight: bold; cursor: pointer;">🌙 Mode</button>
         </div>
-        <!-- TABS -->
+        
+        <!-- TABS NAVIGATION WITH FIXED INLINE CLICK LISTENERS -->
         <div style="display: flex; border-top: 1px solid #f0f2f5; text-align: center; font-size: 13px; font-weight: bold; background-color: #ffffff;">
-            <button type="button" id="tab-jhaneez" onclick="showTab('jhaneez')" style="flex: 1; padding: 12px 0; background: none; border: none; border-bottom: 3px solid #1877f2; color: #1877f2; font-weight: bold; cursor: pointer;">JHANEEZ</button>
-            <button type="button" id="tab-message" onclick="showTab('message')" style="flex: 1; padding: 12px 0; background: none; border: none; border-bottom: 3px solid transparent; color: #606770; font-weight: bold; cursor: pointer;">MESSAGE</button>
-            <button type="button" id="tab-parents" onclick="showTab('parents')" style="flex: 1; padding: 12px 0; background: none; border: none; border-bottom: 3px solid transparent; color: #606770; font-weight: bold; cursor: pointer;">PARENTS</button>
-            <button type="button" id="tab-kuya" onclick="showTab('kuya')" style="flex: 1; padding: 12px 0; background: none; border: none; border-bottom: 3px solid transparent; color: #606770; font-weight: bold; cursor: pointer;">KUYA'S</button>
-            <button type="button" id="tab-reels" onclick="showTab('reels')" style="flex: 1; padding: 12px 0; background: none; border: none; border-bottom: 3px solid transparent; color: #f02849; font-weight: bold; cursor: pointer;">🎬 REELS</button>
+            <button type="button" id="tab-jhaneez" onclick="showTab('jhaneez')" style="flex: 1; padding: 16px 0; background-color: #e7f3ff; border: none; border-bottom: 3px solid #1877f2; color: #1877f2; font-weight: bold; cursor: pointer; font-size: 14px;">JHANEEZ</button>
+            <button type="button" id="tab-message" onclick="showTab('message')" style="flex: 1; padding: 16px 0; background: none; border: none; border-bottom: 3px solid transparent; color: #606770; font-weight: bold; cursor: pointer; font-size: 14px;">MESSAGE</button>
+            <button type="button" id="tab-parents" onclick="showTab('parents')" style="flex: 1; padding: 16px 0; background: none; border: none; border-bottom: 3px solid transparent; color: #606770; font-weight: bold; cursor: pointer; font-size: 14px;">PARENTS</button>
+            <button type="button" id="tab-kuya" onclick="showTab('kuya')" style="flex: 1; padding: 16px 0; background: none; border: none; border-bottom: 3px solid transparent; color: #606770; font-weight: bold; cursor: pointer; font-size: 14px;">KUYA'S</button>
+            <button type="button" id="tab-reels" onclick="showTab('reels')" style="flex: 1; padding: 16px 0; background: none; border: none; border-bottom: 3px solid transparent; color: #f02849; font-weight: bold; cursor: pointer; font-size: 14px;">🎬 REELS</button>
         </div>
     </div>
 
-    <!-- CONTENT CONTAINER -->
+    <!-- MAIN MOUNT CONTAINER -->
     <div style="max-width: 500px; margin: 0 auto; padding: 16px; box-sizing: border-box;">
         
-        <!-- JHANEEZ TAB -->
+        <!-- JHANEEZ TIMELINE TAB -->
         <div id="content-jhaneez" class="tab-content" style="display: block;">
             <div class="card-bg" style="background-color: #ffffff; padding: 16px; border-radius: 8px; border: 1px solid #e5e5e5; margin-bottom: 16px; box-shadow: 0 1px 2px rgba(0,0,0,0.05);">
                 <div style="display: flex; gap: 10px; margin-bottom: 12px;">
-                    <div style="height: 36px; width: 36px; background-color: #1877f2; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-weight: bold;">P</div>
+                    <div style="height: 40px; width: 40px; background-color: #1877f2; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-weight: bold;">P</div>
                     <input type="text" id="feed-caption" placeholder="Ano ang alaala ni Jhaneez ngayon?" style="flex: 1; background-color: #f0f2f5; border: none; border-radius: 20px; padding: 0 16px; font-size: 14px; outline: none; color: #000000;">
                 </div>
                 <div style="display: flex; align-items: center; justify-content: space-between; border-top: 1px solid #e5e5e5; padding-top: 12px;">
-                    <label style="cursor: pointer; color: #45bd62; font-weight: bold; font-size: 13px; display: flex; align-items: center; gap: 4px;">
-                        🖼️ Larawan/Video 
+                    <label style="cursor: pointer; color: #45bd62; font-weight: bold; font-size: 13px; display: flex; align-items: center; gap: 4px; padding: 6px;">
+                        🖼️ Larawan/Video
                         <input type="file" id="feed-files" multiple accept="image/*,video/*" style="display: none;" onchange="previewFiles('feed-preview')">
                     </label>
-                    <select id="milestone-tag" style="background-color: #f0f2f5; border: none; padding: 6px; border-radius: 6px; font-size: 12px; font-weight: bold; color: #000000;"><option value="Standard">Standard Post</option><option value="First Steps">First Steps 👣</option><option value="First Word">First Word 🗣️</option><option value="Birthday">Birthday 🎂</option><option value="Christmas">Christmas 🎄</option></select>
-                    <button type="button" onclick="postToFeed()" style="background-color: #1877f2; color: white; border: none; padding: 6px 16px; border-radius: 6px; font-weight: bold; font-size: 13px; cursor: pointer;">Post</button>
+                    <select id="milestone-tag" style="background-color: #f0f2f5; border: none; padding: 8px; border-radius: 6px; font-size: 12px; font-weight: bold; color: #000000;">
+                        <option value="Standard">Standard Post</option>
+                        <option value="First Steps">First Steps 👣</option>
+                        <option value="First Word">First Word 🗣️</option>
+                        <option value="Birthday">Birthday 🎂</option>
+                        <option value="Christmas">Christmas 🎄</option>
+                    </select>
+                    <button type="button" onclick="postToFeed()" style="background-color: #1877f2; color: white; border: none; padding: 8px 18px; border-radius: 6px; font-weight: bold; font-size: 13px; cursor: pointer;">Post</button>
                 </div>
                 <div id="feed-preview" style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-top: 12px;"></div>
             </div>
@@ -52,14 +56,14 @@
         <!-- MESSAGE TAB -->
         <div id="content-message" class="tab-content" style="display: none;">
             <div class="card-bg" style="background-color: #ffffff; padding: 16px; border-radius: 8px; border: 1px solid #e5e5e5; margin-bottom: 16px;">
-                <label style="font-weight: bold; font-size: 14px; color: #606770; display: block; margin-bottom: 6px;">Sino ang sumusulat?</label>
-                <select id="msg-sender" style="width: 100%; padding: 10px; background-color: #f0f2f5; border: none; border-radius: 6px; font-weight: bold; margin-bottom: 12px; color: #000000;"><option value="Papa 👨">Papa 👨</option><option value="Mama 👩">Mama 👩</option><option value="Kuya 👦">Kuya 👦</option></select>
+                <label style="font-weight: bold; font-size: 14px; color: #606770; display: block; margin-bottom: 8px;">Sino ang sumusulat?</label>
+                <select id="msg-sender" style="width: 100%; padding: 12px; background-color: #f0f2f5; border: none; border-radius: 6px; font-weight: bold; margin-bottom: 12px; color: #000000; font-size: 14px;">
+                    <option value="Papa 👨">Papa 👨</option>
+                    <option value="Mama 👩">Mama 👩</option>
+                    <option value="Kuya 👦">Kuya 👦</option>
+                </select>
                 <textarea id="msg-text" placeholder="Isulat ang mensahe para sa kinabukasan ni Jhaneez..." style="width: 100%; padding: 12px; background-color: #f0f2f5; border: none; border-radius: 6px; font-size: 14px; box-sizing: border-box; outline: none; margin-bottom: 12px; color: #000000;" rows="3"></textarea>
-                <div style="display: flex; align-items: center; justify-content: space-between; border-top: 1px solid #e5e5e5; padding-top: 12px; margin-bottom: 12px; font-size: 13px; color: #606770;">
-                    <label style="font-weight: bold;"><input type="checkbox" id="capsule-lock" onchange="toggleCapsuleDate()"> 🔒 Time Capsule Lock</label>
-                    <input type="date" id="unlock-date" style="display: none; background-color: #f0f2f5; border: none; padding: 4px; border-radius: 4px; color: #000000;">
-                </div>
-                <button type="button" onclick="postMessage()" style="width: 100%; background-color: #1877f2; color: white; border: none; padding: 10px; border-radius: 6px; font-weight: bold; font-size: 14px; cursor: pointer;">I-send ang Mensahe</button>
+                <button type="button" onclick="postMessage()" style="width: 100%; background-color: #1877f2; color: white; border: none; padding: 12px; border-radius: 6px; font-weight: bold; font-size: 14px; cursor: pointer;">I-send ang Mensahe</button>
             </div>
             <div id="message-list" style="display: flex; flex-direction: column; gap: 12px;"></div>
         </div>
@@ -68,7 +72,7 @@
         <div id="content-parents" class="tab-content" style="display: none;">
             <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 16px;">
                 <h2 style="margin: 0; font-size: 18px; font-weight: bold;">Parents Albums</h2>
-                <button type="button" onclick="createAlbum('parents')" style="background-color: #42b72a; color: white; border: none; padding: 6px 12px; border-radius: 6px; font-weight: bold; font-size: 12px; cursor: pointer;">+ Create Album</button>
+                <button type="button" onclick="createAlbum('parents')" style="background-color: #42b72a; color: white; border: none; padding: 8px 16px; border-radius: 6px; font-weight: bold; font-size: 13px; cursor: pointer;">+ Create Album</button>
             </div>
             <div id="parents-albums" style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px;"></div>
         </div>
@@ -77,7 +81,7 @@
         <div id="content-kuya" class="tab-content" style="display: none;">
             <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 16px;">
                 <h2 style="margin: 0; font-size: 18px; font-weight: bold;">Kuya's Albums</h2>
-                <button type="button" onclick="createAlbum('kuya')" style="background-color: #42b72a; color: white; border: none; padding: 6px 12px; border-radius: 6px; font-weight: bold; font-size: 12px; cursor: pointer;">+ Create Album</button>
+                <button type="button" onclick="createAlbum('kuya')" style="background-color: #42b72a; color: white; border: none; padding: 8px 16px; border-radius: 6px; font-weight: bold; font-size: 13px; cursor: pointer;">+ Create Album</button>
             </div>
             <div id="kuya-albums" style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px;"></div>
         </div>
@@ -86,13 +90,32 @@
         <div id="content-reels" class="tab-content" style="display: none;">
             <div class="card-bg" style="background-color: #ffffff; padding: 20px; border-radius: 8px; border: 1px solid #e5e5e5; text-align: center; margin-bottom: 16px;">
                 <p style="font-weight: bold; margin: 0 0 12px 0;">Manood o Mag-upload ng Family Reels 🎬</p>
-                <label style="background-color: #f02849; color: white; padding: 10px 16px; border-radius: 6px; font-weight: bold; font-size: 13px; cursor: pointer; display: inline-block;">+ Mag-upload Short Video <input type="file" accept="video/*" style="display: none;" onchange="uploadReel(event)"></label>
+                <label style="background-color: #f02849; color: white; padding: 12px 20px; border-radius: 6px; font-weight: bold; font-size: 13px; cursor: pointer; display: inline-block;">
+                    + Mag-upload Short Video 
+                    <input type="file" accept="video/*" style="display: none;" onchange="uploadReel(event)">
+                </label>
             </div>
             <div id="reels-feed" style="display: flex; flex-direction: column; gap: 20px;"></div>
         </div>
 
-        <!-- ADMIN TAB -->
-        <div id="content-admin" class="tab-content" style="display: none;">
-            <div class="card-bg" style="background-color: #ffffff; padding: 20px; border-radius: 8px; border: 1px solid #e5e5e5;">
-                <h2 style="margin: 0 0 16px 0; font-size: 18px; font-weight: bold;">Admin Information</h2>
-                <p style="font-size: 14px; color: #606770;">Ligtas ang iyong FamilyLOVE application na nakatira sa Vercel server.</p>
+    </div>
+
+    <!-- CLEAN NAVIGATION CONTROLLER -->
+    <script>
+        // Force unregister any old broken network cache instantly
+        if ('serviceWorker' in navigator) {
+            navigator.serviceWorker.getRegistrations().then(function(registrations) {
+                for(let registration of registrations) { registration.unregister(); }
+            });
+        }
+
+        let posts = []; let messages = []; let albums = { parents: [], kuya: [] }; let reels = []; let isDark = false;
+        
+        function showTab(tabName) { 
+            // Hide all tab screens
+            const targets = ['jhaneez', 'message', 'parents', 'kuya', 'reels'];
+            for (let i = 0; i < targets.length; i++) {
+                const el = document.getElementById('content-' + targets[i]);
+                if (el) el.style.display = 'none';
+            }
+            
