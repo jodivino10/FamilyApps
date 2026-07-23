@@ -7,18 +7,17 @@
 </head>
 <body style="margin:0; padding:0; font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; background-color:#f0f2f5; color:#1c1e21; font-weight:bold;">
 
-    <!-- TOP NAVIGATION BAR (FACEBOOK STYLE) -->
+    <!-- TOP NAVIGATION BAR -->
     <div style="background-color:#ffffff; border-bottom:1px solid #ccd0d5; position:sticky; top:0; z-index:9999; box-shadow:0 2px 4px rgba(0,0,0,0.08); font-weight:bold;">
         <div style="display:flex; align-items:center; justify-content:space-between; padding:12px 16px;">
             <span style="color:#1877f2; font-size:24px; font-weight:900; letter-spacing:0.5px;">FamilyLOVE</span>
-            <!-- SETTINGS AT LOGOUT SA ITAAS -->
             <div style="display:flex; gap:16px; align-items:center;">
                 <button onclick="switchSection('settings')" style="background:none; border:none; font-size:20px; cursor:pointer; padding:4px;">⚙️</button>
                 <button onclick="alert('Logged out!')" style="background:none; border:none; font-size:20px; cursor:pointer; padding:4px;">🚪</button>
             </div>
         </div>
         
-        <!-- TABS BAR (BOLD & FACEBOOK BLUE HIGHLIGHT) -->
+        <!-- TABS BAR -->
         <div style="display:flex; text-align:center; font-size:15px; border-top:1px solid #f0f2f5; background-color:#ffffff;">
             <button id="b-home" onclick="switchSection('home')" style="flex:1; padding:14px 0; background:#e7f3ff; border:none; color:#1877f2; font-weight:black; cursor:pointer; border-bottom:3px solid #1877f2;">Home</button>
             <button id="b-msg" onclick="switchSection('msg')" style="flex:1; padding:14px 0; background:none; border:none; color:#606770; font-size:20px; cursor:pointer; border-bottom:3px solid transparent;">💬</button>
@@ -40,41 +39,59 @@
 
         <!-- MESSAGE SECTION -->
         <div id="sec-msg" style="display:none;">
-            <div style="background:#ffffff; padding:16px; border-radius:8px; border:1px solid #ccd0d5; margin-bottom:16px; box-shadow:0 1px 2px rgba(0,0,0,0.05);">
+            <div style="background:#ffffff; padding:16px; border-radius:8px; border:1px solid #ccd0d5; margin-bottom:16px;">
                 <p style="margin:0 0 12px 0; font-size:16px; color:#1c1e21; font-weight:black;">💬 Message Board</p>
-                <textarea placeholder="Isulat ang mensahe dito..." style="width:100%; padding:12px; background:#f0f2f5; border:1px solid #ccd0d5; border-radius:8px; box-sizing:border-box; outline:none; margin-bottom:12px; font-weight:bold; font-size:14px; color:#000000;" rows="3"></textarea>
-                <button style="width:100%; background:#1877f2; color:white; border:none; padding:12px; border-radius:6px; font-weight:black; font-size:15px; cursor:pointer; box-shadow:0 1px 2px rgba(0,0,0,0.1);">I-send</button>
+                <textarea id="msg-text" placeholder="Isulat ang mensahe dito..." style="width:100%; padding:12px; background:#f0f2f5; border:1px solid #ccd0d5; border-radius:8px; box-sizing:border-box; outline:none; margin-bottom:12px; font-weight:bold; font-size:14px; color:#000000;" rows="3"></textarea>
+                <button type="button" onclick="postMessage()" style="width:100%; background:#1877f2; color:white; border:none; padding:12px; border-radius:6px; font-weight:black; font-size:15px; cursor:pointer;">I-send</button>
             </div>
+            <div id="m-list" style="display:flex; flex-direction:column; gap:12px;"></div>
         </div>
 
         <!-- PARENTS SECTION -->
         <div id="sec-pts" style="display:none;">
-            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:16px; padding:0 4px;">
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:16px;">
                 <h3 style="margin:0; font-size:18px; font-weight:black; color:#1c1e21;">👨‍👩‍👦 Parents Albums</h3>
-                <button onclick="createFolder('pts-list')" style="background:#42b72a; color:white; border:none; padding:10px 16px; border-radius:6px; font-weight:black; cursor:pointer; font-size:13px; box-shadow:0 1px 2px rgba(0,0,0,0.1);">+ Create Album</button>
+                <button onclick="createFolder('pts-list')" style="background:#42b72a; color:white; border:none; padding:10px 16px; border-radius:6px; font-weight:black; cursor:pointer; font-size:13px;">+ Create Album</button>
             </div>
             <div id="pts-list" style="display:grid; grid-template-columns:repeat(2, 1fr); gap:12px;"></div>
         </div>
 
-        <!-- KUYA'S SECTION -->
+        <!-- KUYA'S TIMELINE SECTION (FACEBOOK FEEDS STYLE) -->
         <div id="sec-kya" style="display:none;">
-            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:16px; padding:0 4px;">
-                <h3 style="margin:0; font-size:18px; font-weight:black; color:#1c1e21;">👦 Kuya's Albums</h3>
-                <button onclick="createFolder('kya-list')" style="background:#42b72a; color:white; border:none; padding:10px 16px; border-radius:6px; font-weight:black; cursor:pointer; font-size:13px; box-shadow:0 1px 2px rgba(0,0,0,0.1);">+ Create Album</button>
+            <div style="background:#ffffff; padding:16px; border-radius:8px; border:1px solid #ccd0d5; margin-bottom:16px; box-shadow:0 1px 2px rgba(0,0,0,0.05);">
+                <div style="display:flex; gap:10px; margin-bottom:12px;">
+                    <input type="text" id="kya-caption" placeholder="Ano ang alaala ni Kuya ngayon?" style="flex:1; background-color:#f0f2f5; border:none; border-radius:20px; padding:12px 16px; font-size:14px; outline:none; color:#000000; font-weight:bold;">
+                </div>
+                <div style="display:flex; align-items:center; justify-content:space-between; border-top:1px solid #e5e5e5; padding-top:12px;">
+                    <label style="cursor:pointer; color:#45bd62; font-weight:bold; font-size:13px; display:flex; align-items:center; gap:4px;">
+                        🖼️ Larawan/Video
+                        <input type="file" id="kya-files" multiple accept="image/*,video/*" style="display:none;" onchange="previewKyaFiles()">
+                    </label>
+                    <select id="kya-tag" style="background-color:#f0f2f5; border:none; padding:8px; border-radius:6px; font-size:12px; font-weight:bold; color:#000000;">
+                        <option value="Standard Post">Standard Post</option>
+                        <option value="School 🎒">School 🎒</option>
+                        <option value="Laro 🏀">Laro 🏀</option>
+                        <option value="Birthday 🎂">Birthday 🎂</option>
+                        <option value="Gala 🚗">Gala 🚗</option>
+                    </select>
+                    <button type="button" onclick="postKuyaMemory()" style="background-color:#1877f2; color:white; border:none; padding:8px 18px; border-radius:6px; font-weight:bold; font-size:13px; cursor:pointer;">Post</button>
+                </div>
+                <div id="kya-preview" style="display:grid; grid-template-columns:repeat(3, 1fr); gap:8px; margin-top:12px;"></div>
             </div>
-            <div id="kya-list" style="display:grid; grid-template-columns:repeat(2, 1fr); gap:12px;"></div>
+            <!-- TIMELINE FEED NI KUYA -->
+            <div id="kya-feed" style="display:flex; flex-direction:column; gap:12px;"></div>
         </div>
 
         <!-- LAGA (JHANEEZ TIMELINE) SECTION -->
         <div id="sec-laga" style="display:none;">
-            <div style="background:#ffffff; padding:16px; border-radius:8px; border:1px solid #ccd0d5; margin-bottom:16px; text-align:center; box-shadow:0 1px 2px rgba(0,0,0,0.05);">
+            <div style="background:#ffffff; padding:16px; border-radius:8px; border:1px solid #ccd0d5; margin-bottom:16px; text-align:center;">
                 <p style="margin:0; font-size:16px; color:#1877f2; font-weight:black;">⭐ Ang Timeline ng Aking Laga (Jhaneez) ⭐</p>
             </div>
         </div>
 
         <!-- SETTINGS SECTION -->
         <div id="sec-settings" style="display:none;">
-            <div style="background:#ffffff; padding:16px; border-radius:8px; border:1px solid #ccd0d5; box-shadow:0 1px 2px rgba(0,0,0,0.05);">
+            <div style="background:#ffffff; padding:16px; border-radius:8px; border:1px solid #ccd0d5;">
                 <h3 style="margin:0 0 10px 0; font-size:18px; font-weight:black; color:#1c1e21;">⚙️ App Settings</h3>
                 <p style="margin:0; color:#606770; font-size:14px; font-weight:bold; line-height:1.4;">Dito mo maaayos ang mga advanced settings ng app sa hinaharap.</p>
             </div>
@@ -82,48 +99,48 @@
 
     </div>
 
-    <!-- NAVIGATION CODE LOGIC -->
+    <!-- MAIN CONTROL ARCHITECTURE -->
     <script>
+        let kuyaPosts = [];
+        let messagesData = [];
+
         function switchSection(sectionId) {
             const list = ['home', 'msg', 'pts', 'kya', 'laga', 'settings'];
-            
             list.forEach(s => {
                 const block = document.getElementById('sec-' + s);
                 if (block) block.style.display = 'none';
-                
                 const btn = document.getElementById('b-' + s);
                 if (btn) {
                     btn.style.background = 'none';
                     btn.style.color = '#606770';
                     btn.style.borderBottom = '3px solid transparent';
-                    btn.style.fontWeight = 'bold';
                 }
             });
-            
             const activeBlock = document.getElementById('sec-' + sectionId);
             if (activeBlock) activeBlock.style.display = 'block';
-            
             const activeBtn = document.getElementById('b-' + sectionId);
             if (activeBtn) {
                 if (sectionId !== 'settings') {
                     activeBtn.style.background = '#e7f3ff';
                     activeBtn.style.color = '#1877f2';
                     activeBtn.style.borderBottom = '3px solid #1877f2';
-                    activeBtn.style.fontWeight = 'black';
                 }
             }
         }
 
-        function createFolder(containerId) {
-            const name = prompt('Ilagay ang pangalan ng Folder/Album:');
-            if(name) {
-                document.getElementById(containerId).innerHTML += `
-                    <div style="background:#ffffff; padding:24px 16px; border-radius:8px; border:1px solid #ccd0d5; text-align:center; font-weight:black; font-size:15px; box-shadow:0 1px 3px rgba(0,0,0,0.1); cursor:pointer;">
-                        <span style="font-size:36px; display:block; margin-bottom:6px;">📁</span>
-                        <span style="color:#1c1e21;">${name}</span>
-                    </div>`;
+        // Preview bago i-post kay kuya
+        function previewKyaFiles() {
+            const files = document.getElementById('kya-files').files;
+            const preview = document.getElementById('kya-preview');
+            preview.innerHTML = '';
+            for(let file of files) {
+                const url = URL.createObjectURL(file);
+                if(file.type.startsWith('image/')) {
+                    preview.innerHTML += `<img src="${url}" style="width:100%; height:75px; object-fit:cover; border-radius:6px; border:1px solid #ccd0d5;">`;
+                } else {
+                    preview.innerHTML += `<div style="width:100%; height:75px; background:#000000; color:white; font-size:11px; display:flex; align-items:center; justify-content:center; border-radius:6px;">🎬 Video</div>`;
+                }
             }
         }
-    </script>
-</body>
-</html>
+
+        // Mag-po-post sa Timeline ni Kuya
