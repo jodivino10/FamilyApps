@@ -1,86 +1,382 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>FamilyLOVE</title>
-    <style>
-        /* CSS focus system: Lilipat ang tab kahit walang JavaScript */
-        .tab-content { display: none; }
-        #home:target ~ #sec-home, #msg:target ~ #sec-msg, #pts:target ~ #sec-pts, #kya:target ~ #sec-kya, #laga:target ~ #sec-laga { display: block; }
-        /* Kapag bagong bukas, ipakita ang Home */
-        .tab-content:not(:target) { display: none; }
-        #sec-home { display: block; }
-        #home:target ~ #sec-home { display: block; }
-        #msg:target ~ #sec-home, #pts:target ~ #sec-home, #kya:target ~ #sec-home, #laga:target ~ #sec-home { display: none; }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Family Media & Memory</title>
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:Arial,sans-serif;
+font-weight:bold;
+}
+
+body{
+background:#f0f2f5;
+}
+
+.header{
+background:#1877f2;
+color:white;
+padding:15px;
+font-size:22px;
+text-align:center;
+position:sticky;
+top:0;
+z-index:1000;
+}
+
+.tabs{
+display:flex;
+overflow-x:auto;
+background:white;
+border-bottom:1px solid #ccc;
+}
+
+.tab{
+flex:1;
+padding:14px;
+text-align:center;
+cursor:pointer;
+color:#555;
+user-select:none;
+}
+
+.tab.active{
+color:#1877f2;
+border-bottom:4px solid #1877f2;
+}
+
+.page{
+display:none;
+padding:15px;
+}
+
+.page.active{
+display:block;
+}
+
+.card{
+background:white;
+padding:15px;
+margin-bottom:15px;
+border-radius:10px;
+box-shadow:0 1px 5px rgba(0,0,0,.15);
+}
+
+input,select,textarea{
+width:100%;
+padding:10px;
+margin-top:10px;
+margin-bottom:10px;
+border:1px solid #ccc;
+border-radius:8px;
+font-size:16px;
+}
+
+button{
+width:100%;
+padding:12px;
+background:#1877f2;
+color:white;
+border:none;
+border-radius:8px;
+font-size:16px;
+cursor:pointer;
+}
+
+button:hover{
+background:#166fe5;
+}
+
+.preview{
+display:flex;
+flex-wrap:wrap;
+gap:10px;
+margin-top:10px;
+}
+
+.preview img{
+width:90px;
+height:90px;
+object-fit:cover;
+border-radius:8px;
+}
+
+.post{
+background:white;
+padding:12px;
+margin-top:15px;
+border-radius:10px;
+box-shadow:0 1px 5px rgba(0,0,0,.1);
+}
+
+.post img{
+width:100%;
+margin-top:10px;
+border-radius:8px;
+}
+
+</style>
 </head>
-<body style="margin:0; padding:0; font-family:-apple-system, sans-serif; background-color:#f0f2f5; color:#1c1e21; font-weight:bold;">
 
-    <!-- TARGET ANCHORS PARA SA CLICK NAV -->
-    <div id="home"></div><div id="msg"></div><div id="pts"></div><div id="kya"></div><div id="laga"></div>
+<body>
 
-    <!-- TOP BAR -->
-    <div style="background-color:#ffffff; border-bottom:1px solid #ccd0d5; position:sticky; top:0; z-index:9999; box-shadow:0 2px 4px rgba(0,0,0,0.08);">
-        <div style="display:flex; align-items:center; justify-content:space-between; padding:12px 16px;">
-            <span style="color:#1877f2; font-size:24px; font-weight:900;">FamilyLOVE</span>
-            <button onclick="alert('Logged out!')" style="background:none; border:none; font-size:20px; cursor:pointer;">🚪</button>
-        </div>
-        
-        <!-- TABS BAR (PURE HTML NAVIGATION - HINDING-HINDI MAG-E-ERROR) -->
-        <div style="display:flex; text-align:center; font-size:15px; border-top:1px solid #f0f2f5; background-color:#ffffff;">
-            <a href="#home" style="flex:1; padding:14px 0; color:#1877f2; text-decoration:none;">Home</a>
-            <a href="#msg" style="flex:1; padding:14px 0; color:#606770; font-size:20px; text-decoration:none;">💬</a>
-            <a href="#pts" style="flex:1; padding:14px 0; color:#606770; font-size:20px; text-decoration:none;">👨‍👩‍👦</a>
-            <a href="#kya" style="flex:1; padding:14px 0; color:#606770; font-size:20px; text-decoration:none;">👦</a>
-            <a href="#laga" style="flex:1; padding:14px 0; color:#606770; text-decoration:none;">Laga</a>
-        </div>
-    </div>
+<div class="header">
+Family Media & Memory
+</div>
 
-    <!-- MAIN CONTAINER -->
-    <div style="max-width:500px; margin:0 auto; padding:12px; box-sizing:border-box;">
-        
-        <!-- HOME SECTION -->
-        <div id="sec-home" class="tab-content" style="background:#ffffff; padding:16px; border-radius:8px; border:1px solid #ccd0d5; text-align:center;">
-            <p style="margin:0; font-size:16px; color:#1c1e21;">🏠 Welcome sa FamilyLOVE Timeline</p>
-        </div>
+<div class="tabs">
 
-        <!-- MESSAGE SECTION -->
-        <div id="sec-msg" class="tab-content" style="background:#ffffff; padding:16px; border-radius:8px; border:1px solid #ccd0d5; margin-bottom:16px;">
-            <p style="margin:0 0 12px 0; font-size:16px;">💬 Message Board</p>
-            <textarea id="msg-input" placeholder="Isulat ang mensahe dito..." style="width:100%; padding:12px; background:#f0f2f5; border:1px solid #ccd0d5; border-radius:8px; box-sizing:border-box; outline:none; margin-bottom:12px; font-weight:bold;" rows="3"></textarea>
-            <button onclick="let t=document.getElementById('msg-input').value; if(t){ document.getElementById('m-list').innerHTML='<div style=\'background:#f0f2f5; padding:12px; border-radius:8px; margin-bottom:10px;\'><p style=\'margin:0;\'>'+t+'</p></div>'+document.getElementById('m-list').innerHTML; document.getElementById('msg-input').value=''; }" style="width:100%; background:#1877f2; color:white; border:none; padding:12px; border-radius:6px; font-weight:bold; cursor:pointer;">I-send</button>
-            <div id="m-list" style="margin-top:12px;"></div>
-        </div>
+<div class="tab active" data-page="home">
+Home
+</div>
 
-        <!-- PARENTS SECTION -->
-        <div id="sec-pts" class="tab-content">
-            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:16px;">
-                <h3 style="margin:0;">👨‍👩‍👦 Parents Albums</h3>
-                <button onclick="let n=prompt('Album Name:'); if(n){ document.getElementById('pts-list').innerHTML+='<div style=\'background:#ffffff; padding:20px; border-radius:8px; border:1px solid #ccd0d5; text-align:center;\'>📁<br>'+n+'</div>'; }" style="background:#42b72a; color:white; border:none; padding:10px 16px; border-radius:6px; font-weight:bold; cursor:pointer;">+ Create Album</button>
-            </div>
-            <div id="pts-list" style="display:grid; grid-template-columns:repeat(2, 1fr); gap:12px;"></div>
-        </div>
+<div class="tab" data-page="message">
+Message
+</div>
 
-        <!-- KUYA'S SECTION -->
-        <div id="sec-kya" class="tab-content">
-            <div style="background:#ffffff; padding:16px; border-radius:8px; border:1px solid #ccd0d5; margin-bottom:16px;">
-                <input type="text" id="k-text" placeholder="Ano ang alaala ni Kuya ngayon?" style="width:100%; padding:12px; background:#f0f2f5; border:none; border-radius:20px; box-sizing:border-box; outline:none; margin-bottom:10px; font-weight:bold;">
-                <button onclick="let t=document.getElementById('k-text').value; if(t){ document.getElementById('k-feed').innerHTML='<div style=\'background:#ffffff; padding:16px; border-radius:8px; border:1px solid #ccd0d5; margin-bottom:10px;\'><b>KUYA 👦</b><p style=\'margin:5px 0 0 0;\'>'+t+'</p></div>'+document.getElementById('k-feed').innerHTML; document.getElementById('k-text').value=''; }" style="width:100%; background:#1877f2; color:white; border:none; padding:10px; border-radius:6px; font-weight:bold; cursor:pointer;">Post</button>
-            </div>
-            <div id="k-feed"></div>
-        </div>
+<div class="tab" data-page="parents">
+Parents
+</div>
 
-        <!-- LAGA SECTION -->
-        <div id="sec-laga" class="tab-content">
-            <div style="background:#ffffff; padding:16px; border-radius:8px; border:1px solid #ccd0d5; margin-bottom:16px;">
-                <input type="text" id="l-text" placeholder="Ano ang alaala ni Laga ngayon?" style="width:100%; padding:12px; background:#f0f2f5; border:none; border-radius:20px; box-sizing:border-box; outline:none; margin-bottom:10px; font-weight:bold;">
-                <button onclick="let t=document.getElementById('l-text').value; if(t){ document.getElementById('l-feed').innerHTML='<div style=\'background:#ffffff; padding:16px; border-radius:8px; border:1px solid #ccd0d5; margin-bottom:10px;\'><b>LAGA 👑</b><p style=\'margin:5px 0 0 0;\'>'+t+'</p></div>'+document.getElementById('l-feed').innerHTML; document.getElementById('l-text').value=''; }" style="width:100%; background:#1877f2; color:white; border:none; padding:10px; border-radius:6px; font-weight:bold; cursor:pointer;">Post</button>
-            </div>
-            <div id="l-feed"></div>
-        </div>
+<div class="tab" data-page="kuya">
+Kuya's
+</div>
 
-    </div>
+<div class="tab" data-page="laga">
+Laga
+</div>
+
+</div>
+
+<div id="home" class="page active">
+
+<div class="card">
+
+<h2>Home</h2>
+
+<p>
+Welcome to our Family Media & Memory App.
+</p>
+
+</div>
+
+</div>
+
+<div id="message" class="page">
+
+<div class="card">
+
+<h2>Send Message</h2>
+
+<select id="receiver">
+
+<option>Papa</option>
+
+<option>Mama</option>
+
+<option>Kuya</option>
+
+</select>
+
+<textarea
+id="messageText"
+rows="5"
+placeholder="Write your message...">
+</textarea>
+
+<input
+type="file"
+id="images"
+multiple
+accept="image/*">
+
+<div
+class="preview"
+id="preview">
+</div>
+
+<button id="postBtn">
+POST
+</button>
+
+</div>
+
+<div id="posts"></div>
+
+</div>
+
+<div id="parents" class="page">
+
+<div class="card">
+
+<h2>Parents</h2>
+
+<p>Family memories of Papa and Mama.</p>
+
+</div>
+
+</div>
+
+<div id="kuya" class="page">
+
+<div class="card">
+
+<h2>Kuya's</h2>
+
+<p>Kuya gallery.</p>
+
+</div>
+<script>
+
+const tabs=document.querySelectorAll(".tab");
+const pages=document.querySelectorAll(".page");
+
+tabs.forEach(tab=>{
+
+tab.addEventListener("click",function(){
+
+tabs.forEach(t=>t.classList.remove("active"));
+
+pages.forEach(p=>p.classList.remove("active"));
+
+this.classList.add("active");
+
+document
+.getElementById(this.dataset.page)
+.classList.add("active");
+
+});
+
+});
+
+const images=document.getElementById("images");
+const preview=document.getElementById("preview");
+
+let selectedImages=[];
+
+images.addEventListener("change",function(){
+
+preview.innerHTML="";
+
+selectedImages=[];
+
+Array.from(this.files).forEach(file=>{
+
+const reader=new FileReader();
+
+reader.onload=function(e){
+
+selectedImages.push(e.target.result);
+
+const img=document.createElement("img");
+
+img.src=e.target.result;
+
+preview.appendChild(img);
+
+}
+
+reader.readAsDataURL(file);
+
+});
+
+});
+
+const posts=document.getElementById("posts");
+
+function savePosts(html){
+
+localStorage.setItem("family_posts",html);
+
+}
+
+function loadPosts(){
+
+const data=localStorage.getItem("family_posts");
+
+if(data){
+
+posts.innerHTML=data;
+
+}
+
+}
+
+loadPosts();
+
+document
+.getElementById("postBtn")
+.addEventListener("click",function(){
+
+const receiver=document.getElementById("receiver").value;
+
+const text=document
+.getElementById("messageText")
+.value.trim();
+
+if(text==="" && selectedImages.length===0){
+
+alert("Write a message or select image.");
+
+return;
+
+}
+
+let html="";
+
+html+="<div class='post'>";
+
+html+="<div style='color:#1877f2'>To: "+receiver+"</div>";
+
+if(text!=""){
+
+html+="<p style='margin-top:10px'>"+text+"</p>";
+
+}
+
+selectedImages.forEach(img=>{
+
+html+="<img src='"+img+"'>";
+
+});
+
+html+="</div>";
+
+posts.innerHTML=html+posts.innerHTML;
+
+savePosts(posts.innerHTML);
+
+document.getElementById("messageText").value="";
+
+document.getElementById("images").value="";
+
+preview.innerHTML="";
+
+selectedImages=[];
+
+});
+
+</script>
 
 </body>
 </html>
+</div>
+
+<div id="laga" class="page">
+
+<div class="card">
+
+<h2>Laga</h2>
+
+<p>Laga memories.</p>
+
+</div>
+
+</div>
