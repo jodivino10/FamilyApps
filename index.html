@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width,initial-scale=1">
 
 <title>Family Media & Memory</title>
 
@@ -12,8 +12,7 @@
 margin:0;
 padding:0;
 box-sizing:border-box;
-font-family:Arial,sans-serif;
-font-weight:bold;
+font-family:Arial,Helvetica,sans-serif;
 }
 
 body{
@@ -22,9 +21,10 @@ background:#f0f2f5;
 
 .header{
 background:#1877f2;
-color:white;
-padding:15px;
-font-size:22px;
+color:#fff;
+padding:14px;
+font-size:18px;
+font-weight:bold;
 text-align:center;
 position:sticky;
 top:0;
@@ -33,28 +33,28 @@ z-index:1000;
 
 .tabs{
 display:flex;
-overflow-x:auto;
-background:white;
-border-bottom:1px solid #ccc;
+background:#fff;
+border-bottom:1px solid #ddd;
 }
 
 .tab{
 flex:1;
-padding:14px;
+padding:10px 2px;
+font-size:12px;
+font-weight:bold;
 text-align:center;
 cursor:pointer;
-color:#555;
-user-select:none;
+color:#666;
 }
 
 .tab.active{
 color:#1877f2;
-border-bottom:4px solid #1877f2;
+border-bottom:3px solid #1877f2;
 }
 
 .page{
 display:none;
-padding:15px;
+padding:12px;
 }
 
 .page.active{
@@ -62,63 +62,60 @@ display:block;
 }
 
 .card{
-background:white;
-padding:15px;
-margin-bottom:15px;
+background:#fff;
+padding:12px;
 border-radius:10px;
-box-shadow:0 1px 5px rgba(0,0,0,.15);
+margin-bottom:12px;
+box-shadow:0 1px 4px rgba(0,0,0,.15);
 }
 
-input,select,textarea{
+input,
+textarea,
+select{
 width:100%;
 padding:10px;
 margin-top:10px;
-margin-bottom:10px;
 border:1px solid #ccc;
 border-radius:8px;
-font-size:16px;
+font-size:14px;
 }
 
 button{
 width:100%;
-padding:12px;
+padding:11px;
+margin-top:10px;
 background:#1877f2;
-color:white;
+color:#fff;
 border:none;
 border-radius:8px;
-font-size:16px;
-cursor:pointer;
-}
-
-button:hover{
-background:#166fe5;
+font-weight:bold;
 }
 
 .preview{
 display:flex;
 flex-wrap:wrap;
-gap:10px;
+gap:8px;
 margin-top:10px;
 }
 
 .preview img{
-width:90px;
-height:90px;
+width:80px;
+height:80px;
 object-fit:cover;
 border-radius:8px;
 }
 
 .post{
-background:white;
+background:#fff;
 padding:12px;
-margin-top:15px;
 border-radius:10px;
-box-shadow:0 1px 5px rgba(0,0,0,.1);
+margin-top:12px;
+box-shadow:0 1px 4px rgba(0,0,0,.15);
 }
 
 .post img{
 width:100%;
-margin-top:10px;
+margin-top:8px;
 border-radius:8px;
 }
 
@@ -132,40 +129,24 @@ Family Media & Memory
 </div>
 
 <div class="tabs">
-
-<div class="tab active" data-page="home">
-Home
-</div>
-
-<div class="tab" data-page="message">
-Message
-</div>
-
-<div class="tab" data-page="parents">
-Parents
-</div>
-
-<div class="tab" data-page="kuya">
-Kuya's
-</div>
-
-<div class="tab" data-page="laga">
-Laga
-</div>
-
+<div class="tab active" data-page="home">Home</div>
+<div class="tab" data-page="message">Message</div>
+<div class="tab" data-page="parents">Parents</div>
+<div class="tab" data-page="kuya">Kuya's</div>
+<div class="tab" data-page="laga">Laga</div>
 </div>
 
 <div id="home" class="page active">
 
 <div class="card">
 
-<h2>Home</h2>
+<h2>🏠 Home</h2>
 
-<p>
-Welcome to our Family Media & Memory App.
-</p>
+<p>Welcome to our family memories.</p>
 
 </div>
+
+<div id="feed"></div>
 
 </div>
 
@@ -173,7 +154,7 @@ Welcome to our Family Media & Memory App.
 
 <div class="card">
 
-<h2>Send Message</h2>
+<h2>Create Post</h2>
 
 <select id="receiver">
 
@@ -186,29 +167,27 @@ Welcome to our Family Media & Memory App.
 </select>
 
 <textarea
-id="messageText"
-rows="5"
-placeholder="Write your message...">
-</textarea>
+id="text"
+rows="4"
+placeholder="Write something..."></textarea>
 
 <input
 type="file"
-id="images"
+id="photos"
 multiple
 accept="image/*">
 
 <div
 class="preview"
-id="preview">
-</div>
+id="preview"></div>
 
 <button id="postBtn">
+
 POST
+
 </button>
 
 </div>
-
-<div id="posts"></div>
 
 </div>
 
@@ -218,7 +197,7 @@ POST
 
 <h2>Parents</h2>
 
-<p>Family memories of Papa and Mama.</p>
+<p>Papa & Mama memories.</p>
 
 </div>
 
@@ -230,143 +209,10 @@ POST
 
 <h2>Kuya's</h2>
 
-<p>Kuya gallery.</p>
+<p>Kuya memories.</p>
 
 </div>
-<script>
 
-const tabs=document.querySelectorAll(".tab");
-const pages=document.querySelectorAll(".page");
-
-tabs.forEach(tab=>{
-
-tab.addEventListener("click",function(){
-
-tabs.forEach(t=>t.classList.remove("active"));
-
-pages.forEach(p=>p.classList.remove("active"));
-
-this.classList.add("active");
-
-document
-.getElementById(this.dataset.page)
-.classList.add("active");
-
-});
-
-});
-
-const images=document.getElementById("images");
-const preview=document.getElementById("preview");
-
-let selectedImages=[];
-
-images.addEventListener("change",function(){
-
-preview.innerHTML="";
-
-selectedImages=[];
-
-Array.from(this.files).forEach(file=>{
-
-const reader=new FileReader();
-
-reader.onload=function(e){
-
-selectedImages.push(e.target.result);
-
-const img=document.createElement("img");
-
-img.src=e.target.result;
-
-preview.appendChild(img);
-
-}
-
-reader.readAsDataURL(file);
-
-});
-
-});
-
-const posts=document.getElementById("posts");
-
-function savePosts(html){
-
-localStorage.setItem("family_posts",html);
-
-}
-
-function loadPosts(){
-
-const data=localStorage.getItem("family_posts");
-
-if(data){
-
-posts.innerHTML=data;
-
-}
-
-}
-
-loadPosts();
-
-document
-.getElementById("postBtn")
-.addEventListener("click",function(){
-
-const receiver=document.getElementById("receiver").value;
-
-const text=document
-.getElementById("messageText")
-.value.trim();
-
-if(text==="" && selectedImages.length===0){
-
-alert("Write a message or select image.");
-
-return;
-
-}
-
-let html="";
-
-html+="<div class='post'>";
-
-html+="<div style='color:#1877f2'>To: "+receiver+"</div>";
-
-if(text!=""){
-
-html+="<p style='margin-top:10px'>"+text+"</p>";
-
-}
-
-selectedImages.forEach(img=>{
-
-html+="<img src='"+img+"'>";
-
-});
-
-html+="</div>";
-
-posts.innerHTML=html+posts.innerHTML;
-
-savePosts(posts.innerHTML);
-
-document.getElementById("messageText").value="";
-
-document.getElementById("images").value="";
-
-preview.innerHTML="";
-
-selectedImages=[];
-
-});
-
-</script>
-
-</body>
-</html>
 </div>
 
 <div id="laga" class="page">
@@ -375,8 +221,145 @@ selectedImages=[];
 
 <h2>Laga</h2>
 
-<p>Laga memories.</p>
+<p>Laga gallery.</p>
 
 </div>
 
-</div>
+</div><script>
+
+const tabs=document.querySelectorAll(".tab");
+const pages=document.querySelectorAll(".page");
+
+tabs.forEach(tab=>{
+tab.onclick=function(){
+
+tabs.forEach(t=>t.classList.remove("active"));
+pages.forEach(p=>p.classList.remove("active"));
+
+this.classList.add("active");
+
+document
+.getElementById(this.dataset.page)
+.classList.add("active");
+
+};
+});
+
+const photos=document.getElementById("photos");
+const preview=document.getElementById("preview");
+
+let imageList=[];
+
+photos.onchange=function(){
+
+preview.innerHTML="";
+imageList=[];
+
+Array.from(this.files).forEach(file=>{
+
+const reader=new FileReader();
+
+reader.onload=function(e){
+
+imageList.push(e.target.result);
+
+const img=document.createElement("img");
+
+img.src=e.target.result;
+
+preview.appendChild(img);
+
+};
+
+reader.readAsDataURL(file);
+
+});
+
+};
+
+</script><script>
+
+/* ===== POST + LOCAL STORAGE ===== */
+
+const feed=document.getElementById("feed");
+const postBtn=document.getElementById("postBtn");
+const text=document.getElementById("text");
+const receiver=document.getElementById("receiver");
+
+loadPosts();
+
+postBtn.onclick=function(){
+
+if(text.value.trim()==="" && imageList.length===0){
+
+alert("Write a message or select image.");
+return;
+
+}
+
+const post={
+
+receiver:receiver.value,
+
+text:text.value,
+
+images:imageList,
+
+time:new Date().toLocaleString()
+
+};
+
+let posts=JSON.parse(localStorage.getItem("familyPosts")||"[]");
+
+posts.unshift(post);
+
+localStorage.setItem("familyPosts",JSON.stringify(posts));
+
+showPosts();
+
+text.value="";
+photos.value="";
+preview.innerHTML="";
+imageList=[];
+
+};
+
+function loadPosts(){
+
+showPosts();
+
+}
+
+function showPosts(){
+
+let posts=JSON.parse(localStorage.getItem("familyPosts")||"[]");
+
+feed.innerHTML="";
+
+posts.forEach(post=>{
+
+let html=`
+<div class="post">
+<b>To: ${post.receiver}</b><br>
+<small>${post.time}</small>
+<p>${post.text}</p>
+`;
+
+post.images.forEach(img=>{
+
+html+=`<img src="${img}">`;
+
+});
+
+html+="</div>";
+
+feed.innerHTML+=html;
+
+});
+
+}
+
+</script>
+
+</body>
+</html>
