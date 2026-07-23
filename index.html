@@ -3,59 +3,207 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <title>Family Connect</title>
-<link rel="stylesheet" href="style.css">
+
+<style>
+body{
+    margin:0;
+    font-family:Arial, sans-serif;
+    background:#e7f0ff;
+}
+
+header{
+    background:#1877f2;
+    color:white;
+    padding:15px;
+    text-align:center;
+}
+
+nav button{
+    background:white;
+    color:#1877f2;
+    border:none;
+    padding:10px 15px;
+    margin:5px;
+    border-radius:20px;
+    font-weight:bold;
+}
+
+nav button:active{
+    background:#ddd;
+}
+
+.page{
+    padding:15px;
+}
+
+.hidden{
+    display:none;
+}
+
+.card{
+    background:white;
+    padding:15px;
+    margin-top:15px;
+    border-radius:10px;
+    box-shadow:0 2px 5px #aaa;
+}
+
+.profile img{
+    width:100px;
+    height:100px;
+    border-radius:50%;
+}
+
+textarea{
+    width:100%;
+    height:70px;
+    border-radius:10px;
+    padding:10px;
+}
+
+.post-btn{
+    margin-top:10px;
+    background:#1877f2;
+    color:white;
+    border:none;
+    padding:10px 20px;
+    border-radius:20px;
+}
+
+footer{
+    background:#1877f2;
+    color:white;
+    text-align:center;
+    padding:10px;
+    margin-top:20px;
+}
+</style>
+
 </head>
 
 <body>
 
 <header>
-    <h1>Family Connect</h1>
-    <nav>
-        <button>Home</button>
-        <button>Profile</button>
-        <button>Messages</button>
-    </nav>
+<h1>Family Connect</h1>
+
+<nav>
+<button onclick="showPage('home')">Home</button>
+<button onclick="showPage('profile')">Profile</button>
+<button onclick="showPage('messages')">Messages</button>
+</nav>
+
 </header>
 
 
-<section class="profile">
-    <img src="https://via.placeholder.com/100" alt="Profile">
-    <h2>My Family</h2>
-    <p>Welcome to our private family social app</p>
-</section>
+<div id="home" class="page">
+
+<div class="card profile">
+<img src="https://via.placeholder.com/100">
+
+<h2>My Family</h2>
+
+<p>Welcome to our private family social app ❤️</p>
+
+</div>
 
 
-<section class="post-box">
-    <textarea placeholder="What's happening in the family?"></textarea>
-    <button class="post-btn">Post</button>
-</section>
+<div class="card">
+
+<textarea placeholder="What's happening in the family?"></textarea>
+
+<br>
+
+<button class="post-btn">
+Post
+</button>
+
+</div>
 
 
-<section class="feed">
+<div class="card">
 
-    <div class="post">
-        <h3>Family Member</h3>
-        <p>Welcome to our new family app ❤️</p>
-        <small>Just now</small>
-    </div>
+<h3>Family Member</h3>
+
+<p>Welcome to our new family app ❤️</p>
+
+<small>Just now</small>
+
+</div>
 
 
-    <div class="post">
-        <h3>Mom</h3>
-        <p>Happy family day everyone!</p>
-        <small>Today</small>
-    </div>
+<div class="card">
 
-</section>
+<h3>Mom</h3>
+
+<p>Happy family day everyone!</p>
+
+<small>Today</small>
+
+</div>
+
+</div>
+
+
+
+<div id="profile" class="page hidden">
+
+<div class="card">
+
+<h2>Family Profile</h2>
+
+<p>Family Connect Account</p>
+
+<p>Members: Family</p>
+
+</div>
+
+</div>
+
+
+
+<div id="messages" class="page hidden">
+
+<div class="card">
+
+<h2>Messages</h2>
+
+<p>No messages yet.</p>
+
+</div>
+
+</div>
+
 
 
 <footer>
-    <p>© 2026 Family Connect</p>
+
+© 2026 Family Connect
+
 </footer>
 
 
-<script src="script.js"></script>
+
+<script>
+
+function showPage(page){
+
+let pages=document.querySelectorAll(".page");
+
+pages.forEach(function(p){
+
+p.classList.add("hidden");
+
+});
+
+
+document.getElementById(page).classList.remove("hidden");
+
+}
+
+</script>
+
 
 </body>
 </html>
