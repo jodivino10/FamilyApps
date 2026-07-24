@@ -38,6 +38,42 @@
             100% { transform: scale(0); display: none; }
         }
         .sabog-effect { animation: sunog-sabog 0.4s forwards; }
+
+        /* LOCK SCREEN SECTION */
+        .final-round-section { display: none; margin-top: 15px; }
+        .code-input { width: 80%; padding: 12px; font-size: 18px; border-radius: 8px; border: 2px solid #dc3545; text-align: center; font-weight: bold; margin-bottom: 15px; }
+        .submit-code-btn { background-color: #dc3545; color: white; border: none; padding: 14px 25px; font-size: 16px; font-weight: bold; border-radius: 8px; cursor: pointer; width: 80%; }
+        
+        /* SECRET REVEAL BOX (MAY BACKGROUND PICTURE MO) */
+        .secret-reveal-box { 
+            display: none; 
+            position: relative; 
+            margin-top: 25px; 
+            border-radius: 15px; 
+            overflow: hidden; 
+            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+            min-height: 250px;
+        }
+        .bg-overlay {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background-image: url('papa.jpg');
+            background-size: cover;
+            background-position: center;
+            filter: blur(2px) brightness(0.25);
+            z-index: 1;
+        }
+        .reveal-content {
+            position: relative;
+            z-index: 2;
+            padding: 30px;
+            color: white;
+            font-size: 20px;
+            font-weight: bold;
+            line-height: 1.6;
+            text-shadow: 2px 2px 5px rgba(0,0,0,0.9);
+            text-align: center;
+        }
     </style>
 </head>
 <body>
@@ -53,7 +89,7 @@
         <button id="start-game-btn" class="start-btn" onclick="lumipatScreen('intro-screen', 'q1-screen')">SIMULAN ANG LARO 🎮</button>
     </div>
 
-    <!-- 2. LEVEL 1: EASY (MULTIPLE CHOICE) -->
+    <!-- 2. LEVEL 1: EASY -->
     <div id="q1-screen" class="game-screen">
         <div class="badge badge-easy">🟢 LEVEL 1: EASY</div>
         <h2>Ano ang Complete Full Name ng Papa niyo?</h2>
@@ -66,7 +102,7 @@
         <button id="btn1" class="next-btn" onclick="lumipatScreen('q1-screen', 'q2-screen')">SUSUNOD NA LEVEL ➡️</button>
     </div>
 
-    <!-- 3. LEVEL 2: MEDIUM (MULTIPLE CHOICE) -->
+    <!-- 3. LEVEL 2: MEDIUM -->
     <div id="q2-screen" class="game-screen">
         <div class="badge badge-medium">🟡 LEVEL 2: MEDIUM</div>
         <h2>Ano ang complete name ng tita niyo?</h2>
@@ -79,7 +115,7 @@
         <button id="btn2" class="next-btn" onclick="lumipatScreen('q2-screen', 'q3-screen')">BONUS ROUND ➡️</button>
     </div>
 
-    <!-- 4. LEVEL 3: BONUS ROUND (PICTURE TRICK) -->
+    <!-- 4. LEVEL 3: BONUS ROUND -->
     <div id="q3-screen" class="game-screen">
         <div class="badge badge-bonus">🔵 BONUS QUESTION</div>
         <h2>Sino ang gwapong anak ng Papa niyo?</h2>
@@ -101,75 +137,34 @@
         <button id="btn3" class="next-btn" style="background-color:#dc3545;" onclick="lumipatScreen('q3-screen', 'q4-screen')">🔥 PINDUTIN ANG HARD BUTTON</button>
     </div>
 
-    <!-- 5. LEVEL 4: HARD LEVEL (PUNCH THE FACE MECHANIC) -->
+    <!-- 5. LEVEL 4: HARD LEVEL -->
     <div id="q4-screen" class="game-screen">
         <div class="badge badge-final">🔴 LEVEL 4: HARD CHALLENGE</div>
-        <h2>Suntukin ang mukha ni Papa para lumabas ang secret code!</h2>
-        <p style="font-size:14px; color:#666;">(I-tap ang mukha para patamaan ng kamao)</p>
         
-        <div class="punch-arena" onclick="suntukinPapa()">
-            <img id="papa-face" src="papa.jpg" alt="Mukha ni Papa">
-            <div id="kamao-logo">👊</div>
+        <div id="punch-title-section">
+            <h2>Suntukin ang mukha ni Papa para lumabas ang secret code!</h2>
+            <p style="font-size:14px; color:#666;">(I-tap ang mukha para patamaan ng kamao)</p>
+            
+            <div class="punch-arena" onclick="suntukinPapa()">
+                <img id="papa-face" src="papa.jpg" alt="Mukha ni Papa">
+                <div id="kamao-logo">👊</div>
+            </div>
         </div>
         
-        <!-- BAGONG MENSAHE NA IPINALIT AYON SA IYONG HILING -->
-        <div id="final-alert" class="alert-box" style="background-color:#d4edda; border-color:#c3e6cb; color:#155724; text-align: center;">
-            <b style="display:block; text-align:center; margin-bottom:10px; font-size: 18px;">💥 BOOM! SASABOG ANG MUKHA! 💥</b>
-            Ang galing mo! Napasabog mo mukha ng papa mo at dahil diyan i-screenshot mo ito at i-send sa papa mo para maibigay niya sa iyo ang code para mabuksan ang Final Round!
+        <!-- ANG BERDENG KAHON NA MAG-UTOS NG SCREENSHOT (WALANG REVEAL) -->
+        <div id="final-alert" class="alert-box" style="display:none; background-color:#d4edda; border-color:#c3e6cb; color:#155724; text-align: center;">
+            <b style="display:block; text-align:center; margin-bottom:10px; font-size: 18px;">🔒 FINAL ROUND LOCK 🔒</b>
+            I-screenshot mo ang screen na ito ngayon at i-send sa papa mo upang maibigay niya sa iyo ang secret code para mabuksan ang Final Round!
         </div>
-    </div>
 
-    <script>
-        function lumipatScreen(alisin, ilabas) {
-            document.getElementById(alisin).style.display = 'none';
-            document.getElementById(ilabas).style.display = 'block';
-        }
+        <!-- BOX PARA SA PAG-TYPE NG CODE -->
+        <div id="final-round-block" class="final-round-section">
+            <input type="password" id="secret-code-input" class="code-input" placeholder="I-type ang code ni Papa rito">
+            <button class="submit-code-btn" onclick="verifyFinalCode()">BUKSAN ANG FINAL ROUND 🔓</button>
+        </div>
 
-        function piliinMCQ(status, elemento, idMensahe, idButton) {
-            if (status === 'tama') {
-                elemento.style.backgroundColor = "#28a745";
-                elemento.style.color = "white";
-                document.getElementById(idMensahe).innerText = "🎉 TAMA ANG SAGOT MO!";
-                document.getElementById(idMensahe).style.color = "green";
-                document.getElementById(idButton).style.display = "block";
-            } else {
-                elemento.style.backgroundColor = "#dc3545";
-                elemento.style.color = "white";
-                document.getElementById(idMensahe).innerText = "❌ MALI! Subukan ang ibang option.";
-                document.getElementById(idMensahe).style.color = "red";
-                document.getElementById('beep-sound').currentTime = 0;
-                document.getElementById('beep-sound').play();
-            }
-        }
-
-        var clickCount = 0;
-        function piliinBonus(idX) {
-            document.getElementById('beep-sound').currentTime = 0;
-            document.getElementById('beep-sound').play();
-            document.getElementById('x-' + idX).style.display = 'block';
-            clickCount++;
-            
-            if(clickCount >= 2) {
-                document.getElementById('bonus-alert').style.display = "block";
-                document.getElementById('btn3').style.display = "block";
-            }
-        }
-
-        function suntukinPapa() {
-            var kamao = document.getElementById('kamao-logo');
-            var mukha = document.getElementById('papa-face');
-            kamao.style.bottom = "70px";
-            kamao.style.right = "70px";
-            
-            document.getElementById('explosion-sound').play();
-            mukha.classList.add('sabog-effect');
-            
-            setTimeout(function() {
-                document.getElementById('final-alert').style.display = "block";
-                kamao.style.display = "none";
-            }, 400);
-        }
-    </script>
-
-</body>
-</html>
+        <!-- THE SECRET DRAMA REVEAL BOX (LALABAS LANG KAPAG TAMA ANG CODE) -->
+        <div id="hidden-message-box" class="secret-reveal-box">
+            <div class="bg-overlay"></div>
+            <div class="reveal-content">
+                <span style="color: #28a745; font-size: 24px; display: block; margin-bottom: 15px;">🎉 MISSION COMPLETED! 🎉</span>
