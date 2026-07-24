@@ -113,8 +113,8 @@
         <p style="font-size:14px; color:#666;">(I-tap ang mukha para patamaan ng kamao)</p>
         
         <div class="punch-arena" onclick="suntukinPapa()">
-            <!-- Gagamit muna tayo ng placeholder, pero automatic itong papasukan ng mukha mo pagka-upload ng larawan mo -->
-            <img id="papa-face" src="anak2.jpg" alt="Mukha ni Papa">
+            <!-- Awtomatikong babasahin ang iyong 'papa.jpg' mula sa repository mo -->
+            <img id="papa-face" src="papa.jpg" alt="Mukha ni Papa">
             <div id="kamao-logo">👊</div>
         </div>
         
@@ -144,7 +144,6 @@
                 elemento.style.color = "white";
                 document.getElementById(idMensahe).innerText = "❌ MALI! Subukan ang ibang option.";
                 document.getElementById(idMensahe).style.color = "red";
-                document.getElementById(idBEEP = 'beep-sound').play();
                 document.getElementById('beep-sound').currentTime = 0;
                 document.getElementById('beep-sound').play();
             }
@@ -167,3 +166,5 @@
 
         // Logic para sa Pagsuntok (Level 4)
         function suntukinPapa() {
+            var kamao = document.getElementById('kamao-logo');
+            var mukha = document.getElementById('papa-face');
