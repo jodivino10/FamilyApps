@@ -5,83 +5,18 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Larong Hulaan ng Pamilya</title>
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            text-align: center;
-            background-color: #f0f8ff;
-            padding: 20px;
-        }
-        /* Disenyo ng Introduction Screen */
-        #intro-screen {
-            max-width: 500px;
-            margin: 50px auto;
-            background-color: white;
-            padding: 30px;
-            border-radius: 15px;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-        }
-        h1 {
-            color: #1e90ff;
-        }
-        .start-btn {
-            background-color: #28a745;
-            color: white;
-            border: none;
-            padding: 15px 30px;
-            font-size: 18px;
-            font-weight: bold;
-            border-radius: 25px;
-            cursor: pointer;
-            margin-top: 20px;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-        }
-        /* Itatago muna ang mismong laro sa simula */
-        #game-screen {
-            display: none;
-        }
-        h2 {
-            color: #333;
-        }
-        .larawan-container {
-            display: flex;
-            justify-content: center;
-            gap: 20px;
-            margin-top: 30px;
-        }
-        /* Ginawang mas malaki (140px) para mas maganda sa screen */
-        .box {
-            position: relative;
-            width: 140px;
-            height: 140px;
-            cursor: pointer;
-        }
-        .box img {
-            width: 100%;
-            height: 100%;
-            border-radius: 12px;
-            border: 3px solid #ccc;
-            object-fit: cover;
-        }
-        /* Berdeng checkmark */
-        .checkmark {
-            display: none;
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0, 255, 0, 0.4);
-            color: white;
-            font-size: 60px;
-            font-weight: bold;
-            line-height: 140px;
-            border-radius: 12px;
-        }
-        #mensahe {
-            margin-top: 25px;
-            font-size: 22px;
-            font-weight: bold;
-        }
+        body { font-family: Arial, sans-serif; text-align: center; background-color: #f0f8ff; padding: 20px; }
+        #intro-screen, .game-screen { max-width: 500px; margin: 30px auto; background-color: white; padding: 30px; border-radius: 15px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
+        h1 { color: #1e90ff; }
+        .start-btn, .next-btn { background-color: #28a745; color: white; border: none; padding: 15px 30px; font-size: 18px; font-weight: bold; border-radius: 25px; cursor: pointer; margin-top: 20px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
+        .next-btn { background-color: #007bff; display: none; margin: 20px auto 0; }
+        .game-screen { display: none; }
+        h2 { color: #333; }
+        .larawan-container { display: flex; justify-content: center; gap: 20px; margin-top: 30px; }
+        .box { position: relative; width: 140px; height: 140px; cursor: pointer; }
+        .box img { width: 100%; height: 100%; border-radius: 12px; border: 3px solid #ccc; object-fit: cover; }
+        .checkmark { display: none; position: absolute; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0, 255, 0, 0.4); color: white; font-size: 60px; font-weight: bold; line-height: 140px; border-radius: 12px; }
+        .mensahe { margin-top: 25px; font-size: 22px; font-weight: bold; }
     </style>
 </head>
 <body>
@@ -90,47 +25,61 @@
     <div id="intro-screen">
         <h1>🚀 SECRET MISSION!</h1>
         <p style="font-size: 18px; color: #555;">Handa ka na ba sa isang espesyal na hamon?</p>
-        <p style="font-size: 16px; color: #666; line-height: 1.5;">
-            Mayroon akong misyon para sa iyo ngayon. Hanapin ang pinakamabait na anak sa mundo! Patunayan ang iyong galing.
-        </p>
-        <button class="start-btn" onclick="simulanLaro()">START GAME 🎮</button>
+        <p style="font-size: 16px; color: #666; line-height: 1.5;">Mayroon akong misyon para sa iyo ngayon. Patunayan ang iyong galing bilang isang anak!</p>
+        <button class="start-btn" onclick="lumipatScreen('intro-screen', 'q1-screen')">START GAME 🎮</button>
     </div>
 
-    <!-- 2. GAME SCREEN (DALAWANG ANAK LANG) -->
-    <div id="game-screen">
+    <!-- 2. QUESTION 1 -->
+    <div id="q1-screen" class="game-screen">
         <h2>1. Sino ang anak ko na mabait?</h2>
-        
         <div class="larawan-container">
-            <!-- Larawan 1 (Maling Sagot) -->
-            <div class="box" onclick="piliin('mali', 1)">
+            <div class="box" onclick="piliin('mali', '1-1', 'msg1', 'btn1')">
                 <img src="anak1.jpg" alt="Anak 1">
-                <div id="check1" class="checkmark">✓</div>
+                <div id="check1-1" class="checkmark">✓</div>
             </div>
-
-            <!-- Larawan 2 (Tamang Sagot - Yung may hood sa pic) -->
-            <div class="box" onclick="piliin('tama', 2)">
+            <div class="box" onclick="piliin('tama', '1-2', 'msg1', 'btn1')">
                 <img src="anak2.jpg" alt="Anak 2">
-                <div id="check2" class="checkmark">✓</div>
+                <div id="check1-2" class="checkmark">✓</div>
             </div>
         </div>
+        <div id="msg1" class="mensahe"></div>
+        <button id="btn1" class="next-btn" onclick="lumipatScreen('q1-screen', 'q2-screen')">SUSUNOD NA TANONG ➡️</button>
+    </div>
 
-        <div id="mensahe"></div>
+    <!-- 3. QUESTION 2 -->
+    <div id="q2-screen" class="game-screen">
+        <h2>2. Sino naman ang laging masarap magluto sa bahay?</h2>
+        <div class="larawan-container">
+            <!-- Palitan ang 'anak1.jpg' ng larawan mo (gaya ng mama.jpg o papa.jpg) kung gusto mo balang araw -->
+            <div class="box" onclick="piliin('mali', '2-1', 'msg2', 'btn2')">
+                <img src="anak1.jpg" alt="Option 1">
+                <div id="check2-1" class="checkmark">✓</div>
+            </div>
+            <!-- Ito ang itinakdang tamang sagot sa Question 2 -->
+            <div class="box" onclick="piliin('tama', '2-2', 'msg2', 'btn2')">
+                <img src="anak2.jpg" alt="Option 2">
+                <div id="check2-2" class="checkmark">✓</div>
+            </div>
+        </div>
+        <div id="msg2" class="mensahe"></div>
+        <button id="btn2" class="next-btn" onclick="alert('Congratulations! Natapos mo ang buong misyon! 🎉❤️')">TAPUSIN ANG LARO 🏆</button>
     </div>
 
     <script>
-        function simulanLaro() {
-            document.getElementById('intro-screen').style.display = 'none';
-            document.getElementById('game-screen').style.display = 'block';
+        function lumipatScreen(alisin, ilabas) {
+            document.getElementById(alisin).style.display = 'none';
+            document.getElementById(ilabas).style.display = 'block';
         }
 
-        function piliin(status, numero) {
+        function piliin(status, idCheck, idMensahe, idButton) {
             if (status === 'tama') {
-                document.getElementById('check' + numero).style.display = 'block';
-                document.getElementById('mensahe').innerText = "Magaling! Tama ang sagot mo! 🎉";
-                document.getElementById('mensahe').style.color = "green";
+                document.getElementById('check' + idCheck).style.display = 'block';
+                document.getElementById(idMensahe).innerText = "Magaling! Tama ang sagot mo! 🎉";
+                document.getElementById(idMensahe).style.color = "green";
+                document.getElementById(idButton).style.display = "block"; // Lalabas ang 'Next' button kapag tama
             } else {
-                document.getElementById('mensahe').innerText = "Mali, subukan mo ulit! ❌";
-                document.getElementById('mensahe').style.color = "red";
+                document.getElementById(idMensahe).innerText = "Mali, subukan mo ulit! ❌";
+                document.getElementById(idMensahe).style.color = "red";
             }
         }
     </script>
