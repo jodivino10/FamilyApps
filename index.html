@@ -1,209 +1,102 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="tl">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<title>Family Connect</title>
-
-<style>
-body{
-    margin:0;
-    font-family:Arial, sans-serif;
-    background:#e7f0ff;
-}
-
-header{
-    background:#1877f2;
-    color:white;
-    padding:15px;
-    text-align:center;
-}
-
-nav button{
-    background:white;
-    color:#1877f2;
-    border:none;
-    padding:10px 15px;
-    margin:5px;
-    border-radius:20px;
-    font-weight:bold;
-}
-
-nav button:active{
-    background:#ddd;
-}
-
-.page{
-    padding:15px;
-}
-
-.hidden{
-    display:none;
-}
-
-.card{
-    background:white;
-    padding:15px;
-    margin-top:15px;
-    border-radius:10px;
-    box-shadow:0 2px 5px #aaa;
-}
-
-.profile img{
-    width:100px;
-    height:100px;
-    border-radius:50%;
-}
-
-textarea{
-    width:100%;
-    height:70px;
-    border-radius:10px;
-    padding:10px;
-}
-
-.post-btn{
-    margin-top:10px;
-    background:#1877f2;
-    color:white;
-    border:none;
-    padding:10px 20px;
-    border-radius:20px;
-}
-
-footer{
-    background:#1877f2;
-    color:white;
-    text-align:center;
-    padding:10px;
-    margin-top:20px;
-}
-</style>
-
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Larong Hulaan</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background-color: #f0f8ff;
+            padding: 20px;
+        }
+        h2 {
+            color: #333;
+        }
+        .larawan-container {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 30px;
+        }
+        .box {
+            position: relative;
+            width: 100px;
+            height: 100px;
+            cursor: pointer;
+        }
+        /* Dito mo ilalagay ang hitsura ng mga kahon habang wala pang totoong litrato */
+        .box img {
+            width: 100%;
+            height: 100%;
+            border-radius: 10px;
+            border: 3px solid #ccc;
+            object-fit: cover;
+        }
+        /* Ito ang berdeng checkmark na lalabas kapag tama ang pinindot */
+        .checkmark {
+            display: none;
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 255, 0, 0.4);
+            color: white;
+            font-size: 50px;
+            font-weight: bold;
+            line-height: 100px;
+            border-radius: 10px;
+        }
+        #mensahe {
+            margin-top: 20px;
+            font-size: 20px;
+            font-weight: bold;
+            color: green;
+        }
+    </style>
 </head>
-
 <body>
 
-<header>
-<h1>Family Connect</h1>
+    <h2>1. Sino ang anak ko na mabait?</h2>
+    
+    <div class="larawan-container">
+        <!-- Larawan 1 (Maling Sagot) -->
+        <div class="box" onclick="piliin('mali', 1)">
+            <img src="https://picsum.photos" alt="Anak 1">
+            <div id="check1" class="checkmark">✓</div>
+        </div>
 
-<nav>
-<button onclick="showPage('home')">Home</button>
-<button onclick="showPage('profile')">Profile</button>
-<button onclick="showPage('messages')">Messages</button>
-</nav>
+        <!-- Larawan 2 (Tamang Sagot) -->
+        <div class="box" onclick="piliin('tama', 2)">
+            <img src="https://picsum.photos" alt="Anak 2">
+            <div id="check2" class="checkmark">✓</div>
+        </div>
 
-</header>
+        <!-- Larawan 3 (Maling Sagot) -->
+        <div class="box" onclick="piliin('mali', 3)">
+            <img src="https://picsum.photos" alt="Anak 3">
+            <div id="check3" class="checkmark">✓</div>
+        </div>
+    </div>
 
+    <div id="mensahe"></div>
 
-<div id="home" class="page">
-
-<div class="card profile">
-<img src="https://via.placeholder.com/100">
-
-<h2>My Family</h2>
-
-<p>Welcome to our private family social app ❤️</p>
-
-</div>
-
-
-<div class="card">
-
-<textarea placeholder="What's happening in the family?"></textarea>
-
-<br>
-
-<button class="post-btn">
-Post
-</button>
-
-</div>
-
-
-<div class="card">
-
-<h3>Family Member</h3>
-
-<p>Welcome to our new family app ❤️</p>
-
-<small>Just now</small>
-
-</div>
-
-
-<div class="card">
-
-<h3>Mom</h3>
-
-<p>Happy family day everyone!</p>
-
-<small>Today</small>
-
-</div>
-
-</div>
-
-
-
-<div id="profile" class="page hidden">
-
-<div class="card">
-
-<h2>Family Profile</h2>
-
-<p>Family Connect Account</p>
-
-<p>Members: Family</p>
-
-</div>
-
-</div>
-
-
-
-<div id="messages" class="page hidden">
-
-<div class="card">
-
-<h2>Messages</h2>
-
-<p>No messages yet.</p>
-
-</div>
-
-</div>
-
-
-
-<footer>
-
-© 2026 Family Connect
-
-</footer>
-
-
-
-<script>
-
-function showPage(page){
-
-let pages=document.querySelectorAll(".page");
-
-pages.forEach(function(p){
-
-p.classList.add("hidden");
-
-});
-
-
-document.getElementById(page).classList.remove("hidden");
-
-}
-
-</script>
-
+    <script>
+        function piliin(status, numero) {
+            // Kung tama ang pinindot, lalabas ang checkmark at mensahe
+            if (status === 'tama') {
+                document.getElementById('check' + numero).style.display = 'block';
+                document.getElementById('mensahe').innerText = "Magaling! Tama ang sagot mo! 🎉";
+                document.getElementById('mensahe').style.color = "green";
+            } else {
+                // Kung mali, walang checkmark at sasabihin ng program na subukan ulit
+                document.getElementById('mensahe').innerText = "Mali, subukan mo ulit! ❌";
+                document.getElementById('mensahe').style.color = "red";
+            }
+        }
+    </script>
 
 </body>
-</html> ("sex"
+</html>
