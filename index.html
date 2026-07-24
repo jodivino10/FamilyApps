@@ -15,10 +15,9 @@
         .badge-hard { background-color: #dc3545; }
         
         .options-container { display: flex; flex-direction: column; gap: 12px; margin-top: 20px; }
-        .opt-btn { background-color: #ffffff; border: 2px solid #007bff; color: #007bff; padding: 12px; font-size: 16px; font-weight: bold; border-radius: 10px; cursor: pointer; text-align: left; transition: 0.2s; }
-        .opt-btn:hover { background-color: #007bff; color: white; }
+        .opt-btn { background-color: #ffffff; border: 2px solid #007bff; color: #007bff; padding: 12px; font-size: 16px; font-weight: bold; border-radius: 10px; cursor: pointer; text-align: left; }
         
-        .start-btn, .next-btn { background-color: #28a745; color: white; border: none; padding: 15px 30px; font-size: 18px; font-weight: bold; border-radius: 25px; cursor: pointer; margin-top: 20px; display: none; width: 100%; box-sizing: border-box; }
+        .start-btn, .next-btn { background-color: #28a745; color: white; border: none; padding: 15px 30px; font-size: 18px; font-weight: bold; border-radius: 25px; cursor: pointer; margin-top: 20px; display: none; width: 100%; }
         #start-game-btn { display: block; }
         .game-screen { display: none; }
         
@@ -29,51 +28,16 @@
         .alert-box { display: none; background-color: #fff3cd; padding: 15px; border-radius: 10px; margin-top: 15px; border: 1px solid #ffeeba; text-align: left; color: #856404; font-size: 15px; line-height: 1.4; }
         
         .punch-arena { position: relative; width: 200px; height: 200px; margin: 30px auto; cursor: pointer; }
-        #papa-face { width: 100%; height: 100%; border-radius: 50%; border: 5px solid #dc3545; object-fit: cover; transition: transform 0.1s; }
-        #kamao-logo { position: absolute; bottom: -20px; right: -20px; font-size: 60px; pointer-events: none; transition: all 0.1s ease-out; }
-        
-        @keyframes sunog-sabog {
-            0% { transform: scale(1); filter: none; }
-            50% { transform: scale(1.2) rotate(10deg); filter: sepia(1) saturate(5) hue-rotate(-50deg); }
-            100% { transform: scale(0); display: none; }
-        }
-        .sabog-effect { animation: sunog-sabog 0.4s forwards; }
+        #papa-face { width: 100%; height: 100%; border-radius: 50%; border: 5px solid #dc3545; object-fit: cover; }
+        #kamao-logo { position: absolute; bottom: -20px; right: -20px; font-size: 60px; pointer-events: none; }
 
-        /* LOCK SCREEN SECTION */
         .final-round-section { display: none; margin-top: 15px; }
         .code-input { width: 80%; padding: 12px; font-size: 18px; border-radius: 8px; border: 2px solid #dc3545; text-align: center; font-weight: bold; margin-bottom: 15px; }
         .submit-code-btn { background-color: #dc3545; color: white; border: none; padding: 14px 25px; font-size: 16px; font-weight: bold; border-radius: 8px; cursor: pointer; width: 80%; }
         
-        /* SECRET REVEAL BOX */
-        .secret-reveal-box { 
-            display: none; 
-            position: relative; 
-            margin-top: 25px; 
-            border-radius: 15px; 
-            overflow: hidden; 
-            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
-            min-height: 250px;
-        }
-        .bg-overlay {
-            position: absolute;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background-image: url('papa.jpg');
-            background-size: cover;
-            background-position: center;
-            filter: blur(2px) brightness(0.25);
-            z-index: 1;
-        }
-        .reveal-content {
-            position: relative;
-            z-index: 2;
-            padding: 30px;
-            color: white;
-            font-size: 20px;
-            font-weight: bold;
-            line-height: 1.6;
-            text-shadow: 2px 2px 5px rgba(0,0,0,0.9);
-            text-align: center;
-        }
+        .secret-reveal-box { display: none; position: relative; margin-top: 25px; border-radius: 15px; overflow: hidden; box-shadow: 0 4px 15px rgba(0,0,0,0.3); min-height: 250px; }
+        .bg-overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background-image: url('papa.jpg'); background-size: cover; background-position: center; filter: blur(2px) brightness(0.25); z-index: 1; }
+        .reveal-content { position: relative; z-index: 2; padding: 30px; color: white; font-size: 20px; font-weight: bold; line-height: 1.6; text-shadow: 2px 2px 5px rgba(0,0,0,0.9); text-align: center; }
     </style>
 </head>
 <body>
@@ -126,7 +90,6 @@
                 <div id="x-3-2" class="xmark">❌</div>
             </div>
         </div>
-        
         <div id="bonus-alert" class="alert-box">
             <b style="color:red; display:block; text-align:center; margin-bottom:5px;">⚠️ SYSTEM ERROR: WALANG GWAPO? ⚠️</b>
             Mayroon pang FINAL QUESTION at yun ang HARD! Pindutin mo ang HARD BUTTON sa ibaba at nandoon ang totoong tanong!
@@ -137,30 +100,21 @@
     <!-- 5. LEVEL 4: HARD LEVEL -->
     <div id="q4-screen" class="game-screen">
         <div class="badge badge-final">🔴 LEVEL 4: HARD CHALLENGE</div>
-        
         <div id="punch-title-section">
             <h2>Suntukin ang mukha ni Papa para lumabas ang secret code!</h2>
-            <p style="font-size:14px; color:#666;">(I-tap ang mukha para patamaan ng kamao)</p>
-            
             <div class="punch-arena" onclick="suntukinPapa()">
                 <img id="papa-face" src="papa.jpg" alt="Mukha ni Papa">
                 <div id="kamao-logo">👊</div>
             </div>
         </div>
-        
-        <!-- ANG ALERT KAHON -->
         <div id="final-alert" class="alert-box" style="display:none; background-color:#d4edda; border-color:#c3e6cb; color:#155724; text-align: center;">
             <b style="display:block; text-align:center; margin-bottom:10px; font-size: 18px;">🔒 FINAL ROUND LOCK 🔒</b>
             I-screenshot mo ang screen na ito ngayon at i-send sa papa mo upang maibigay niya sa iyo ang secret code para mabuksan ang Final Round!
         </div>
-
-        <!-- INPUT REVEAL BOX -->
         <div id="final-round-block" class="final-round-section">
             <input type="password" id="secret-code-input" class="code-input" placeholder="I-type ang code ni Papa rito">
             <button class="submit-code-btn" onclick="verifyFinalCode()">BUKSAN ANG FINAL ROUND 🔓</button>
         </div>
-
-        <!-- THE SECRET DRAMA REVEAL BOX -->
         <div id="hidden-message-box" class="secret-reveal-box">
             <div class="bg-overlay"></div>
             <div class="reveal-content">
@@ -173,3 +127,25 @@
 
     <script>
         function lumipatScreen(alisin, ilabas) {
+            document.getElementById(alisin).style.display = 'none';
+            document.getElementById(ilabas).style.display = 'block';
+        }
+        function piliinMCQ(status, elemento, idMensahe, idButton) {
+            if (status === 'tama') {
+                elemento.style.backgroundColor = "#28a745";
+                elemento.style.color = "white";
+                document.getElementById(idMensahe).innerText = "🎉 TAMA ANG SAGOT MO!";
+                document.getElementById(idMensahe).style.color = "green";
+                document.getElementById(idButton).style.display = "block";
+            } else {
+                elemento.style.backgroundColor = "#dc3545";
+                elemento.style.color = "white";
+                document.getElementById(idMensahe).innerText = "❌ MALI! Subukan ang ibang option.";
+                document.getElementById(idMensahe).style.color = "red";
+            }
+        }
+        var clickCount = 0;
+        function piliinBonus(idX) {
+            document.getElementById('x-' + idX).style.display = 'block';
+            clickCount++;
+            if(clickCount >= 2) {
