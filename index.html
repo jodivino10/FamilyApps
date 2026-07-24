@@ -33,7 +33,7 @@
         #kamao-logo { position: absolute; bottom: -20px; right: -20px; font-size: 60px; pointer-events: none; transition: all 0.1s ease-out; }
         
         @keyframes sunog-sabog {
-            0% { transform: scale(1); filter: none; }
+            0 { transform: scale(1); filter: none; }
             50% { transform: scale(1.2) rotate(10deg); filter: sepia(1) saturate(5) hue-rotate(-50deg); }
             100% { transform: scale(0); display: none; }
         }
@@ -44,7 +44,7 @@
         .code-input { width: 80%; padding: 12px; font-size: 18px; border-radius: 8px; border: 2px solid #dc3545; text-align: center; font-weight: bold; margin-bottom: 15px; }
         .submit-code-btn { background-color: #dc3545; color: white; border: none; padding: 14px 25px; font-size: 16px; font-weight: bold; border-radius: 8px; cursor: pointer; width: 80%; }
         
-        /* SECRET REVEAL BOX (MAY BACKGROUND PICTURE MO) */
+        /* SECRET REVEAL BOX */
         .secret-reveal-box { 
             display: none; 
             position: relative; 
@@ -151,20 +151,21 @@
             </div>
         </div>
         
-        <!-- ANG BERDENG KAHON NA MAG-UTOS NG SCREENSHOT (WALANG REVEAL) -->
+        <!-- ANG ALERT KAHON (WALANG REVEAL SA SIMULA) -->
         <div id="final-alert" class="alert-box" style="display:none; background-color:#d4edda; border-color:#c3e6cb; color:#155724; text-align: center;">
             <b style="display:block; text-align:center; margin-bottom:10px; font-size: 18px;">🔒 FINAL ROUND LOCK 🔒</b>
             I-screenshot mo ang screen na ito ngayon at i-send sa papa mo upang maibigay niya sa iyo ang secret code para mabuksan ang Final Round!
         </div>
 
-        <!-- BOX PARA SA PAG-TYPE NG CODE -->
+        <!-- INPUT REVEAL BOX -->
         <div id="final-round-block" class="final-round-section">
             <input type="password" id="secret-code-input" class="code-input" placeholder="I-type ang code ni Papa rito">
             <button class="submit-code-btn" onclick="verifyFinalCode()">BUKSAN ANG FINAL ROUND 🔓</button>
         </div>
 
-        <!-- THE SECRET DRAMA REVEAL BOX (LALABAS LANG KAPAG TAMA ANG CODE) -->
+        <!-- THE SECRET DRAMA REVEAL BOX -->
         <div id="hidden-message-box" class="secret-reveal-box">
             <div class="bg-overlay"></div>
             <div class="reveal-content">
                 <span style="color: #28a745; font-size: 24px; display: block; margin-bottom: 15px;">🎉 MISSION COMPLETED! 🎉</span>
+                Ang galing mo! Napasabog mo mukha ng papa mo at dahil diyan i-screenshot mo ito at i-send sa papa mo para maibigay niya sa iyo ang code para mabuksan ang Final Round!<br><br>
