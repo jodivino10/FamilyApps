@@ -33,7 +33,7 @@
         #kamao-logo { position: absolute; bottom: -20px; right: -20px; font-size: 60px; pointer-events: none; transition: all 0.1s ease-out; }
         
         @keyframes sunog-sabog {
-            0 { transform: scale(1); filter: none; }
+            0% { transform: scale(1); filter: none; }
             50% { transform: scale(1.2) rotate(10deg); filter: sepia(1) saturate(5) hue-rotate(-50deg); }
             100% { transform: scale(0); display: none; }
         }
@@ -77,9 +77,6 @@
     </style>
 </head>
 <body>
-
-    <audio id="beep-sound" src="https://mixkit.co"></audio>
-    <audio id="explosion-sound" src="https://mixkit.co"></audio>
 
     <!-- 1. INTRO SCREEN -->
     <div id="intro-screen">
@@ -151,7 +148,7 @@
             </div>
         </div>
         
-        <!-- ANG ALERT KAHON (WALANG REVEAL SA SIMULA) -->
+        <!-- ANG ALERT KAHON -->
         <div id="final-alert" class="alert-box" style="display:none; background-color:#d4edda; border-color:#c3e6cb; color:#155724; text-align: center;">
             <b style="display:block; text-align:center; margin-bottom:10px; font-size: 18px;">🔒 FINAL ROUND LOCK 🔒</b>
             I-screenshot mo ang screen na ito ngayon at i-send sa papa mo upang maibigay niya sa iyo ang secret code para mabuksan ang Final Round!
@@ -169,3 +166,10 @@
             <div class="reveal-content">
                 <span style="color: #28a745; font-size: 24px; display: block; margin-bottom: 15px;">🎉 MISSION COMPLETED! 🎉</span>
                 Ang galing mo! Napasabog mo mukha ng papa mo at dahil diyan i-screenshot mo ito at i-send sa papa mo para maibigay niya sa iyo ang code para mabuksan ang Final Round!<br><br>
+                Kaya mo talagang pasabugin ang mukha ko! Dahil lang sa laro ay sinuntok mo ako na papa mo.
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function lumipatScreen(alisin, ilabas) {
