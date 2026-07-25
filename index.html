@@ -1,412 +1,231 @@
 <!DOCTYPE html>
 <html lang="tl">
-
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Family Love</title>
-
-<!-- Supabase Loader (Inilagay sa pinakababa para hindi nito harangan o pabagalin ang pagbasa ng page mo) -->
-<script src="https://jsdelivr.net" defer></script>
-
-<style>
-body{
-margin:0;
-font-family:Arial,sans-serif;
-background:#f0f2f5;
-}
-
-.hidden{
-display:none !important;
-}
-
-.card{
-background:blue;
-padding:15px;
-border-radius:12px;
-margin:15px;
-box-shadow:0 1px 4px #ccc;
-color: white; /* Siniguro nating puti ang text sa asul na card */
-}
-
-input{
-padding:12px;
-width:85%;
-border-radius:8px;
-border:1px solid #ccc;
-margin:5px;
-color: black;
-}
-
-button{
-padding:10px 15px;
-border:none;
-border-radius:8px;
-background:#1877f2;
-color:white;
-font-weight:bold;
-cursor:pointer;
-}
-
-.login{
-text-align:center;
-padding-top:80px;
-}
-
-.cover{
-height:200px;
-background:url("https://picsum.photos") center/cover;
-position:relative;
-}
-
-.icon-btn{
-width:40px;
-height:40px;
-border-radius:50%;
-background:#1877f2;
-color:white;
-display:flex;
-align-items:center;
-justify-content:center;
-cursor:pointer;
-font-size:22px;
-border:3px solid white;
-}
-
-input[type=file]{
-display:none;
-}
-
-.cover-upload{
-position:absolute;
-right:15px;
-bottom:15px;
-}
-
-.profile{
-background:white;
-text-align:center;
-padding:20px;
-color: black;
-}
-
-.profile-pic{
-width:120px;
-height:120px;
-border-radius:50%;
-border:5px solid white;
-object-fit:cover;
-margin-top:-80px;
-}
-
-.top-menu{
-text-align:right;
-background:white;
-padding:10px;
-}
-
-.top-menu span{
-margin-left:15px;
-cursor:pointer;
-font-weight:bold;
-color: black;
-}
-
-.tabs{
-display:flex;
-background:white;
-}
-
-.tabs button{
-flex:1;
-border-radius:0;
-color: white;
-background: #1877f2;
-}
-
-.container{
-padding:5px;
-}
-
-.member{
-display:flex;
-align-items:center;
-padding:12px;
-border-bottom:1px solid #ddd;
-cursor:pointer;
-color: black;
-}
-
-.member img{
-width:55px;
-height:55px;
-border-radius:50%;
-margin-right: 10px;
-}
-
-.album{
-display:grid;
-grid-template-columns:repeat(3,1fr);
-gap:8px;
-}
-
-.album img{
-width:100%;
-height:100px;
-object-fit:cover;
-border-radius:8px;
-}
-
-.back{
-font-size:25px;
-cursor:pointer;
-}
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jhaneez Album</title>
+    <!-- Supabase Library (Asynchronous/Deferred loading para hindi mag-hang ang browser) -->
+    <script src="https://jsdelivr.net" defer></script>
+    <style>
+        body { margin: 0; font-family: Arial, sans-serif; background: #f0f2f5; text-align: center; }
+        .hidden { display: none !important; }
+        
+        /* Ibinaba at ibinalik ang orihinal mong Kulay Blue na Card */
+        .card { background: blue; color: white; padding: 20px; border-radius: 12px; margin: 15px auto; max-width: 450px; box-shadow: 0 4px 10px rgba(0,0,0,0.2); }
+        .card h2 { margin-top: 0; color: white; }
+        
+        input { padding: 12px; width: 85%; border-radius: 8px; border: 1px solid #ccc; margin: 5px; font-size: 16px; color: black; box-sizing: border-box; }
+        button { padding: 12px 24px; border: none; border-radius: 8px; background: white; color: blue; font-weight: bold; cursor: pointer; margin-top: 5px; font-size: 16px; }
+        button:hover { background: #e6e6e6; }
+        
+        /* Profile Layout */
+        .profile { padding: 20px; background: white; color: black; margin-bottom: 15px; }
+        .profile-pic { width: 120px; height: 120px; border-radius: 50%; border: 4px solid blue; object-fit: cover; background: #eee; }
+        .logout-btn { background: #e4e6eb; color: black; padding: 6px 12px; font-size: 14px; border-radius: 6px; cursor: pointer; display: inline-block; margin-top: 10px; font-weight: bold; }
+        
+        /* Album List & Folder Layout */
+        .folder-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; padding: 10px; }
+        .folder-card { background: #1877f2; color: white; padding: 20px 10px; border-radius: 10px; cursor: pointer; font-weight: bold; font-size: 16px; position: relative; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
+        .folder-card::before { content: "📁 "; }
+        
+        /* Photo Grid Inside Album */
+        .photo-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-top: 15px; }
+        .photo-grid img { width: 100%; height: 100px; object-fit: cover; border-radius: 8px; background: #eee; }
+        
+        .back-btn { font-size: 25px; cursor: pointer; float: left; display: inline-block; color: white; }
+        .clearfix::after { content: ""; clear: both; display: table; }
+    </style>
 </head>
-
 <body>
 
-<!-- LOGIN -->
-<div id="loginPage" class="login">
-<h1>❤️ Family Love</h1>
-<div class="card">
-<h2>Login</h2>
-<input id="username" placeholder="Username">
-<br>
-<input id="password" type="password" placeholder="Password">
-<br>
-<label style="color: white;">
-<input type="checkbox" onclick="showPassword()" style="width: auto;">
-Show Password
-</label>
-<br><br>
-<button onclick="login()">
-Login
-</button>
-<p id="loginMsg" style="color: yellow; font-weight: bold;"></p>
-</div>
-</div>
+    <!-- 1. LOGIN PAGE -->
+    <div id="loginPage" style="padding-top: 80px;">
+        <h1 style="color: #1877f2;">❤️ Family Love</h1>
+        <div class="card">
+            <h2>Login</h2>
+            <input id="username" placeholder="Username">
+            <br>
+            <input id="password" type="password" placeholder="Password">
+            <br>
+            <button onclick="login()">Login</button>
+            <p id="loginMsg" style="color: yellow; font-weight: bold;"></p>
+        </div>
+    </div>
 
-<!-- MAIN WEBSITE -->
-<div id="mainPage" class="hidden">
-<div class="cover" id="cover">
-<label class="icon-btn cover-upload">
-📷
-<input id="coverUpload" type="file" accept="image/*">
-</label>
-</div>
+    <!-- 2. JHANEEZ MAIN DASHBOARD (ISANG TAB LANG) -->
+    <div id="mainPage" class="hidden">
+        <div class="profile">
+            <img class="profile-pic" src="https://picsum.photos">
+            <h1 style="margin: 10px 0 5px 0;">❤️ JHANEEZ</h1>
+            <p style="margin: 0; color: #555;">Mga sub-folder at alaala ng pamilya</p>
+            <div class="logout-btn" onclick="location.reload()">🚪 Logout</div>
+        </div>
 
-<div class="profile">
-<img id="profilePic" class="profile-pic" src="https://picsum.photos">
-<h1>Family Love ❤️</h1>
-<p>Mga alaala at pagmamahal ng pamilya</p>
-</div>
+        <!-- Create Album Control -->
+        <div class="card">
+            <h2>Gumawa ng Bagong Album</h2>
+            <input id="newAlbumName" placeholder="Pangalan ng Album (Folder)...">
+            <br>
+            <button onclick="createFolder()">➕ Create Folder</button>
+        </div>
 
-<div class="top-menu">
-<span onclick="openSettings()">⚙️ Settings</span>
-<span onclick="logout()">🚪 Logout</span>
-</div>
+        <!-- Mga Folder Layout List -->
+        <div class="card" style="background: white; color: black;">
+            <h3 style="text-align: left; margin-left: 10px;">📂 Iyong mga Albums:</h3>
+            <div id="folderContainer" class="folder-grid"></div>
+        </div>
+    </div>
 
-<div class="tabs">
-<button onclick="openTab('home')">Home</button>
-<button onclick="openTab('family')">Family</button>
-<button onclick="openTab('jhaneez')">JHANEEZ</button>
-</div>
+    <!-- 3. INNER FOLDER CONTENT PAGE -->
+    <div id="folderPage" class="hidden">
+        <div class="card clearfix">
+            <div class="back-btn" onclick="backToDashboard()">⬅️</div>
+            <h2 id="currentFolderName" style="display: inline-block; margin-left: 15px;">Pangalan ng Album</h2>
+            <br><br>
+            
+            <!-- Upload Inside Folder Control -->
+            <label style="background: white; color: blue; padding: 10px 20px; border-radius: 8px; cursor: pointer; font-weight: bold; display: inline-block; margin-bottom: 10px;">
+                📸 Mag-upload ng mga Litrato
+                <input id="photoUpload" type="file" accept="image/*" multiple style="display: none;" onchange="uploadPhotosToFolder()">
+            </label>
 
-<div class="container">
-<div id="home" class="card">
-<h2>Welcome ❤️</h2>
-<p>Maligayang pagdating sa Family Love website.</p>
-</div>
-
-<div id="family" class="card hidden">
-<h2>👨‍👩‍👧 Family Members</h2>
-<div class="member" onclick="openMember('Father')">
-<img src="https://picsum.photos">
-<b>Father</b>
-</div>
-<div class="member" onclick="openMember('Mother')">
-<img src="https://picsum.photos">
-<b>Mother</b>
-</div>
-<div class="member" onclick="openMember('Children')">
-<img src="https://picsum.photos">
-<b>Children</b>
-</div>
-</div>
-
-<div id="jhaneez" class="card hidden" onclick="openJhaneez()">
-<h2>❤️ JHANEEZ</h2>
-<img id="jhaneezPic" src="https://picsum.photos?5" style="width:120px;height:120px;border-radius:50%;object-fit:cover;">
-<p>Tap para buksan ang JHANEEZ profile</p>
-</div>
-</div>
-</div>
-
-<!-- MEMBER PAGE -->
-<div id="memberPage" class="hidden">
-<div class="card">
-<div class="back" onclick="backMain()">⬅️</div>
-<h2 id="memberTitle"></h2>
-<img id="memberImage" src="https://picsum.photos" style="width:120px;height:120px;border-radius:50%;object-fit:cover;">
-<br><br>
-<label class="icon-btn">
-📷
-<input id="memberPhoto" type="file" accept="image/*">
-</label>
-<h3>Album</h3>
-<label class="icon-btn">
-➕
-<input id="memberAlbumUpload" type="file" accept="image/*" multiple>
-</label>
-<div id="memberAlbum" class="album"></div>
-</div>
-</div>
-
-<!-- JHANEEZ PAGE -->
-<div id="jhaneezPage" class="hidden">
-<div class="card">
-<div class="back" onclick="backMain()">⬅️</div>
-<h2>❤️ JHANEEZ</h2>
-<img id="jizProfile" src="https://picsum.photos?8" style="width:120px;height:120px;border-radius:50%;object-fit:cover;">
-<br><br>
-<label class="icon-btn">
-📷
-<input id="jhaneezPhoto" type="file" accept="image/*">
-</label>
-<h3>Albums</h3>
-<label class="icon-btn">
-➕
-<input id="jhaneezAlbum" type="file" accept="image/*" multiple>
-</label>
-<div id="jhaneezPhotos" class="album"></div>
-</div>
-</div>
-
-<!-- SETTINGS PAGE -->
-<div id="settingsPage" class="hidden">
-<div class="card">
-<div class="back" onclick="backMain()">⬅️</div>
-<h2>⚙️ Settings</h2>
-<p>Change Username</p>
-<input id="newUsername">
-<p>Change Password</p>
-<input id="newPassword" type="password">
-<br>
-<label style="color: white;">
-<input type="checkbox" onclick="showNewPassword()" style="width: auto;">
-Show Password
-</label>
-<br><br>
-<button onclick="saveSettings()">Save Changes</button>
-</div>
-</div>
+            <!-- Grid kung saan lalabas ang mga larawan -->
+            <div id="photoContainer" class="photo-grid"></div>
+        </div>
+    </div>
 
 <script>
-// Ibinaba ang default credentials para makapasok ka INSTANTLY kahit nagloloko ang internet
-let savedUser="jhan";
-let savedPass="12345";
+    // Configuration
+    const SUPABASE_URL = "https://supabase.co";
+    const SUPABASE_ANON_KEY = "sb_publishable_Nqn5bv72ij34yLsA1d3RnA_rNqqDz5Y"; 
 
-const SUPABASE_URL = "https://supabase.co";
-const SUPABASE_ANON_KEY = "sb_publishable_Nqn5bv72ij34yLsA1d3RnA_rNqqDz5Y";
-let supabase = null;
+    let supabase = null;
+    let folders = []; // Tagatabi ng mga ginawang folder
+    let activeFolderId = null;
 
-// Hayaang mag-load ang website nang mabilis nang hindi naghihintay sa Supabase
-window.onload = function() {
-    try {
-        if (typeof Supabase !== 'undefined') {
-            supabase = Supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
-        }
-    } catch (e) {
-        console.log("Supabase system loading delayed.");
-    }
-};
+    // Instant at matatag na login credentials
+    let savedUser = "jhan";
+    let savedPass = "12345";
 
-function login(){
-    let u=document.getElementById("username").value;
-    let p=document.getElementById("password").value;
-
-    // Direct match sa local code mo para mabilis at walang loading delay
-    if(u==savedUser && p==savedPass){
-        document.getElementById("loginPage").classList.add("hidden");
-        document.getElementById("mainPage").classList.remove("hidden");
-    }else{
-        document.getElementById("loginMsg").innerHTML="Wrong username or password";
-    }
-}
-
-function showPassword(){
-    let x=document.getElementById("password");
-    x.type = (x.type === "password") ? "text" : "password";
-}
-
-function logout(){ location.reload(); }
-
-function openTab(tab){
-    document.getElementById("home").classList.add("hidden");
-    document.getElementById("family").classList.add("hidden");
-    document.getElementById("jhaneez").classList.add("hidden");
-    document.getElementById(tab).classList.remove("hidden");
-}
-
-function openMember(name){
-    document.getElementById("mainPage").classList.add("hidden");
-    document.getElementById("memberPage").classList.remove("hidden");
-    document.getElementById("memberTitle").innerHTML=name;
-    loadAlbumFromCloud(name, "memberAlbum");
-}
-
-function openJhaneez(){
-    document.getElementById("mainPage").classList.add("hidden");
-    document.getElementById("jhaneezPage").classList.remove("hidden");
-    loadAlbumFromCloud("Jhaneez", "jhaneezPhotos");
-}
-
-function backMain(){
-    document.getElementById("memberPage").classList.add("hidden");
-    document.getElementById("jhaneezPage").classList.add("hidden");
-    document.getElementById("settingsPage").classList.add("hidden");
-    document.getElementById("mainPage").classList.remove("hidden");
-}
-
-function openSettings(){
-    document.getElementById("mainPage").classList.add("hidden");
-    document.getElementById("settingsPage").classList.remove("hidden");
-}
-
-function saveSettings(){
-    savedUser=document.getElementById("newUsername").value;
-    savedPass=document.getElementById("newPassword").value;
-    alert("Settings saved!");
-}
-
-function showNewPassword(){
-    let x=document.getElementById("newPassword");
-    x.type=x.type==="password"?"text":"password";
-}
-
-// Ligtas na pag-upload sa Local Memory AT Cloud Storage nang sabay
-function addLocalAndCloudPhotos(inputId, albumId, cloudCategory) {
-    document.getElementById(inputId).onchange = async function(e) {
-        for(let file of e.target.files) {
-            // 1. Instant Display sa Screen gamit ang orihinal mong FileReader (Napakabilis!)
-            let r=new FileReader();
-            r.onload=function(){
-                let img=document.createElement("img");
-                img.src=r.result;
-                document.getElementById(albumId).appendChild(img);
+    // Pag-load ng Supabase sa background pagkabukas ng browser
+    window.onload = function() {
+        try {
+            if (typeof Supabase !== 'undefined') {
+                supabase = Supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
             }
+        } catch (e) { console.log("Supabase loading held safely."); }
+        
+        // Mag-load ng mga folder mula sa local memory para hindi mag-lag ang system niyo
+        let savedFolders = localStorage.getItem("jhan_folders");
+        if(savedFolders) {
+            folders = JSON.parse(savedFolders);
+        }
+    };
+
+    // Mabilis na Login System
+    function login() {
+        let u = document.getElementById("username").value;
+        let p = document.getElementById("password").value;
+
+        if (u == savedUser && p == savedPass) {
+            document.getElementById("loginPage").classList.add("hidden");
+            document.getElementById("mainPage").classList.remove("hidden");
+            renderFolders(); // Ipakita ang mga folders
+        } else {
+            document.getElementById("loginMsg").innerHTML = "Maling username o password";
+        }
+    }
+
+    // Gagawa ng bagong Subfolder
+    function createFolder() {
+        let nameInput = document.getElementById("newAlbumName");
+        let folderName = nameInput.value.trim();
+        if (folderName === "") return;
+
+        let newFolder = {
+            id: "folder_" + Date.now(),
+            name: folderName,
+            photos: [] // Dito maiipon ang mga instant images niyo
+        };
+
+        folders.push(newFolder);
+        localStorage.setItem("jhan_folders", JSON.stringify(folders)); // Save sa browser local data
+        nameInput.value = "";
+        renderFolders();
+    }
+
+    // Tagasulat ng mga folders sa screen
+    function renderFolders() {
+        let container = document.getElementById("folderContainer");
+        container.innerHTML = "";
+
+        if (folders.length === 0) {
+            container.innerHTML = "<p style='color: #888; grid-column: 1/-1;'>Wala pang nagagawang folder. Gumawa muna sa itaas.</p>";
+            return;
+        }
+
+        folders.forEach(folder => {
+            let div = document.createElement("div");
+            div.className = "folder-card";
+            div.innerHTML = folder.name;
+            div.onclick = function() { openFolder(folder.id); };
+            container.appendChild(div);
+        });
+    }
+
+    // Pagbubukas ng Folder
+    function openFolder(folderId) {
+        activeFolderId = folderId;
+        let folder = folders.find(f => f.id === folderId);
+        if(!folder) return;
+
+        document.getElementById("mainPage").classList.add("hidden");
+        document.getElementById("folderPage").classList.remove("hidden");
+        document.getElementById("currentFolderName").innerHTML = folder.name;
+
+        renderPhotos(folder.photos);
+    }
+
+    function backToDashboard() {
+        document.getElementById("folderPage").classList.add("hidden");
+        document.getElementById("mainPage").classList.remove("hidden");
+        renderFolders();
+    }
+
+    // Tagasulat ng mga litrato sa loob ng Folder
+    function renderPhotos(photoArray) {
+        let container = document.getElementById("photoContainer");
+        container.innerHTML = "";
+
+        if (!photoArray || photoArray.length === 0) {
+            container.innerHTML = "<p style='grid-column: 1/-1;'>Wala pang larawan sa album na ito.</p>";
+            return;
+        }
+
+        photoArray.forEach(url => {
+            let img = document.createElement("img");
+            img.src = url;
+            container.appendChild(img);
+        });
+    }
+
+    // Upload Engine sa Loob ng Folder gamit ang FileReader + Cloud Background Sync
+    function uploadPhotosToFolder() {
+        let files = document.getElementById("photoUpload").files;
+        if (files.length === 0) return;
+
+        let folder = folders.find(f => f.id === activeFolderId);
+        if(!folder) return;
+
+        for (let file of files) {
+            // 1. INSTANT PREVIEW: Mababasa agad ng pamilya mo sa screen kahit mahina ang signal
+            let r = new FileReader();
+            r.onload = function() {
+                folder.photos.push(r.result);
+                localStorage.setItem("jhan_folders", JSON.stringify(folders));
+                renderPhotos(folder.photos); // I-refresh agad ang mga litrato sa screen
+            };
             r.readAsDataURL(file);
 
-            // 2. I-save sa Supabase Cloud sa background para hindi mag-hang ang website mo
+            // 2. CLOUD SYNC: Isasave ang file sa Supabase sa background nang hindi hinaharangan ang phone mo
             if (supabase) {
-                try {
-                    const fileName = `albums/${cloudCategory}/${Date.now()}-${file.name}`;
-                    const { error: storageError } = await supabase.storage.from('photos').upload(fileName, file);
-                    if (!storageError) {
-                        const publicUrl = `${SUPABASE_URL}/storage/v1/object/public/photos/${fileName}`;
-                        await supabase.from('gallery_photos').insert([{ category: cloudCategory, image_url: publicUrl }]);
-                    }
-                } catch(err) { console.log("Background cloud save bypassed."); }
-            }
-        }
