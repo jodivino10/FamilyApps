@@ -1,28 +1,29 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Memories</title>
+
+<title>FamilyLOVE</title>
 
 <link rel="stylesheet" href="style.css">
 
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 
 </head>
+
 <body>
 
 <header class="topbar">
 
 <div class="logo">
-📷 Memories
+FamilyLOVE
 </div>
 
-<div class="top-icons">
+<div class="topButtons">
 
-<button id="uploadBtn">➕</button>
-
-<button id="searchBtn">🔍</button>
+<button id="settingsBtn">⚙️</button>
 
 <button id="menuBtn">☰</button>
 
@@ -30,66 +31,81 @@
 
 </header>
 
-<nav class="nav">
+<nav class="tabs">
 
-<button class="navBtn active">🏠</button>
+<button class="tab active">HOME</button>
 
-<button class="navBtn">👥</button>
+<button class="tab">PHOTOS</button>
 
-<button class="navBtn">📁</button>
+<button class="tab">VIDEOS</button>
 
-<button class="navBtn">🎥</button>
-
-<button class="navBtn">⭐</button>
-
-<button class="navBtn">⚙️</button>
+<button class="tab">ALBUMS</button>
 
 </nav>
 
-<section class="albumBar">
+<section class="composer">
 
-<div id="albumList">
+<div class="avatar">
+F
+</div>
 
-<button class="albumItem">
-📁 Family
+<div class="composerBox">
+
+<input
+type="text"
+id="caption"
+placeholder="What memory are you sharing today?">
+
+<div class="composerBottom">
+
+<label for="mediaInput" class="uploadBtn">
+
+📷 Photo / Video
+
+</label>
+
+<button id="postBtn">
+
+Post
+
 </button>
 
-<button class="albumItem">
-📁 Travel
-</button>
+</div>
 
-<button class="albumItem">
-📁 School
-</button>
+</div>
 
-<button class="albumItem">
-➕ Album
-</button>
+<input
+type="file"
+id="mediaInput"
+accept="image/*,video/*"
+multiple
+hidden>
+
+</section>
+
+<section class="feed">
+
+<div id="emptyFeed" class="empty">
+
+<div class="emptyIcon">
+🖼️
+</div>
+
+<h2>No Memories Yet</h2>
+
+<p>
+
+Share your first family memory.
+
+</p>
+
+</div>
+
+<div id="posts">
 
 </div>
 
 </section>
-
-<main id="timeline">
-
-<h3 class="sectionTitle">
-Today
-</h3>
-
-<div id="gallery" class="gallery">
-
-<!-- Photos appear here -->
-
-</div>
-
-</main>
-
-<input
-type="file"
-id="fileInput"
-multiple
-accept="image/*,video/*"
-hidden>
 
 <script src="script.js"></script>
 
