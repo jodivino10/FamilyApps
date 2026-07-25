@@ -1,91 +1,148 @@
 <!DOCTYPE html>
 <html lang="tl">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Family Love</title>
-<link rel="stylesheet" href="style.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Family Love</title>
+    <!-- Supabase Library -->
+    <script src="https://jsdelivr.net"></script>
+    <style>
+        body { margin: 0; font-family: Arial, sans-serif; background: #f0f2f5; text-align: center; }
+        .hidden { display: none !important; }
+        .card { background: white; padding: 20px; border-radius: 12px; margin: 15px auto; max-width: 450px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
+        input { padding: 10px; width: 80%; border-radius: 6px; border: 1px solid #ccc; margin: 8px 0; }
+        button { padding: 10px 20px; border: none; border-radius: 6px; background: #1877f2; color: white; font-weight: bold; cursor: pointer; margin-top: 5px; }
+        .tabs { display: flex; background: white; margin-bottom: 15px; border-bottom: 1px solid #ddd; }
+        .tabs button { flex: 1; border-radius: 0; background: none; color: #1877f2; padding: 12px; margin: 0; border: none; cursor: pointer; }
+        .tabs button.active { background: #f0f2f5; border-bottom: 3px solid #1877f2; }
+        .album { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-top: 15px; }
+        .album img { width: 100%; height: 90px; object-fit: cover; border-radius: 6px; background: #eee; }
+        .logout-btn { background: #e4e6eb; color: black; padding: 5px 10px; font-size: 12px; border-radius: 4px; cursor: pointer; display: inline-block; margin-bottom: 10px; }
+    </style>
 </head>
 <body>
 
-<!-- LOGIN -->
-<div id="loginPage" class="login">
-  <h1>❤️ Family Love</h1>
-  <div class="card">
-    <h2>Login</h2>
-    <input id="username" placeholder="Username"><br>
-    <input id="password" type="password" placeholder="Password"><br>
-    <label><input type="checkbox" onclick="showPassword()"> Show Password</label><br><br>
-    <button onclick="login()">Login</button>
-    <p id="loginMsg"></p>
-  </div>
-</div>
-
-<!-- MAIN WEBSITE -->
-<div id="mainPage" class="hidden">
-  <!-- cover + profile -->
-  <div class="cover"></div>
-  <div class="profile">
-    <img id="profilePic" class="profile-pic" src="https://picsum.photos/300">
-    <h1>Family Love ❤️</h1>
-    <p>Mga alaala at pagmamahal ng pamilya</p>
-  </div>
-
-  <!-- menu -->
-  <div class="top-menu">
-    <span onclick="openSettings()">⚙️ Settings</span>
-    <span onclick="logout()">🚪 Logout</span>
-  </div>
-
-  <!-- tabs -->
-  <div class="tabs">
-    <button onclick="openTab('home')">Home</button>
-    <button onclick="openTab('family')">Family</button>
-    <button onclick="openTab('jhaneez')">JHANEEZ</button>
-  </div>
-
-  <!-- content -->
-  <div class="container">
-    <div id="home" class="card">
-      <h2>Welcome ❤️</h2>
-      <p>Maligayang pagdating sa Family Love website.</p>
-      <h3>Photo Wall</h3>
-      <div class="wall" id="photoWall"></div>
+    <!-- 1. LOGIN PAGE -->
+    <div id="loginPage" style="padding-top: 80px;">
+        <h1>❤️ Family Love</h1>
+        <div class="card">
+            <h2>Login</h2>
+            <input id="username" placeholder="Username">
+            <input id="password" type="password" placeholder="Password"><br>
+            <button onclick="login()">Login</button>
+            <p id="loginMsg" style="color: red;"></p>
+        </div>
     </div>
 
-    <div id="family" class="card hidden">
-      <h2>👨‍👩‍👧 Family Members</h2>
-      <div class="member" onclick="openMember('Father')"><img src="https://picsum.photos/100?1"><b>Father</b></div>
-      <div class="member" onclick="openMember('Mother')"><img src="https://picsum.photos/100?2"><b>Mother</b></div>
-      <div class="member" onclick="openMember('Children')"><img src="https://picsum.photos/100?3"><b>Children</b></div>
+    <!-- 2. MAIN WEBSITE -->
+    <div id="mainPage" class="hidden">
+        <div style="padding: 20px 10px 5px 10px;">
+            <h1>Family Love ❤️</h1>
+            <div class="logout-btn" onclick="location.reload()">🚪 Logout</div>
+        </div>
+
+        <!-- Navigation Tabs -->
+        <div class="tabs">
+            <button id="tab-Father" onclick="changeTab('Father')" class="active">Father</button>
+            <button id="tab-Mother" onclick="changeTab('Mother')">Mother</button>
+            <button id="tab-Children" onclick="changeTab('Children')">Children</button>
+            <button id="tab-Jhaneez" onclick="changeTab('Jhaneez')">Jhaneez</button>
+        </div>
+
+        <!-- Dynamic Photo Album Section -->
+        <div class="card">
+            <h2 id="albumTitle">Father's Album</h2>
+            
+            <!-- Upload Controls -->
+            <label style="background: #1877f2; color: white; padding: 8px 15px; border-radius: 6px; cursor: pointer; font-weight: bold; display: inline-block;">
+                ➕ Magdagdag ng Larawan
+                <input id="photoUpload" type="file" accept="image/*" multiple style="display: none;" onchange="uploadPhotos()">
+            </label>
+
+            <!-- Container kung saan lalabas ang mga pictures -->
+            <div id="photoGrid" class="album"></div>
+        </div>
     </div>
 
-    <div id="jhaneez" class="card hidden" onclick="openJhaneez()">
-      <h2>❤️ JHANEEZ</h2>
-      <img id="jhaneezPic" src="https://picsum.photos/300?5"
-        style="width:120px;height:120px;border-radius:50%;object-fit:cover;">
-      <p>Tap para buksan ang JHANEEZ profile</p>
-    </div>
-  </div>
-</div>
+<script>
+    // Configuration
+    const SUPABASE_URL = "https://supabase.co";
+    // PASTE MO DITO ANG JHAN CODES KEY MO
+    const SUPABASE_ANON_KEY = "sb_publishable_Nqn5bv72ij34yLsA1d3RnA_rNqqDz5Y"; 
 
-<!-- SETTINGS PAGE -->
-<div id="settingsPage" class="hidden">
-  <div class="card">
-    <div class="back" onclick="backMain()">⬅️</div>
-    <h2>⚙️ Settings</h2>
-    <p>Change Username</p><input id="newUsername">
-    <p>Change Password</p><input id="newPassword" type="password"><br>
-    <label><input type="checkbox" onclick="showNewPassword()"> Show Password</label><br><br>
-    <button onclick="saveSettings()">Save Changes</button>
-    <button onclick="toggleDarkMode()">🌙 Toggle Dark Mode</button>
-    <h3>Upload to Supabase</h3>
-    <input id="multiUpload" type="file" accept="image/*,video/*" multiple>
-    <button onclick="uploadFiles('multiUpload','family-bucket')">Upload</button>
-  </div>
-</div>
+    const supabase = Supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+    let currentCategory = "Father";
 
-<script src="main.js"></script>
-<script type="module" src="supabase.js"></script>
+    // Login Engine
+    async function login() {
+        const u = document.getElementById("username").value;
+        const p = document.getElementById("password").value;
+
+        const { data, error } = await supabase.from('profiles').select('*').eq('id', 'primary_account').single();
+
+        if (error || !data) {
+            document.getElementById("loginMsg").innerHTML = "Error: Ayusin ang SQL tables sa Supabase.";
+            return;
+        }
+
+        if (u === data.username && p === data.password) {
+            document.getElementById("loginPage").classList.add("hidden");
+            document.getElementById("mainPage").classList.remove("hidden");
+            loadAlbum("Father"); // Unang bubuksan ang album ni Father
+        } else {
+            document.getElementById("loginMsg").innerHTML = "Maling username o password";
+        }
+    }
+
+    // Tab Switcher
+    function changeTab(category) {
+        currentCategory = category;
+        document.getElementById("albumTitle").innerHTML = category + "'s Album";
+        
+        // Baguhin ang kulay ng active button
+        ['Father', 'Mother', 'Children', 'Jhaneez'].forEach(cat => {
+            document.getElementById(`tab-${cat}`).classList.remove("active");
+        });
+        document.getElementById(`tab-${category}`).classList.add("active");
+
+        loadAlbum(category);
+    }
+
+    // Load Photos from Cloud Database
+    async function loadAlbum(category) {
+        const grid = document.getElementById("photoGrid");
+        grid.innerHTML = "Loading photos...";
+
+        const { data, error } = await supabase.from('gallery_photos').select('*').eq('category', category).order('created_at', { ascending: false });
+
+        grid.innerHTML = "";
+        if (error) { grid.innerHTML = "Error loading images."; return; }
+
+        data.forEach(photo => {
+            const img = document.createElement("img");
+            img.src = photo.image_url;
+            grid.appendChild(img);
+        });
+    }
+
+    // Upload Engine
+    async function uploadPhotos() {
+        const files = document.getElementById("photoUpload").files;
+        if (files.length === 0) return;
+
+        for (let file of files) {
+            const fileName = `albums/${currentCategory}/${Date.now()}-${file.name}`;
+            const { error } = await supabase.storage.from('photos').upload(fileName, file);
+
+            if (!error) {
+                const publicUrl = `${SUPABASE_URL}/storage/v1/object/public/photos/${fileName}`;
+                await supabase.from('gallery_photos').insert([{ category: currentCategory, image_url: publicUrl }]);
+            } else {
+                alert("Upload Error: " + error.message);
+            }
+        }
+        loadAlbum(currentCategory); // I-refresh ang album kapag tapos na mag-upload
+    }
+</script>
 </body>
 </html>
