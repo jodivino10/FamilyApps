@@ -4,99 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Family Love</title>
-<style>
-body{
-  margin:0;
-  font-family:Arial,sans-serif;
-  background:#f0f2f5;
-}
-.hidden{display:none;}
-.login{
-  text-align:center;
-  padding-top:80px;
-}
-.card{
-  background:white;
-  padding:20px;
-  border-radius:12px;
-  margin:auto;
-  max-width:350px;
-  box-shadow:0 1px 4px #ccc;
-}
-button{
-  padding:10px 15px;
-  border:none;
-  border-radius:8px;
-  background:#1877f2;
-  color:white;
-  font-weight:bold;
-  cursor:pointer;
-  transition:0.3s;
-}
-button:hover{background:#145dbf;}
-.tabs button.active{
-  background:#1877f2;
-  color:white;
-}
-.cover{
-  height:120px;
-  background:url("https://picsum.photos/900/300") center/cover;
-  position:relative;
-}
-.profile{
-  background:white;
-  text-align:center;
-  padding:20px;
-}
-.profile-pic{
-  width:150px;
-  height:150px;
-  border-radius:50%;
-  border:5px solid white;
-  object-fit:cover;
-  margin-top:-75px;
-}
-.wall{
-  display:grid;
-  grid-template-columns:repeat(3,1fr);
-  gap:10px;
-}
-.wall img{
-  width:100%;
-  height:120px;
-  object-fit:cover;
-  border-radius:8px;
-}
-body.dark{background:#18191a;color:#e4e6eb;}
-.card.dark{background:#242526;color:#e4e6eb;}
-@media(max-width:600px){
-  .album{grid-template-columns:repeat(2,1fr);}
-}
-.member{
-  display:flex;
-  align-items:center;
-  padding:12px;
-  border-bottom:1px solid #ddd;
-  cursor:pointer;
-}
-.member img{
-  width:55px;
-  height:55px;
-  border-radius:50%;
-}
-.album{
-  display:grid;
-  grid-template-columns:repeat(3,1fr);
-  gap:8px;
-}
-.album img{
-  width:100%;
-  height:100px;
-  object-fit:cover;
-  border-radius:8px;
-}
-.back{font-size:25px;cursor:pointer;}
-</style>
+<link rel="stylesheet" href="style.css">
 </head>
 <body>
 
@@ -115,21 +23,28 @@ body.dark{background:#18191a;color:#e4e6eb;}
 
 <!-- MAIN WEBSITE -->
 <div id="mainPage" class="hidden">
-  <div class="cover" id="cover"></div>
+  <!-- cover + profile -->
+  <div class="cover"></div>
   <div class="profile">
     <img id="profilePic" class="profile-pic" src="https://picsum.photos/300">
     <h1>Family Love ❤️</h1>
     <p>Mga alaala at pagmamahal ng pamilya</p>
   </div>
+
+  <!-- menu -->
   <div class="top-menu">
     <span onclick="openSettings()">⚙️ Settings</span>
     <span onclick="logout()">🚪 Logout</span>
   </div>
+
+  <!-- tabs -->
   <div class="tabs">
     <button onclick="openTab('home')">Home</button>
     <button onclick="openTab('family')">Family</button>
     <button onclick="openTab('jhaneez')">JHANEEZ</button>
   </div>
+
+  <!-- content -->
   <div class="container">
     <div id="home" class="card">
       <h2>Welcome ❤️</h2>
@@ -137,52 +52,20 @@ body.dark{background:#18191a;color:#e4e6eb;}
       <h3>Photo Wall</h3>
       <div class="wall" id="photoWall"></div>
     </div>
+
     <div id="family" class="card hidden">
       <h2>👨‍👩‍👧 Family Members</h2>
-      <div class="member" onclick="openMember('Father')">
-        <img src="https://picsum.photos/100?1"><b>Father</b>
-      </div>
-      <div class="member" onclick="openMember('Mother')">
-        <img src="https://picsum.photos/100?2"><b>Mother</b>
-      </div>
-      <div class="member" onclick="openMember('Children')">
-        <img src="https://picsum.photos/100?3"><b>Children</b>
-      </div>
+      <div class="member" onclick="openMember('Father')"><img src="https://picsum.photos/100?1"><b>Father</b></div>
+      <div class="member" onclick="openMember('Mother')"><img src="https://picsum.photos/100?2"><b>Mother</b></div>
+      <div class="member" onclick="openMember('Children')"><img src="https://picsum.photos/100?3"><b>Children</b></div>
     </div>
+
     <div id="jhaneez" class="card hidden" onclick="openJhaneez()">
       <h2>❤️ JHANEEZ</h2>
       <img id="jhaneezPic" src="https://picsum.photos/300?5"
         style="width:120px;height:120px;border-radius:50%;object-fit:cover;">
       <p>Tap para buksan ang JHANEEZ profile</p>
     </div>
-  </div>
-</div>
-
-<!-- MEMBER PAGE -->
-<div id="memberPage" class="hidden">
-  <div class="card">
-    <div class="back" onclick="backMain()">⬅️</div>
-    <h2 id="memberTitle"></h2>
-    <img id="memberImage" src="https://picsum.photos/300"
-      style="width:120px;height:120px;border-radius:50%;object-fit:cover;">
-    <br><br>
-    <label class="icon-btn">📷<input id="memberPhoto" type="file" accept="image/*"></label>
-    <h3>Album</h3>
-    <div id="memberAlbum" class="album"></div>
-  </div>
-</div>
-
-<!-- JHANEEZ PAGE -->
-<div id="jhaneezPage" class="hidden">
-  <div class="card">
-    <div class="back" onclick="backMain()">⬅️</div>
-    <h2>❤️ JHANEEZ</h2>
-    <img id="jhaneezProfile" src="https://picsum.photos/300?8"
-      style="width:120px;height:120px;border-radius:50%;object-fit:cover;">
-    <br><br>
-    <label class="icon-btn">📷<input id="jhaneezPhoto" type="file" accept="image/*"></label>
-    <h3>Albums</h3>
-    <div id="jhaneezPhotos" class="album"></div>
   </div>
 </div>
 
@@ -202,28 +85,7 @@ body.dark{background:#18191a;color:#e4e6eb;}
   </div>
 </div>
 
-<script>
-let savedUser="jhan";
-let savedPass="12345";
-let lastTab="home";
-
-function login(){
-  let u=document.getElementById("username").value;
-  let p=document.getElementById("password").value;
-  if(u==savedUser && p==savedPass){
-    document.getElementById("loginPage").classList.add("hidden");
-    document.getElementById("mainPage").classList.remove("hidden");
-    loadWall();
-  }else{
-    document.getElementById("loginMsg").innerHTML="Wrong username or password";
-  }
-}
-function showPassword(){
-  let x=document.getElementById("password");
-  x.type=(x.type==="password")?"text":"password";
-}
-function logout(){location.reload();}
-function openTab(tab){
-  lastTab=tab;
-  document.querySelectorAll(".tabs button").forEach(btn=>btn.classList.remove("active"));
-  event.target.classList.add("
+<script src="main.js"></script>
+<script type="module" src="supabase.js"></script>
+</body>
+</html>
