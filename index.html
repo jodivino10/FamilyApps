@@ -750,7 +750,116 @@ async function uploadPhotos(input, albumId){
     }
 
 
-    alert("Photos uploaded!");
+    alert("Photos uploaded!");</script>// ===============================
+// SUPABASE PHOTO UPLOAD
+// ===============================
+
+async function uploadPhotos(input, albumId){
+
+    const files = input.files;
+
+    if(!files.length){
+        return;
+    }
+
+
+    for(let file of files){
+
+        const fileName =
+        Date.now() + "-" + file.name;
+
+
+        const { data, error } =
+        await supabaseClient
+        .storage
+        .from(bucketName)
+        .upload(fileName, file);
+
+
+        if(error){
+
+            console.log(
+                "Upload Error:",
+                error.message
+            );
+
+            continue;
+        }
+
+
+
+        const { data:urlData } =
+        supabaseClient
+        .storage
+        .from(bucketName)
+        .getPublicUrl(fileName);
+
+
+
+        let img =
+        document.createElement("img");
+
+
+        img.src =
+        urlData.publicUrl;
+
+
+        document
+        .getElementById(albumId)
+        .appendChild(img);
+
+
+    }
+
+
+    alert("Upload Complete!");
+
+}
+
+
+
+// HOME PHOTOS
+
+document
+.getElementById("homePhotos")
+.onchange = function(){
+
+    uploadPhotos(
+        this,
+        "homeAlbum"
+    );
+
+};
+
+
+
+// MEMBER PHOTOS
+
+document
+.getElementById("memberUpload")
+.onchange = function(){
+
+    uploadPhotos(
+        this,
+        "memberAlbum"
+    );
+
+};
+
+
+
+// JHANEEZ PHOTOS
+
+document
+.getElementById("jhaneezUpload")
+.onchange = function(){
+
+    uploadPhotos(
+        this,
+        "jhaneezAlbum"
+    );
+
+};
 
 }
 
