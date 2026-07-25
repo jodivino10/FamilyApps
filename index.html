@@ -3,265 +3,342 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>JHANEEZ</title>
+
+<title>JHANEEZ Family</title>
 
 <style>
+
 *{
-  box-sizing:border-box;
-  font-family:Arial, sans-serif;
+ box-sizing:border-box;
+ font-family:Arial, sans-serif;
 }
 
 body{
-  margin:0;
-  background:#f0f2f5;
+ margin:0;
+ background:#f0f2f5;
 }
 
-/* HEADER */
+
+/* TOP HEADER */
 .header{
-  background:#1877f2;
-  color:white;
-  padding:12px;
-  text-align:center;
-  font-size:26px;
-  font-weight:bold;
+ background:#1877f2;
+ color:white;
+ padding:15px;
+ text-align:center;
+ font-size:28px;
+ font-weight:bold;
 }
 
-/* PROFILE AREA */
-.profile-box{
-  background:white;
-  padding-bottom:15px;
+
+/* PROFILE */
+.profile-container{
+ background:white;
 }
 
-.cover{
-  width:100%;
-  height:150px;
-  object-fit:cover;
-  border-bottom:1px solid #ddd;
+.cover-photo{
+ width:100%;
+ height:130px;
+ object-fit:cover;
 }
 
-.profile{
-  width:130px;
-  height:130px;
-  border-radius:50%;
-  border:5px solid white;
-  object-fit:cover;
-  margin-top:-65px;
-  margin-left:20px;
+
+.profile-photo{
+ width:150px;
+ height:150px;
+ border-radius:50%;
+ border:5px solid white;
+ object-fit:cover;
+ margin-top:-75px;
+ margin-left:20px;
 }
 
-.name{
-  font-size:24px;
-  font-weight:bold;
-  margin-left:20px;
-  margin-top:10px;
+
+.profile-name{
+ font-size:25px;
+ font-weight:bold;
+ margin:10px 20px;
 }
+
 
 /* TABS */
 .tabs{
-  display:flex;
-  overflow-x:auto;
-  background:white;
-  border-top:1px solid #ddd;
-  border-bottom:1px solid #ddd;
+ display:flex;
+ overflow-x:auto;
+ background:white;
+ border-top:1px solid #ddd;
+ border-bottom:1px solid #ddd;
 }
+
 
 .tab{
-  padding:12px 18px;
-  cursor:pointer;
-  font-weight:bold;
-  white-space:nowrap;
+ padding:14px 20px;
+ cursor:pointer;
+ font-weight:bold;
+ white-space:nowrap;
 }
+
 
 .tab:hover{
-  background:#eee;
+ background:#e4e6eb;
 }
 
-/* CONTENT */
+
+/* PAGE */
 .page{
-  display:none;
-  padding:15px;
+ display:none;
+ padding:15px;
 }
 
-.active{
-  display:block;
+
+.page.active{
+ display:block;
 }
 
+
+/* CARD */
 .card{
-  background:white;
-  padding:15px;
-  border-radius:10px;
-  margin-bottom:15px;
+ background:white;
+ padding:18px;
+ border-radius:12px;
+ margin-bottom:15px;
+ box-shadow:0 1px 3px #ccc;
 }
+
 
 /* BUTTON */
-.upload-btn{
-  background:#1877f2;
-  color:white;
-  border:none;
-  padding:12px 20px;
-  border-radius:8px;
-  font-size:16px;
-  cursor:pointer;
+.upload-button{
+ background:#1877f2;
+ color:white;
+ border:0;
+ padding:12px 20px;
+ border-radius:8px;
+ font-size:16px;
+ cursor:pointer;
 }
 
-/* PHOTO BOX */
+
+/* UPLOAD ICON */
+.camera{
+ font-size:55px;
+ cursor:pointer;
+ text-align:center;
+}
+
+
+.photo-grid{
+ display:grid;
+ grid-template-columns:repeat(2,1fr);
+ gap:10px;
+}
+
+
 .photo-box{
-  background:white;
-  padding:20px;
-  border-radius:10px;
-  text-align:center;
+ height:130px;
+ background:#ddd;
+ border-radius:10px;
+ display:flex;
+ align-items:center;
+ justify-content:center;
+ font-size:35px;
 }
 
-.upload-icon{
-  font-size:45px;
-  cursor:pointer;
-}
 
 </style>
+
 </head>
 
 <body>
+
 
 <div class="header">
 JHANEEZ
 </div>
 
-<div class="profile-box">
 
-<img class="cover" src="https://via.placeholder.com/800x200">
+<div class="profile-container">
 
-<img class="profile" src="https://via.placeholder.com/200">
+<img class="cover-photo"
+src="cover.jpg">
 
-<div class="name">
+
+<img class="profile-photo"
+src="profile.jpg">
+
+
+<div class="profile-name">
 JHANEEZ Family
 </div>
 
+
 </div>
+
 
 
 <div class="tabs">
 
-<div class="tab" onclick="openPage('home')">
+<div class="tab" onclick="showPage('home')">
 🏠 Home
 </div>
 
-<div class="tab" onclick="openPage('photos')">
+
+<div class="tab" onclick="showPage('photos')">
 📷 Photos
 </div>
 
-<div class="tab" onclick="openPage('family')">
+
+<div class="tab" onclick="showPage('family')">
 👨‍👩‍👧 Family
 </div>
 
-<div class="tab" onclick="openPage('memories')">
+
+<div class="tab" onclick="showPage('memories')">
 💙 Memories
 </div>
 
+
 </div>
+
 
 
 <div id="home" class="page active">
 
+
 <div class="card">
 
-<h3>Home</h3>
+<h2>Home</h2>
 
 <p>
-Welcome sa JHANEEZ website.
+Welcome sa JHANEEZ Family website.
 </p>
 
-<button class="upload-btn" onclick="openPage('photos')">
+
+<button class="upload-button"
+onclick="showPage('photos')">
+
 📷 Upload Photos
+
 </button>
 
+
 </div>
+
 
 </div><div id="photos" class="page">
 
-<div class="photo-box">
+<div class="card">
 
-<h3>Photos</h3>
+<h2>Photos</h2>
 
-<div class="upload-icon" onclick="fakeUpload()">
+<p>
+Your photo collection
+</p>
+
+
+<div class="camera" onclick="demoUpload()">
 📷
 </div>
 
-<p>
-Click ang camera icon para pumunta sa upload area.
+
+<p style="text-align:center;color:gray;">
+Upload Photos (Demo lang muna)
 </p>
 
-<p style="color:gray;">
-(Design lang muna — hindi pa totoong nag-a-upload sa website)
-</p>
+
+<div class="photo-grid">
+
+<div class="photo-box">🖼️</div>
+
+<div class="photo-box">🖼️</div>
+
+<div class="photo-box">🖼️</div>
+
+<div class="photo-box">🖼️</div>
+
+</div>
+
 
 </div>
 
 </div>
+
 
 
 <div id="family" class="page">
 
 <div class="card">
 
-<h3>Family</h3>
+<h2>Family</h2>
 
 <p>
-Family photos at memories ay ilalagay dito.
+Family memories and pictures.
 </p>
 
-<div class="upload-icon" onclick="openPage('photos')">
+
+<div class="camera" onclick="showPage('photos')">
 📷
 </div>
 
+
 </div>
 
 </div>
+
 
 
 <div id="memories" class="page">
 
 <div class="card">
 
-<h3>Memories</h3>
+<h2>Memories</h2>
 
 <p>
-Mga espesyal na alaala ng JHANEEZ.
+Special moments of JHANEEZ Family.
 </p>
 
-<div class="upload-icon" onclick="openPage('photos')">
+
+<div class="camera" onclick="showPage('photos')">
 📷
 </div>
 
+
 </div>
 
 </div>
+
 
 
 <script>
 
-function openPage(page){
+function showPage(pageName){
 
 let pages = document.querySelectorAll(".page");
 
-pages.forEach(function(item){
-item.classList.remove("active");
+
+pages.forEach(function(page){
+
+page.classList.remove("active");
+
 });
 
-document.getElementById(page).classList.add("active");
+
+document.getElementById(pageName).classList.add("active");
 
 }
 
 
-function fakeUpload(){
 
-openPage("photos");
+function demoUpload(){
 
-alert("Upload Photos area (demo lang muna).");
+alert("Upload Photos feature: Demo mode lang muna.");
+
+showPage("photos");
 
 }
+
 
 </script>
 
 
 </body>
+
 </html>
