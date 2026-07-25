@@ -1,57 +1,54 @@
 <!DOCTYPE html>
 <html lang="tl">
 <head>
+
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Family LOVE 💕💕</title>
+<title>Family Love</title>
 
 <style>
 
-*{
-box-sizing:border-box;
-}
-
 body{
 margin:0;
-font-family:Arial, Orbitron black;
+font-family:Arial,sans-serif;
 background:#f0f2f5;
-color:#333;
 }
 
-.header{
+.cover{
+height:200px;
+background:url("https://picsum.photos/900/400") center/cover;
+}
+
+.btn{
+display:inline-block;
 background:#1877f2;
 color:white;
-padding:20px;
-text-align:center;
-font-size:26px;
+padding:10px 15px;
+margin:10px;
+border-radius:8px;
 font-weight:bold;
+cursor:pointer;
 }
 
 .profile{
 background:white;
 text-align:center;
 padding:20px;
+position:relative;
 }
 
-.profile img{
+.profile-pic{
 width:120px;
 height:120px;
 border-radius:50%;
+border:5px solid white;
+margin-top:-80px;
 object-fit:cover;
-border:4px solid #1877f2;
 }
 
-.profile h2{
-margin:10px 0;
-}
-
-.icons{
-display:flex;
-justify-content:center;
-gap:35px;
-font-size:30px;
-margin-top:15px;
+input[type=file]{
+display:none;
 }
 
 .tabs{
@@ -63,16 +60,10 @@ border-bottom:1px solid #ddd;
 
 .tabs button{
 flex:1;
-padding:15px 5px;
+padding:15px;
 border:none;
 background:white;
-font-size:15px;
 font-weight:bold;
-cursor:pointer;
-}
-
-.tabs button:hover{
-color:#1877f2;
 }
 
 .container{
@@ -81,29 +72,28 @@ padding:15px;
 
 .card{
 background:white;
-padding:18px;
+padding:15px;
 border-radius:12px;
 margin-bottom:15px;
-box-shadow:0 1px 3px #ccc;
+box-shadow:0 1px 4px #ccc;
 }
 
-.album{
-display:grid;
-grid-template-columns:repeat(3,1fr);
-gap:8px;
-}
-
-.album img{
+.post-img{
 width:100%;
-height:110px;
-object-fit:cover;
 border-radius:10px;
+}
+
+.actions{
+display:flex;
+justify-content:space-around;
+padding-top:10px;
+font-weight:bold;
 }
 
 .family{
 display:flex;
-gap:10px;
 align-items:center;
+gap:15px;
 padding:10px;
 border-bottom:1px solid #ddd;
 }
@@ -127,159 +117,32 @@ font-size:25px;
 <body>
 
 
-<div class="header">
-❤️ Family Memories
-</div>
+<div class="cover" id="cover"></div>
+
+<label class="btn">
+📷 Change Cover Photo
+<input type="file" id="coverUpload" accept="image/*">
+</label>
+
 
 
 <div class="profile">
 
-<img src="https://picsum.photos/300">
+<img id="profilePic" class="profile-pic" src="https://picsum.photos/300">
 
-<h2>Our Family</h2>
+<br>
 
-<p>Mga alaala, kwento, at masasayang sandali.</p>
+<label class="btn">
+👤 Change Profile Photo
+<input type="file" id="profileUpload" accept="image/*">
+</label>
 
 
-<div class="icons">
+<h1>Family Love ❤️</h1>
 
-<span>🏠</span>
-<span>👨‍👩‍👧</span>
-<span>📷</span>
+<p>Mga alaala at pagmamahal ng pamilya</p>
 
-</div>
-
-</div>
-
-
-
-<div class="tabs">
-
-<button onclick="show('home')">Home</button>
-
-<button onclick="show('family')">Family</button>
-
-<button onclick="show('photos')">Photos</button>
-
-</div>
-
-
-
-<div class="container">
-
-
-<div id="home" class="card">
-
-<h2>Welcome</h2>
-
-<p>
-Maligayang pagdating sa aming family album.
-Dito namin inilalagay ang mga espesyal na alaala.
-</p>
-
-</div>
-
-
-
-<div id="family" class="card" style="display:none">
-
-<h2>Family Members</h2>
-
-
-<div class="family">
-
-<div class="avatar">👨</div>
-
-<p>Father</p>
-
-</div>
-
-
-<div class="family">
-
-<div class="avatar">👩</div>
-
-<p>Mother</p>
-
-</div>
-
-
-<div class="family">
-
-<div class="avatar">👦</div>
-
-<p>Children</p>
-
-</div>
-
-
-<div class="family">
-
-<div class="avatar">👧</div>
-
-<p>Siblings</p>
-
-</div>
-
-
-</div>
-
-
-
-
-
-<div id="photos" class="card" style="display:none">
-
-
-<h2>Photo Album</h2>
-
-
-<div class="album">
-
-<img src="https://picsum.photos/400/400?1">
-
-<img src="https://picsum.photos/400/400?2">
-
-<img src="https://picsum.photos/400/400?3">
-
-<img src="https://picsum.photos/400/400?4">
-
-<img src="https://picsum.photos/400/400?5">
-
-<img src="https://picsum.photos/400/400?6">
-
-</div>
-
-
-</div>
-
-
-</div>
-
-
-
-
-<script>
-
-function show(page){
-
-document.getElementById("home").style.display="none";
-
-document.getElementById("family").style.display="none";
-
-document.getElementById("photos").style.display="none";
-
-
-document.getElementById(page).style.display="block";
-
-}
-
-</script>
-
-
-
-</body>
-</html><div class="tabs">
+</div><div class="tabs">
 
 <button onclick="showPage('home')">Home</button>
 
@@ -298,34 +161,21 @@ document.getElementById(page).style.display="block";
 
 <div class="card">
 
-<div class="post-head">
-
-<img class="small" src="https://picsum.photos/100">
-
-<b>Family Love ❤️</b>
-
-</div>
-
+<h2>Family Love ❤️</h2>
 
 <p>
-Masayang araw kasama ang aming pamilya.
-Ang bawat sandali ay espesyal.
+" WELCOME !!! To Family Love 💕 💕 💕 
 </p>
 
-
 <img class="post-img" src="https://picsum.photos/600/400">
-
 
 <div class="actions">
 
 <span>👍 Like</span>
-
 <span>💬 Comment</span>
-
 <span>↗ Share</span>
 
 </div>
-
 
 </div>
 
@@ -335,7 +185,6 @@ Ang bawat sandali ay espesyal.
 
 
 <div id="family" style="display:none">
-
 
 <div class="card">
 
@@ -380,7 +229,6 @@ Ang bawat sandali ay espesyal.
 
 </div>
 
-
 </div>
 
 
@@ -389,11 +237,9 @@ Ang bawat sandali ay espesyal.
 
 <div id="photos" style="display:none">
 
-
 <div class="card">
 
 <h2>📷 Family Album</h2>
-
 
 <img class="post-img" src="https://picsum.photos/600/401">
 
@@ -401,9 +247,7 @@ Ang bawat sandali ay espesyal.
 
 <img class="post-img" src="https://picsum.photos/600/403">
 
-
 </div>
-
 
 </div>
 
@@ -431,7 +275,7 @@ document.getElementById(page).style.display="block";
 
 
 
-// Cover photo upload
+// Cover upload
 
 document.getElementById("coverUpload").onchange=function(e){
 
@@ -439,8 +283,8 @@ let reader=new FileReader();
 
 reader.onload=function(){
 
-document.getElementById("cover").style.backgroundImage=
-"url("+reader.result+")";
+document.getElementById("cover").style.backgroundImage =
+"url('"+reader.result+"')";
 
 }
 
@@ -450,7 +294,8 @@ reader.readAsDataURL(e.target.files[0]);
 
 
 
-// Profile photo upload
+
+// Profile upload
 
 document.getElementById("profileUpload").onchange=function(e){
 
@@ -471,5 +316,4 @@ reader.readAsDataURL(e.target.files[0]);
 
 
 </body>
-
 </html>
