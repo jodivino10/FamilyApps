@@ -1,1 +1,36 @@
 
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:'Poppins',sans-serif;
+}
+
+body{
+background:#f0f2f5;
+color:#222;
+}
+
+.topbar{
+height:60px;
+background:#1877f2;
+...@media(max-width:500px){
+
+.album-grid{
+grid-template-columns:1fr;
+}
+
+.topbar{
+padding:10px;
+gap:8px;
+}
+
+.topbar input{
+width:100%;
+}
+
+.logo{
+display:none;
+}
+
+}
