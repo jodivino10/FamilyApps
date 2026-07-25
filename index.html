@@ -1,1 +1,760 @@
+<!DOCTYPE html>
+<html lang="tl">
+<head>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+<title>Family Love</title>
+
+<style>
+
+body{
+margin:0;
+font-family:Arial,sans-serif;
+background:#f0f2f5;
+}
+
+.hidden{
+display:none;
+}
+
+.card{
+background:white;
+padding:15px;
+border-radius:12px;
+margin:15px;
+box-shadow:0 1px 4px #ccc;
+}
+
+button{
+padding:10px 15px;
+border:none;
+border-radius:8px;
+background:#1877f2;
+color:white;
+font-weight:bold;
+cursor:pointer;
+}
+
+input{
+padding:12px;
+width:85%;
+border-radius:8px;
+border:1px solid #ccc;
+margin:5px;
+}
+
+.login{
+text-align:center;
+padding-top:80px;
+}
+
+
+/* COVER */
+
+.cover{
+height:140px;
+background:url("https://picsum.photos/900/400") center/cover;
+position:relative;
+}
+
+
+/* PROFILE */
+
+.profile{
+background:white;
+text-align:center;
+padding:15px;
+}
+
+
+.profile-pic{
+width:180px;
+height:180px;
+border-radius:50%;
+border:5px solid white;
+object-fit:cover;
+margin-top:-90px;
+}
+
+
+/* TOP MENU */
+
+.top-menu{
+background:white;
+text-align:right;
+padding:10px;
+}
+
+.top-menu span{
+margin-left:15px;
+cursor:pointer;
+font-weight:bold;
+}
+
+
+/* TABS */
+
+.tabs{
+display:flex;
+background:white;
+}
+
+.tabs button{
+flex:1;
+border-radius:0;
+}
+
+
+/* UPLOAD ICON */
+
+.icon-btn{
+width:45px;
+height:45px;
+border-radius:50%;
+background:#1877f2;
+color:white;
+display:flex;
+align-items:center;
+justify-content:center;
+font-size:22px;
+cursor:pointer;
+margin:10px;
+}
+
+input[type=file]{
+display:none;
+}
+
+
+/* ALBUM */
+
+.album{
+display:grid;
+grid-template-columns:repeat(3,1fr);
+gap:8px;
+}
+
+.album img{
+width:100%;
+height:100px;
+object-fit:cover;
+border-radius:8px;
+}
+
+
+</style>
+
+</head>
+
+<body>
+
+
+<!-- LOGIN PAGE -->
+
+<div id="loginPage" class="login">
+
+<h1>❤️ Family Love</h1>
+
+<div class="card">
+
+<h2>Login</h2>
+
+<input id="username" placeholder="Username">
+
+<br>
+
+<input id="password" type="password" placeholder="Password">
+
+<br><br>
+
+<button onclick="login()">
+Login
+</button>
+
+<p id="loginMsg"></p>
+
+</div>
+
+</div>
+
+
+<!-- MAIN PAGE -->
+
+<div id="mainPage" class="hidden">
+
+
+<div class="cover">
+
+<label class="icon-btn">
+
+📷
+
+<input type="file" accept="image/*">
+
+</label>
+
+</div>
+
+
+<div class="profile">
+
+<img class="profile-pic"
+src="https://picsum.photos/300">
+
+<h1>Family Love ❤️</h1>
+
+<p>Mga alaala at pagmamahal ng pamilya</p>
+
+</div>
+
+
+<div class="top-menu">
+
+<span>
+⚙️ Settings
+</span>
+
+<span onclick="logout()">
+🚪 Logout
+</span>
+
+</div>
+
+
+<div class="tabs">
+
+<button>
+Home
+</button>
+
+<button>
+Family
+</button>
+
+<button>
+Photos
+</button>
+
+</div><div class="container">
+
+
+<!-- HOME TAB -->
+
+<div id="home" class="card">
+
+<h2>Welcome ❤️</h2>
+
+<p>
+Maligayang pagdating sa Family Love website.
+</p>
+
+
+<h3>Upload Photos</h3>
+
+
+<label class="icon-btn">
+
+📷
+
+<input id="homePhotos"
+type="file"
+accept="image/*"
+multiple>
+
+</label>
+
+
+<div id="homeAlbum" class="album"></div>
+
+
+</div>
+
+
+
+
+<!-- FAMILY TAB -->
+
+<div id="family" class="card hidden">
+
+<h2>👨‍👩‍👧 Family Members</h2>
+
+
+<div class="card">
+
+<img src="https://picsum.photos/100?1"
+style="width:60px;height:60px;border-radius:50%;">
+
+<b>Father</b>
+
+</div>
+
+
+<div class="card">
+
+<img src="https://picsum.photos/100?2"
+style="width:60px;height:60px;border-radius:50%;">
+
+<b>Mother</b>
+
+</div>
+
+
+<div class="card">
+
+<img src="https://picsum.photos/100?3"
+style="width:60px;height:60px;border-radius:50%;">
+
+<b>Children</b>
+
+</div>
+
+
+</div>
+
+
+
+
+<!-- PHOTOS TAB -->
+
+<div id="photos" class="card hidden">
+
+
+<h2>📷 Photos</h2>
+
+
+<div id="photoGallery" class="album"></div>
+
+
+</div>
+
+
+
+</div>
+
+
+</div>
+
+
+
+<!-- MEMBER PAGE -->
+
+<div id="memberPage" class="hidden">
+
+<div class="card">
+
+<h2 id="memberName">
+Member
+</h2>
+
+
+<img id="memberImage"
+src="https://picsum.photos/300"
+style="width:150px;height:150px;border-radius:50%;object-fit:cover;">
+
+
+<br><br>
+
+
+<label class="icon-btn">
+
+📷
+
+<input id="memberUpload"
+type="file"
+accept="image/*"
+multiple>
+
+</label>
+
+
+<div id="memberAlbum"
+class="album"></div>
+
+
+<br>
+
+<button onclick="backHome()">
+⬅️ Back
+</button>
+
+
+</div>
+
+</div><!-- JHANEEZ PAGE -->
+
+<div id="jhaneezPage" class="hidden">
+
+<div class="card">
+
+
+<h2>❤️ JHANEEZ Profile</h2>
+
+
+<img id="jhaneezProfile"
+src="https://picsum.photos/300?8"
+style="width:180px;height:180px;border-radius:50%;object-fit:cover;">
+
+
+<br><br>
+
+
+<label class="icon-btn">
+
+📷
+
+<input id="jhaneezUpload"
+type="file"
+accept="image/*"
+multiple>
+
+</label>
+
+
+<h3>Albums</h3>
+
+
+<div id="jhaneezAlbum" class="album"></div>
+
+
+<br>
+
+
+<button onclick="backHome()">
+⬅️ Back
+</button>
+
+
+</div>
+
+</div>
+
+
+
+
+<!-- SETTINGS PAGE -->
+
+<div id="settingsPage" class="hidden">
+
+<div class="card">
+
+
+<h2>⚙️ Settings</h2>
+
+
+<p>Change Username</p>
+
+<input id="newUsername"
+placeholder="New Username">
+
+
+
+<p>Change Password</p>
+
+<input id="newPassword"
+type="password"
+placeholder="New Password">
+
+
+<br><br>
+
+
+<button onclick="saveSettings()">
+Save Changes
+</button>
+
+
+<br><br>
+
+
+<button onclick="backHome()">
+⬅️ Back
+</button>
+
+
+</div>
+
+</div>
+
+
+
+
+<!-- UPLOAD PREVIEW AREA -->
+
+<div id="uploadPreview"
+class="hidden">
+
+</div>
+
+
+
+<script>
+
+
+let savedUser="jhan";
+
+let savedPass="12345";
+
+
+
+function login(){
+
+
+let u=document.getElementById("username").value;
+
+let p=document.getElementById("password").value;
+
+
+
+if(u===savedUser && p===savedPass){
+
+
+document.getElementById("loginPage")
+.classList.add("hidden");
+
+
+document.getElementById("mainPage")
+.classList.remove("hidden");
+
+
+}else{
+
+
+document.getElementById("loginMsg")
+.innerHTML="Wrong username or password";
+
+
+}
+
+
+}
+
+
+
+function logout(){
+
+location.reload();
+
+}
+
+
+
+function backHome(){
+
+
+document.getElementById("memberPage")
+.classList.add("hidden");
+
+
+document.getElementById("jhaneezPage")
+.classList.add("hidden");
+
+
+document.getElementById("settingsPage")
+.classList.add("hidden");
+
+
+document.getElementById("mainPage")
+.classList.remove("hidden");
+
+
+}
+
+
+
+function openSettings(){
+
+
+document.getElementById("mainPage")
+.classList.add("hidden");
+
+
+document.getElementById("settingsPage")
+.classList.remove("hidden");
+
+
+}
+function saveSettings(){
+
+let newU=document.getElementById("newUsername").value;
+
+let newP=document.getElementById("newPassword").value;
+
+
+if(newU!=""){
+savedUser=newU;
+}
+
+
+if(newP!=""){
+savedPass=newP;
+}
+
+
+alert("Settings saved!");
+
+}
+
+
+
+function openTab(tab){
+
+
+document.getElementById("home")
+.classList.add("hidden");
+
+
+document.getElementById("family")
+.classList.add("hidden");
+
+
+document.getElementById("photos")
+.classList.add("hidden");
+
+
+
+document.getElementById(tab)
+.classList.remove("hidden");
+
+
+}
+
+
+
+
+function showImage(input,container){
+
+
+input.onchange=function(e){
+
+
+for(let file of e.target.files){
+
+
+let reader=new FileReader();
+
+
+
+reader.onload=function(){
+
+
+let img=document.createElement("img");
+
+
+img.src=reader.result;
+
+
+document.getElementById(container)
+.appendChild(img);
+
+
+
+}
+
+
+reader.readAsDataURL(file);
+
+
+}
+
+
+}
+
+
+
+}
+
+
+
+
+showImage(
+document.getElementById("homePhotos"),
+"homeAlbum"
+);
+
+
+
+showImage(
+document.getElementById("memberUpload"),
+"memberAlbum"
+);
+
+
+
+showImage(
+document.getElementById("jhaneezUpload"),
+"jhaneezAlbum"
+);
+
+
+
+</script>// SUPABASE CONNECTION
+
+const SUPABASE_URL = "https://gbtrhsmymwkzfpmfxoiw.supabase.co";
+
+const SUPABASE_KEY = "sb_publishable_Nqn5bv72ij34yLsA1d3RnA_rNqqDz5Y";
+
+const supabaseClient = supabase.createClient(
+    SUPABASE_URL,
+    SUPABASE_KEY
+);
+
+const bucketName = "photos";
+
+console.log("Supabase Ready");// ===============================
+// UPLOAD MULTIPLE PHOTOS TO SUPABASE
+// ===============================
+
+async function uploadPhotos(input, albumId){
+
+    const files = input.files;
+
+    for(let file of files){
+
+        const fileName =
+        Date.now() + "_" + file.name;
+
+
+        const { data, error } =
+        await supabaseClient
+        .storage
+        .from(bucketName)
+        .upload(fileName, file);
+
+
+        if(error){
+
+            console.log("Upload error:", error.message);
+            continue;
+
+        }
+
+
+        const { data:urlData } =
+        supabaseClient
+        .storage
+        .from(bucketName)
+        .getPublicUrl(fileName);
+
+
+        let img = document.createElement("img");
+
+        img.src = urlData.publicUrl;
+
+
+        document.getElementById(albumId)
+        .appendChild(img);
+
+
+    }
+
+
+    alert("Photos uploaded!");
+
+}
+
+
+</body>
+
+</html>
