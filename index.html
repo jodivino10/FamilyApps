@@ -4,31 +4,33 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Jhaneez Album</title>
-    <!-- Supabase Library (Asynchronous/Deferred loading para hindi mag-hang ang browser) -->
+    <!-- Supabase Library (Deferred para hindi harangan ang Login page) -->
     <script src="https://jsdelivr.net" defer></script>
     <style>
         body { margin: 0; font-family: Arial, sans-serif; background: #f0f2f5; text-align: center; }
         .hidden { display: none !important; }
         
-        /* Ibinaba at ibinalik ang orihinal mong Kulay Blue na Card */
-        .card { background: blue; color: white; padding: 20px; border-radius: 12px; margin: 15px auto; max-width: 450px; box-shadow: 0 4px 10px rgba(0,0,0,0.2); }
+        /* Ibinalik ang orihinal mong asul na kulay sa card */
+        .card { background: blue; color: white; padding: 20px; border-radius: 12px; margin: 15px auto; max-width: 450px; box-shadow: 0 4px 10px rgba(0,0,0,0.2); box-sizing: border-box; }
         .card h2 { margin-top: 0; color: white; }
         
-        input { padding: 12px; width: 85%; border-radius: 8px; border: 1px solid #ccc; margin: 5px; font-size: 16px; color: black; box-sizing: border-box; }
-        button { padding: 12px 24px; border: none; border-radius: 8px; background: white; color: blue; font-weight: bold; cursor: pointer; margin-top: 5px; font-size: 16px; }
+        input { padding: 12px; width: 90%; border-radius: 8px; border: 1px solid #ccc; margin: 8px 0; font-size: 16px; color: black; box-sizing: border-box; display: inline-block; }
+        
+        /* Buton na puti at asul tulad ng disenyo mo */
+        button { padding: 12px 24px; border: none; border-radius: 8px; background: white; color: blue; font-weight: bold; cursor: pointer; margin-top: 8px; font-size: 16px; }
         button:hover { background: #e6e6e6; }
         
-        /* Profile Layout */
-        .profile { padding: 20px; background: white; color: black; margin-bottom: 15px; }
+        /* Profile Dashboard layout */
+        .profile { padding: 20px; background: white; color: black; border-bottom: 1px solid #ddd; }
         .profile-pic { width: 120px; height: 120px; border-radius: 50%; border: 4px solid blue; object-fit: cover; background: #eee; }
-        .logout-btn { background: #e4e6eb; color: black; padding: 6px 12px; font-size: 14px; border-radius: 6px; cursor: pointer; display: inline-block; margin-top: 10px; font-weight: bold; }
+        .logout-btn { background: #e4e6eb; color: black; padding: 8px 16px; font-size: 14px; border-radius: 6px; cursor: pointer; display: inline-block; margin-top: 10px; font-weight: bold; }
         
-        /* Album List & Folder Layout */
+        /* Folder at Albums Section */
         .folder-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; padding: 10px; }
-        .folder-card { background: #1877f2; color: white; padding: 20px 10px; border-radius: 10px; cursor: pointer; font-weight: bold; font-size: 16px; position: relative; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
+        .folder-card { background: #1877f2; color: white; padding: 20px 10px; border-radius: 10px; cursor: pointer; font-weight: bold; font-size: 16px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
         .folder-card::before { content: "📁 "; }
         
-        /* Photo Grid Inside Album */
+        /* Grid ng mga uploaded pictures sa loob ng Folder */
         .photo-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-top: 15px; }
         .photo-grid img { width: 100%; height: 100px; object-fit: cover; border-radius: 8px; background: #eee; }
         
@@ -47,12 +49,12 @@
             <br>
             <input id="password" type="password" placeholder="Password">
             <br>
-            <button onclick="login()">Login</button>
-            <p id="loginMsg" style="color: yellow; font-weight: bold;"></p>
+            <button type="button" onclick="login()">Login</button>
+            <p id="loginMsg" style="color: yellow; font-weight: bold; margin-top: 10px;"></p>
         </div>
     </div>
 
-    <!-- 2. JHANEEZ MAIN DASHBOARD (ISANG TAB LANG) -->
+    <!-- 2. MAIN DASHBOARD (ISANG PAGE NA NAKATUTOK KAY JHANEEZ) -->
     <div id="mainPage" class="hidden">
         <div class="profile">
             <img class="profile-pic" src="https://picsum.photos">
@@ -61,111 +63,124 @@
             <div class="logout-btn" onclick="location.reload()">🚪 Logout</div>
         </div>
 
-        <!-- Create Album Control -->
+        <!-- Tagagawa ng Album -->
         <div class="card">
             <h2>Gumawa ng Bagong Album</h2>
             <input id="newAlbumName" placeholder="Pangalan ng Album (Folder)...">
             <br>
-            <button onclick="createFolder()">➕ Create Folder</button>
+            <button type="button" onclick="createFolder()">➕ Create Folder</button>
         </div>
 
-        <!-- Mga Folder Layout List -->
+        <!-- Grid ng mga nagawang Albums -->
         <div class="card" style="background: white; color: black;">
-            <h3 style="text-align: left; margin-left: 10px;">📂 Iyong mga Albums:</h3>
+            <h3 style="text-align: left; margin-top: 0;">📂 Iyong mga Albums:</h3>
             <div id="folderContainer" class="folder-grid"></div>
         </div>
     </div>
 
-    <!-- 3. INNER FOLDER CONTENT PAGE -->
+    <!-- 3. INSIDE FOLDER PAGES -->
     <div id="folderPage" class="hidden">
         <div class="card clearfix">
             <div class="back-btn" onclick="backToDashboard()">⬅️</div>
-            <h2 id="currentFolderName" style="display: inline-block; margin-left: 15px;">Pangalan ng Album</h2>
+            <h2 id="currentFolderName" style="display: inline-block; margin: 0 0 0 15px;">Pangalan ng Album</h2>
             <br><br>
             
-            <!-- Upload Inside Folder Control -->
-            <label style="background: white; color: blue; padding: 10px 20px; border-radius: 8px; cursor: pointer; font-weight: bold; display: inline-block; margin-bottom: 10px;">
+            <!-- Buton para mag-upload sa loob ng Album folder -->
+            <label style="background: white; color: blue; padding: 12px 20px; border-radius: 8px; cursor: pointer; font-weight: bold; display: inline-block; margin-bottom: 10px;">
                 📸 Mag-upload ng mga Litrato
                 <input id="photoUpload" type="file" accept="image/*" multiple style="display: none;" onchange="uploadPhotosToFolder()">
             </label>
 
-            <!-- Grid kung saan lalabas ang mga larawan -->
+            <!-- Lalagyan ng mga litrato -->
             <div id="photoContainer" class="photo-grid"></div>
         </div>
     </div>
 
 <script>
-    // Configuration
+    // Supabase Connection Strings
     const SUPABASE_URL = "https://supabase.co";
     const SUPABASE_ANON_KEY = "sb_publishable_Nqn5bv72ij34yLsA1d3RnA_rNqqDz5Y"; 
 
     let supabase = null;
-    let folders = []; // Tagatabi ng mga ginawang folder
+    let folders = []; 
     let activeFolderId = null;
 
-    // Instant at matatag na login credentials
-    let savedUser = "jhan";
-    let savedPass = "12345";
+    // Fixed credentials tulad ng orihinal mong code
+    const savedUser = "jhan";
+    const savedPass = "12345";
 
-    // Pag-load ng Supabase sa background pagkabukas ng browser
+    // Ligtas na initialization engine (Sinisiguradong hinding-hindi magka-crash)
     window.onload = function() {
+        try {
+            // Kunin ang mga folders mula sa storage ng device kung meron na dati
+            let savedFolders = localStorage.getItem("jhan_folders");
+            if (savedFolders !== null && savedFolders !== undefined && savedFolders !== "") {
+                folders = JSON.parse(savedFolders);
+            }
+        } catch (e) { 
+            console.log("Storage check bypassed safely."); 
+        }
+
+        // Ligtas na pag-konekta sa Supabase sa background
         try {
             if (typeof Supabase !== 'undefined') {
                 supabase = Supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
             }
-        } catch (e) { console.log("Supabase loading held safely."); }
-        
-        // Mag-load ng mga folder mula sa local memory para hindi mag-lag ang system niyo
-        let savedFolders = localStorage.getItem("jhan_folders");
-        if(savedFolders) {
-            folders = JSON.parse(savedFolders);
+        } catch (e) { 
+            console.log("Supabase initialization deferred."); 
         }
     };
 
-    // Mabilis na Login System
+    // Mabilis at Independent na Login Engine
     function login() {
-        let u = document.getElementById("username").value;
-        let p = document.getElementById("password").value;
+        const u = document.getElementById("username").value.trim();
+        const p = document.getElementById("password").value.trim();
 
-        if (u == savedUser && p == savedPass) {
+        if (u === savedUser && p === savedPass) {
             document.getElementById("loginPage").classList.add("hidden");
             document.getElementById("mainPage").classList.remove("hidden");
-            renderFolders(); // Ipakita ang mga folders
+            renderFolders(); 
         } else {
             document.getElementById("loginMsg").innerHTML = "Maling username o password";
         }
     }
 
-    // Gagawa ng bagong Subfolder
+    // Paggawa ng bagong Folder
     function createFolder() {
-        let nameInput = document.getElementById("newAlbumName");
-        let folderName = nameInput.value.trim();
+        const nameInput = document.getElementById("newAlbumName");
+        const folderName = nameInput.value.trim();
         if (folderName === "") return;
 
-        let newFolder = {
+        const newFolder = {
             id: "folder_" + Date.now(),
             name: folderName,
-            photos: [] // Dito maiipon ang mga instant images niyo
+            photos: [] 
         };
 
+        if (!Array.isArray(folders)) { folders = []; }
         folders.push(newFolder);
-        localStorage.setItem("jhan_folders", JSON.stringify(folders)); // Save sa browser local data
+        
+        try {
+            localStorage.setItem("jhan_folders", JSON.stringify(folders));
+        } catch(e){}
+
         nameInput.value = "";
         renderFolders();
     }
 
-    // Tagasulat ng mga folders sa screen
+    // Pagpapakita ng folders sa screen
     function renderFolders() {
-        let container = document.getElementById("folderContainer");
+        const container = document.getElementById("folderContainer");
+        if(!container) return;
         container.innerHTML = "";
 
-        if (folders.length === 0) {
-            container.innerHTML = "<p style='color: #888; grid-column: 1/-1;'>Wala pang nagagawang folder. Gumawa muna sa itaas.</p>";
+        if (!Array.isArray(folders) || folders.length === 0) {
+            container.innerHTML = "<p style='color: #888; grid-column: 1/-1; margin: 10px 0;'>Wala pang nagagawang folder. Gumawa muna sa itaas.</p>";
             return;
         }
 
         folders.forEach(folder => {
-            let div = document.createElement("div");
+            const div = document.createElement("div");
             div.className = "folder-card";
             div.innerHTML = folder.name;
             div.onclick = function() { openFolder(folder.id); };
@@ -173,10 +188,10 @@
         });
     }
 
-    // Pagbubukas ng Folder
+    // Pagbukas sa loob ng partikular na Folder
     function openFolder(folderId) {
         activeFolderId = folderId;
-        let folder = folders.find(f => f.id === folderId);
+        const folder = folders.find(f => f.id === folderId);
         if(!folder) return;
 
         document.getElementById("mainPage").classList.add("hidden");
@@ -192,40 +207,28 @@
         renderFolders();
     }
 
-    // Tagasulat ng mga litrato sa loob ng Folder
+    // Pagpapakita ng mga larawan
     function renderPhotos(photoArray) {
-        let container = document.getElementById("photoContainer");
+        const container = document.getElementById("photoContainer");
+        if(!container) return;
         container.innerHTML = "";
 
         if (!photoArray || photoArray.length === 0) {
-            container.innerHTML = "<p style='grid-column: 1/-1;'>Wala pang larawan sa album na ito.</p>";
+            container.innerHTML = "<p style='grid-column: 1/-1; padding: 20px 0;'>Wala pang larawan sa album na ito.</p>";
             return;
         }
 
         photoArray.forEach(url => {
-            let img = document.createElement("img");
+            const img = document.createElement("img");
             img.src = url;
             container.appendChild(img);
         });
     }
 
-    // Upload Engine sa Loob ng Folder gamit ang FileReader + Cloud Background Sync
+    // Dual-Storage Upload System (Instant Display + Cloud Backup)
     function uploadPhotosToFolder() {
-        let files = document.getElementById("photoUpload").files;
-        if (files.length === 0) return;
+        const fileInput = document.getElementById("photoUpload");
+        if(!fileInput || fileInput.files.length === 0) return;
+        const files = fileInput.files;
 
-        let folder = folders.find(f => f.id === activeFolderId);
-        if(!folder) return;
-
-        for (let file of files) {
-            // 1. INSTANT PREVIEW: Mababasa agad ng pamilya mo sa screen kahit mahina ang signal
-            let r = new FileReader();
-            r.onload = function() {
-                folder.photos.push(r.result);
-                localStorage.setItem("jhan_folders", JSON.stringify(folders));
-                renderPhotos(folder.photos); // I-refresh agad ang mga litrato sa screen
-            };
-            r.readAsDataURL(file);
-
-            // 2. CLOUD SYNC: Isasave ang file sa Supabase sa background nang hindi hinaharangan ang phone mo
-            if (supabase) {
+        const folder = folders.find(f => f.id === activeFolderId);
