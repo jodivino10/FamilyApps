@@ -1,4 +1,266 @@
-<div id="photos" class="card hidden">
+<!DOCTYPE html>
+<html lang="tl">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Family Love</title>
+
+<style>
+
+body{
+margin:0;
+font-family:Arial,sans-serif;
+background:#f0f2f5;
+}
+
+.hidden{
+display:none;
+}
+
+.cover{
+height:200px;
+background:url("https://picsum.photos/900/400") center/cover;
+position:relative;
+}
+
+.icon-btn{
+width:40px;
+height:40px;
+border-radius:50%;
+background:#1877f2;
+color:white;
+display:flex;
+align-items:center;
+justify-content:center;
+cursor:pointer;
+font-size:22px;
+border:3px solid white;
+}
+
+input[type=file]{
+display:none;
+}
+
+.cover-upload{
+position:absolute;
+right:15px;
+bottom:15px;
+}
+
+.profile{
+background:white;
+text-align:center;
+padding:20px;
+position:relative;
+}
+
+.profile-pic{
+width:120px;
+height:120px;
+border-radius:50%;
+border:5px solid white;
+object-fit:cover;
+margin-top:-80px;
+}
+
+.profile-upload{
+margin:auto;
+margin-top:-25px;
+}
+
+.tabs{
+display:flex;
+background:white;
+border-top:1px solid #ddd;
+border-bottom:1px solid #ddd;
+}
+
+.tabs button{
+flex:1;
+padding:15px;
+border:none;
+background:white;
+font-weight:bold;
+cursor:pointer;
+}
+
+.container{
+padding:15px;
+}
+
+.card{
+background:white;
+border-radius:12px;
+padding:15px;
+margin-bottom:15px;
+box-shadow:0 1px 4px #ccc;
+}
+
+.member{
+display:flex;
+align-items:center;
+gap:15px;
+padding:12px;
+border-bottom:1px solid #ddd;
+cursor:pointer;
+}
+
+.member img{
+width:55px;
+height:55px;
+border-radius:50%;
+object-fit:cover;
+}
+
+.small-icon{
+width:30px;
+height:30px;
+border-radius:50%;
+background:#1877f2;
+color:white;
+display:flex;
+align-items:center;
+justify-content:center;
+margin-left:auto;
+}
+
+.album{
+display:grid;
+grid-template-columns:repeat(3,1fr);
+gap:8px;
+}
+
+.album img{
+width:100%;
+height:100px;
+object-fit:cover;
+border-radius:8px;
+}
+
+.back-btn{
+display:inline-block;
+background:#1877f2;
+color:white;
+padding:8px 15px;
+border-radius:20px;
+font-weight:bold;
+cursor:pointer;
+margin-bottom:15px;
+}
+
+</style>
+
+</head>
+
+
+<body>
+
+
+<div id="mainPage">
+
+
+<div class="cover" id="cover">
+
+<label class="icon-btn cover-upload">
+
+📷
+
+<input id="coverUpload" type="file" accept="image/*" class="hidden">
+
+</label>
+
+</div>
+
+
+<div class="profile">
+
+
+<img id="profilePic" class="profile-pic" src="https://picsum.photos/300">
+
+
+<label class="icon-btn profile-upload">
+
+📷
+
+<input id="profileUpload" type="file" accept="image/*" class="hidden">
+
+</label>
+
+
+<h1>Family Love ❤️</h1>
+
+<p>Mga alaala at pagmamahal ng pamilya</p>
+
+</div>
+
+
+<div class="tabs">
+
+<button onclick="openTab('home')">Home</button>
+
+<button onclick="openTab('family')">Family</button>
+
+<button onclick="openTab('photos')">Photos</button>
+
+</div>
+
+
+<div class="container">
+
+
+<div id="home" class="card">
+
+<h2>Welcome ❤️</h2>
+
+<p>
+Maligayang pagdating sa aming Family Love page.
+</p>
+
+</div>
+
+
+<div id="family" class="card hidden">
+
+<h2>👨‍👩‍👧 Family Members</h2>
+
+
+<div class="member" onclick="openMember('father')">
+
+<img src="https://picsum.photos/100?1">
+
+<b>Father</b>
+
+<div class="small-icon">📷</div>
+
+</div>
+
+
+<div class="member" onclick="openMember('mother')">
+
+<img src="https://picsum.photos/100?2">
+
+<b>Mother</b>
+
+<div class="small-icon">📷</div>
+
+</div>
+
+
+<div class="member" onclick="openMember('child')">
+
+<img src="https://picsum.photos/100?3">
+
+<b>Children</b>
+
+<div class="small-icon">📷</div>
+
+</div>
+
+
+</div><div id="photos" class="card hidden">
 
 <h2>📷 Family Album</h2>
 
@@ -19,18 +281,24 @@
 
 
 
+
 <!-- MEMBER PROFILE PAGE -->
 
 <div id="memberPage" class="hidden">
 
 <div class="card">
 
-<div class="back" onclick="backHome()">
-⬅️
+
+<div class="back-btn" onclick="backHome()">
+
+⬅️ Back
+
 </div>
 
 
-<h2 id="memberName">Family Member</h2>
+<h2 id="memberName">
+Family Member
+</h2>
 
 
 <img id="memberPic"
@@ -38,7 +306,7 @@ src="https://picsum.photos/300"
 style="width:120px;height:120px;border-radius:50%;object-fit:cover;">
 
 
-<br>
+<br><br>
 
 
 <label class="icon-btn">
@@ -50,7 +318,7 @@ style="width:120px;height:120px;border-radius:50%;object-fit:cover;">
 </label>
 
 
-<h3>📷 Album</h3>
+<h3>📷 Nested Album</h3>
 
 
 <label class="icon-btn">
@@ -62,26 +330,28 @@ style="width:120px;height:120px;border-radius:50%;object-fit:cover;">
 </label>
 
 
+
 <div id="memberAlbum" class="album">
+
 
 <img src="https://picsum.photos/300?20">
 
 <img src="https://picsum.photos/300?21">
 
-</div>
-
 
 </div>
 
+
 </div>
+
+</div>
+
 
 
 
 
 <script>
 
-
-// Tabs
 
 function openTab(tab){
 
@@ -98,37 +368,34 @@ document.getElementById(tab).classList.remove("hidden");
 
 
 
-// Open member profile
-
-let currentMember="";
-
 
 function openMember(name){
-
-currentMember=name;
 
 document.getElementById("mainPage").classList.add("hidden");
 
 document.getElementById("memberPage").classList.remove("hidden");
 
 
-let title="";
-
-
 if(name=="father"){
-title="Father";
+
+document.getElementById("memberName").innerHTML="Father";
+
 }
+
 
 if(name=="mother"){
-title="Mother";
+
+document.getElementById("memberName").innerHTML="Mother";
+
 }
+
 
 if(name=="child"){
-title="Children";
+
+document.getElementById("memberName").innerHTML="Children";
+
 }
 
-
-document.getElementById("memberName").innerHTML=title;
 
 }
 
@@ -145,11 +412,13 @@ document.getElementById("mainPage").classList.remove("hidden");
 
 
 
+
 // Cover Upload
 
 document.getElementById("coverUpload").onchange=function(e){
 
 let reader=new FileReader();
+
 
 reader.onload=function(){
 
@@ -157,6 +426,7 @@ document.getElementById("cover").style.backgroundImage=
 "url('"+reader.result+"')";
 
 }
+
 
 reader.readAsDataURL(e.target.files[0]);
 
@@ -171,15 +441,18 @@ document.getElementById("profileUpload").onchange=function(e){
 
 let reader=new FileReader();
 
+
 reader.onload=function(){
 
 document.getElementById("profilePic").src=reader.result;
 
 }
 
+
 reader.readAsDataURL(e.target.files[0]);
 
 }
+
 
 
 
@@ -190,15 +463,18 @@ document.getElementById("memberUpload").onchange=function(e){
 
 let reader=new FileReader();
 
+
 reader.onload=function(){
 
 document.getElementById("memberPic").src=reader.result;
 
 }
 
+
 reader.readAsDataURL(e.target.files[0]);
 
 }
+
 
 
 
@@ -207,281 +483,34 @@ reader.readAsDataURL(e.target.files[0]);
 
 document.getElementById("albumUpload").onchange=function(e){
 
-let files=e.target.files;
 
+for(let file of e.target.files){
 
-for(let i=0;i<files.length;i++){
 
 let reader=new FileReader();
 
 
 reader.onload=function(){
 
+
 let img=document.createElement("img");
 
 img.src=reader.result;
+
 
 document.getElementById("memberAlbum").appendChild(img);
 
-}
-
-
-reader.readAsDataURL(files[i]);
 
 }
 
-
-}
-
-
-</script>
-
-
-</body>
-
-</html><div id="jhaneez" class="card hidden">
-
-<h2>❤️ JHANEEZ Profile</h2>
-
-
-<img id="jhaneezPic"
-src="https://picsum.photos/300?50"
-style="width:120px;height:120px;border-radius:50%;object-fit:cover;">
-
-
-<br><br>
-
-
-<label class="icon-btn">
-
-📷
-
-<input id="jhaneezUpload" type="file" accept="image/*">
-
-</label>
-
-
-<h3>JHANEEZ Album 📷</h3>
-
-
-<label class="icon-btn">
-
-➕
-
-<input id="jhaneezAlbumUpload" type="file" accept="image/*" multiple>
-
-</label>
-
-
-<div id="jhaneezAlbum" class="album">
-
-
-<img src="https://picsum.photos/300?51">
-
-<img src="https://picsum.photos/300?52">
-
-
-</div>
-
-
-</div>
-
-
-</div>
-
-
-</div>
-
-
-
-
-
-<!-- JHANEEZ DETAIL PAGE -->
-
-<div id="jhaneezPage" class="hidden">
-
-<div class="card">
-
-
-<div class="back" onclick="backJhaneez()">
-
-⬅️
-
-</div>
-
-
-<h2>❤️ JHANEEZ</h2>
-
-
-<img id="detailPic"
-src="https://picsum.photos/300?60"
-style="width:120px;height:120px;border-radius:50%;object-fit:cover;">
-
-
-<br>
-
-
-<label class="icon-btn">
-
-📷
-
-<input id="detailUpload" type="file" accept="image/*">
-
-</label>
-
-
-
-<h3>Nested Album</h3>
-
-
-<label class="icon-btn">
-
-➕
-
-<input id="detailAlbumUpload" type="file" accept="image/*" multiple>
-
-</label>
-
-
-<div id="detailAlbum" class="album">
-
-</div>
-
-
-</div>
-
-</div>
-
-
-
-
-
-<script>
-
-
-function openTab(page){
-
-document.getElementById("home").classList.add("hidden");
-
-document.getElementById("family").classList.add("hidden");
-
-document.getElementById("jhaneez").classList.add("hidden");
-
-
-document.getElementById(page).classList.remove("hidden");
-
-}
-
-
-
-// JHANEEZ profile upload
-
-document.getElementById("jhaneezUpload").onchange=function(e){
-
-let reader=new FileReader();
-
-reader.onload=function(){
-
-document.getElementById("jhaneezPic").src=reader.result;
-
-}
-
-reader.readAsDataURL(e.target.files[0]);
-
-}
-
-
-
-// JHANEEZ multiple album upload
-
-document.getElementById("jhaneezAlbumUpload").onchange=function(e){
-
-for(let file of e.target.files){
-
-let reader=new FileReader();
-
-reader.onload=function(){
-
-let img=document.createElement("img");
-
-img.src=reader.result;
-
-document.getElementById("jhaneezAlbum").appendChild(img);
-
-}
 
 reader.readAsDataURL(file);
 
-}
 
 }
 
 
-
-// Open JHANEEZ detail
-
-function openJhaneez(){
-
-document.getElementById("mainPage").classList.add("hidden");
-
-document.getElementById("jhaneezPage").classList.remove("hidden");
-
 }
-
-
-
-function backJhaneez(){
-
-document.getElementById("jhaneezPage").classList.add("hidden");
-
-document.getElementById("mainPage").classList.remove("hidden");
-
-}
-
-
-
-// Detail profile upload
-
-document.getElementById("detailUpload").onchange=function(e){
-
-let reader=new FileReader();
-
-reader.onload=function(){
-
-document.getElementById("detailPic").src=reader.result;
-
-}
-
-reader.readAsDataURL(e.target.files[0]);
-
-}
-
-
-
-// Detail album upload
-
-document.getElementById("detailAlbumUpload").onchange=function(e){
-
-for(let file of e.target.files){
-
-let reader=new FileReader();
-
-reader.onload=function(){
-
-let img=document.createElement("img");
-
-img.src=reader.result;
-
-document.getElementById("detailAlbum").appendChild(img);
-
-}
-
-reader.readAsDataURL(file);
-
-}
-
-}
-
 
 
 </script>
