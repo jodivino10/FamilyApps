@@ -279,4 +279,197 @@ document.getElementById(page).style.display="block";
 
 
 </body>
+</html><div class="tabs">
+
+<button onclick="showPage('home')">Home</button>
+
+<button onclick="showPage('family')">Family</button>
+
+<button onclick="showPage('photos')">Photos</button>
+
+</div>
+
+
+
+<div class="container">
+
+
+<div id="home">
+
+<div class="card">
+
+<div class="post-head">
+
+<img class="small" src="https://picsum.photos/100">
+
+<b>Family Love ❤️</b>
+
+</div>
+
+
+<p>
+Masayang araw kasama ang aming pamilya.
+Ang bawat sandali ay espesyal.
+</p>
+
+
+<img class="post-img" src="https://picsum.photos/600/400">
+
+
+<div class="actions">
+
+<span>👍 Like</span>
+
+<span>💬 Comment</span>
+
+<span>↗ Share</span>
+
+</div>
+
+
+</div>
+
+</div>
+
+
+
+
+<div id="family" style="display:none">
+
+
+<div class="card">
+
+<h2>👨‍👩‍👧 Family Members</h2>
+
+
+<div class="family">
+
+<div class="avatar">👨</div>
+
+<p>Father</p>
+
+</div>
+
+
+<div class="family">
+
+<div class="avatar">👩</div>
+
+<p>Mother</p>
+
+</div>
+
+
+<div class="family">
+
+<div class="avatar">👦</div>
+
+<p>Children</p>
+
+</div>
+
+
+<div class="family">
+
+<div class="avatar">👧</div>
+
+<p>Siblings</p>
+
+</div>
+
+
+</div>
+
+
+</div>
+
+
+
+
+
+<div id="photos" style="display:none">
+
+
+<div class="card">
+
+<h2>📷 Family Album</h2>
+
+
+<img class="post-img" src="https://picsum.photos/600/401">
+
+<img class="post-img" src="https://picsum.photos/600/402">
+
+<img class="post-img" src="https://picsum.photos/600/403">
+
+
+</div>
+
+
+</div>
+
+
+</div>
+
+
+
+
+<script>
+
+
+function showPage(page){
+
+document.getElementById("home").style.display="none";
+
+document.getElementById("family").style.display="none";
+
+document.getElementById("photos").style.display="none";
+
+
+document.getElementById(page).style.display="block";
+
+}
+
+
+
+// Cover photo upload
+
+document.getElementById("coverUpload").onchange=function(e){
+
+let reader=new FileReader();
+
+reader.onload=function(){
+
+document.getElementById("cover").style.backgroundImage=
+"url("+reader.result+")";
+
+}
+
+reader.readAsDataURL(e.target.files[0]);
+
+}
+
+
+
+// Profile photo upload
+
+document.getElementById("profileUpload").onchange=function(e){
+
+let reader=new FileReader();
+
+reader.onload=function(){
+
+document.getElementById("profilePic").src=reader.result;
+
+}
+
+reader.readAsDataURL(e.target.files[0]);
+
+}
+
+
+</script>
+
+
+</body>
+
 </html>
