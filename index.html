@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="tl">
+
 <head>
 
 <meta charset="UTF-8">
@@ -15,20 +16,34 @@ font-family:Arial,sans-serif;
 background:#f0f2f5;
 }
 
+.hidden{
+display:none;
+}
+
 .cover{
 height:200px;
 background:url("https://picsum.photos/900/400") center/cover;
+position:relative;
 }
 
-.btn{
-display:inline-block;
+.icon-btn{
+width:40px;
+height:40px;
+border-radius:50%;
 background:#1877f2;
 color:white;
-padding:10px 15px;
-margin:10px;
-border-radius:8px;
-font-weight:bold;
+display:flex;
+align-items:center;
+justify-content:center;
 cursor:pointer;
+font-size:22px;
+border:3px solid white;
+}
+
+.cover-upload{
+position:absolute;
+right:15px;
+bottom:15px;
 }
 
 .profile{
@@ -43,12 +58,15 @@ width:120px;
 height:120px;
 border-radius:50%;
 border:5px solid white;
-margin-top:-80px;
 object-fit:cover;
+margin-top:-80px;
 }
 
-input[type=file]{
-display:none;
+.profile-upload{
+margin:auto;
+margin-top:-25px;
+position:relative;
+z-index:2;
 }
 
 .tabs{
@@ -64,6 +82,7 @@ padding:15px;
 border:none;
 background:white;
 font-weight:bold;
+cursor:pointer;
 }
 
 .container{
@@ -72,69 +91,95 @@ padding:15px;
 
 .card{
 background:white;
-padding:15px;
 border-radius:12px;
+padding:15px;
 margin-bottom:15px;
 box-shadow:0 1px 4px #ccc;
 }
 
-.post-img{
-width:100%;
-border-radius:10px;
-}
-
-.actions{
-display:flex;
-justify-content:space-around;
-padding-top:10px;
-font-weight:bold;
-}
-
-.family{
+.member{
 display:flex;
 align-items:center;
 gap:15px;
-padding:10px;
+padding:12px;
 border-bottom:1px solid #ddd;
+cursor:pointer;
 }
 
-.avatar{
-width:50px;
-height:50px;
+.member img{
+width:55px;
+height:55px;
+border-radius:50%;
+object-fit:cover;
+}
+
+.small-icon{
+width:30px;
+height:30px;
 border-radius:50%;
 background:#1877f2;
 color:white;
 display:flex;
 align-items:center;
 justify-content:center;
-font-size:25px;
+margin-left:auto;
+}
+
+.album{
+display:grid;
+grid-template-columns:repeat(3,1fr);
+gap:8px;
+}
+
+.album img{
+width:100%;
+height:100px;
+object-fit:cover;
+border-radius:8px;
+}
+
+.back{
+font-size:28px;
+cursor:pointer;
 }
 
 </style>
 
 </head>
 
+
 <body>
 
 
-<div class="cover" id="cover"></div>
+<div id="mainPage">
 
-<label class="btn">
-📷 Change Cover Photo
-<input type="file" id="coverUpload" accept="image/*">
+
+<div class="cover" id="cover">
+
+<label class="icon-btn cover-upload">
+
+📷
+
+<input id="coverUpload" type="file" accept="image/*" class="hidden">
+
 </label>
+
+</div>
 
 
 
 <div class="profile">
 
+
 <img id="profilePic" class="profile-pic" src="https://picsum.photos/300">
 
-<br>
 
-<label class="btn">
-👤 Change Profile Photo
-<input type="file" id="profileUpload" accept="image/*">
+<label class="icon-btn profile-upload">
+
+📷
+
+<input id="profileUpload" type="file" accept="image/*" class="hidden">
+
 </label>
 
 
@@ -142,115 +187,149 @@ font-size:25px;
 
 <p>Mga alaala at pagmamahal ng pamilya</p>
 
-</div><div class="tabs">
-
-<button onclick="showPage('home')">Home</button>
-
-<button onclick="showPage('family')">Family</button>
-
-<button onclick="showPage('photos')">Photos</button>
 
 </div>
 
+
+
+<div class="tabs">
+
+<button onclick="openTab('home')">Home</button>
+
+<button onclick="openTab('family')">Family</button>
+
+<button onclick="openTab('photos')">Photos</button>
+
+</div>
 
 
 <div class="container">
 
 
-<div id="home">
+<div id="home" class="card">
 
-<div class="card">
-
-<h2>Family Love ❤️</h2>
+<h2>Welcome ❤️</h2>
 
 <p>
-" WELCOME !!! To Family Love 💕 💕 💕 
+Maligayang pagdating sa aming Family Love page.
 </p>
 
-<img class="post-img" src="https://picsum.photos/600/400">
-
-<div class="actions">
-
-<span>👍 Like</span>
-<span>💬 Comment</span>
-<span>↗ Share</span>
-
-</div>
-
-</div>
-
 </div>
 
 
 
-
-<div id="family" style="display:none">
-
-<div class="card">
+<div id="family" class="card hidden">
 
 <h2>👨‍👩‍👧 Family Members</h2>
 
 
-<div class="family">
+<div class="member" onclick="openMember('father')">
 
-<div class="avatar">👨</div>
+<img src="https://picsum.photos/100?1">
 
-<p>Father</p>
+<b>Father</b>
 
-</div>
-
-
-<div class="family">
-
-<div class="avatar">👩</div>
-
-<p>Mother</p>
+<div class="small-icon">📷</div>
 
 </div>
 
 
-<div class="family">
+<div class="member" onclick="openMember('mother')">
 
-<div class="avatar">👦</div>
+<img src="https://picsum.photos/100?2">
 
-<p>Children</p>
+<b>Mother</b>
 
-</div>
-
-
-<div class="family">
-
-<div class="avatar">👧</div>
-
-<p>Siblings</p>
+<div class="small-icon">📷</div>
 
 </div>
 
 
-</div>
+<div class="member" onclick="openMember('child')">
+
+<img src="https://picsum.photos/100?3">
+
+<b>Children</b>
+
+<div class="small-icon">📷</div>
 
 </div>
 
 
-
-
-
-<div id="photos" style="display:none">
-
-<div class="card">
+</div><div id="photos" class="card hidden">
 
 <h2>📷 Family Album</h2>
 
-<img class="post-img" src="https://picsum.photos/600/401">
+<div class="album">
 
-<img class="post-img" src="https://picsum.photos/600/402">
+<img src="https://picsum.photos/300?10">
+<img src="https://picsum.photos/300?11">
+<img src="https://picsum.photos/300?12">
 
-<img class="post-img" src="https://picsum.photos/600/403">
+</div>
+
+</div>
+
 
 </div>
 
 </div>
 
+
+
+<!-- MEMBER PROFILE PAGE -->
+
+<div id="memberPage" class="hidden">
+
+<div class="card">
+
+<div class="back" onclick="backHome()">
+⬅️
+</div>
+
+
+<h2 id="memberName">Family Member</h2>
+
+
+<img id="memberPic"
+src="https://picsum.photos/300"
+style="width:120px;height:120px;border-radius:50%;object-fit:cover;">
+
+
+<br>
+
+
+<label class="icon-btn">
+
+📷
+
+<input id="memberUpload" type="file" accept="image/*" class="hidden">
+
+</label>
+
+
+<h3>📷 Album</h3>
+
+
+<label class="icon-btn">
+
+➕
+
+<input id="albumUpload" type="file" accept="image/*" multiple class="hidden">
+
+</label>
+
+
+<div id="memberAlbum" class="album">
+
+<img src="https://picsum.photos/300?20">
+
+<img src="https://picsum.photos/300?21">
+
+</div>
+
+
+</div>
 
 </div>
 
@@ -260,22 +339,71 @@ font-size:25px;
 <script>
 
 
-function showPage(page){
+// Tabs
 
-document.getElementById("home").style.display="none";
+function openTab(tab){
 
-document.getElementById("family").style.display="none";
+document.getElementById("home").classList.add("hidden");
 
-document.getElementById("photos").style.display="none";
+document.getElementById("family").classList.add("hidden");
+
+document.getElementById("photos").classList.add("hidden");
 
 
-document.getElementById(page).style.display="block";
+document.getElementById(tab).classList.remove("hidden");
 
 }
 
 
 
-// Cover upload
+// Open member profile
+
+let currentMember="";
+
+
+function openMember(name){
+
+currentMember=name;
+
+document.getElementById("mainPage").classList.add("hidden");
+
+document.getElementById("memberPage").classList.remove("hidden");
+
+
+let title="";
+
+
+if(name=="father"){
+title="Father";
+}
+
+if(name=="mother"){
+title="Mother";
+}
+
+if(name=="child"){
+title="Children";
+}
+
+
+document.getElementById("memberName").innerHTML=title;
+
+}
+
+
+
+
+function backHome(){
+
+document.getElementById("memberPage").classList.add("hidden");
+
+document.getElementById("mainPage").classList.remove("hidden");
+
+}
+
+
+
+// Cover Upload
 
 document.getElementById("coverUpload").onchange=function(e){
 
@@ -283,7 +411,7 @@ let reader=new FileReader();
 
 reader.onload=function(){
 
-document.getElementById("cover").style.backgroundImage =
+document.getElementById("cover").style.backgroundImage=
 "url('"+reader.result+"')";
 
 }
@@ -295,7 +423,7 @@ reader.readAsDataURL(e.target.files[0]);
 
 
 
-// Profile upload
+// Profile Upload
 
 document.getElementById("profileUpload").onchange=function(e){
 
@@ -312,8 +440,61 @@ reader.readAsDataURL(e.target.files[0]);
 }
 
 
+
+
+// Member Profile Upload
+
+document.getElementById("memberUpload").onchange=function(e){
+
+let reader=new FileReader();
+
+reader.onload=function(){
+
+document.getElementById("memberPic").src=reader.result;
+
+}
+
+reader.readAsDataURL(e.target.files[0]);
+
+}
+
+
+
+
+// Multiple Album Upload
+
+document.getElementById("albumUpload").onchange=function(e){
+
+let files=e.target.files;
+
+
+for(let i=0;i<files.length;i++){
+
+let reader=new FileReader();
+
+
+reader.onload=function(){
+
+let img=document.createElement("img");
+
+img.src=reader.result;
+
+document.getElementById("memberAlbum").appendChild(img);
+
+}
+
+
+reader.readAsDataURL(files[i]);
+
+}
+
+
+}
+
+
 </script>
 
 
 </body>
+
 </html>
