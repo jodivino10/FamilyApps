@@ -3,110 +3,93 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>My Photo Albums</title>
+<title>Memories</title>
 
 <link rel="stylesheet" href="style.css">
 
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
 </head>
-
 <body>
 
 <header class="topbar">
 
 <div class="logo">
-📘 My Albums
+📷 Memories
 </div>
 
-<input type="text" id="searchBox" placeholder="Search albums...">
+<div class="top-icons">
 
-<button id="createAlbumBtn">
-➕ New Album
-</button>
+<button id="uploadBtn">➕</button>
+
+<button id="searchBtn">🔍</button>
+
+<button id="menuBtn">☰</button>
+
+</div>
 
 </header>
 
-<div class="container">
+<nav class="nav">
 
-<aside class="sidebar">
+<button class="navBtn active">🏠</button>
 
-<h3>Navigation</h3>
+<button class="navBtn">👥</button>
 
-<ul>
+<button class="navBtn">📁</button>
 
-<li class="active">
-🏠 Home
-</li>
+<button class="navBtn">🎥</button>
 
-<li>
-📁 Albums
-</li>
+<button class="navBtn">⭐</button>
 
-<li>
-🎥 Videos
-</li>
+<button class="navBtn">⚙️</button>
 
-<li>
-⭐ Favorites
-</li>
+</nav>
 
-<li>
-🗑 Recycle Bin
-</li>
+<section class="albumBar">
 
-<li>
-⚙ Settings
-</li>
+<div id="albumList">
 
-</ul>
+<button class="albumItem">
+📁 Family
+</button>
 
-</aside>
+<button class="albumItem">
+📁 Travel
+</button>
 
-<main class="content">
+<button class="albumItem">
+📁 School
+</button>
 
-<h2>Your Albums</h2>
+<button class="albumItem">
+➕ Album
+</button>
 
-<div id="albumGrid" class="album-grid">
+</div>
 
-<!-- Albums appear here -->
+</section>
+
+<main id="timeline">
+
+<h3 class="sectionTitle">
+Today
+</h3>
+
+<div id="gallery" class="gallery">
+
+<!-- Photos appear here -->
 
 </div>
 
 </main>
 
-</div>
-
-<!-- Create Album Modal -->
-
-<div id="albumModal" class="modal">
-
-<div class="modal-content">
-
-<h2>Create Album</h2>
-
 <input
-type="text"
-id="albumName"
-placeholder="Album name">
-
-<div class="modal-buttons">
-
-<button id="saveAlbum">
-Save
-</button>
-
-<button id="cancelAlbum">
-Cancel
-</button>
-
-</div>
-
-</div>
-
-</div>
+type="file"
+id="fileInput"
+multiple
+accept="image/*,video/*"
+hidden>
 
 <script src="script.js"></script>
 
