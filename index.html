@@ -1,15 +1,282 @@
-<header class="topbar">
+<!DOCTYPE html>
+<html lang="tl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<div class="logo">
-FamilyLOVE
+<title>Family Memories</title>
+
+<style>
+
+*{
+box-sizing:border-box;
+}
+
+body{
+margin:0;
+font-family:Arial, sans-serif;
+background:#f0f2f5;
+color:#333;
+}
+
+.header{
+background:#1877f2;
+color:white;
+padding:20px;
+text-align:center;
+font-size:26px;
+font-weight:bold;
+}
+
+.profile{
+background:white;
+text-align:center;
+padding:20px;
+}
+
+.profile img{
+width:120px;
+height:120px;
+border-radius:50%;
+object-fit:cover;
+border:4px solid #1877f2;
+}
+
+.profile h2{
+margin:10px 0;
+}
+
+.icons{
+display:flex;
+justify-content:center;
+gap:35px;
+font-size:30px;
+margin-top:15px;
+}
+
+.tabs{
+display:flex;
+background:white;
+border-top:1px solid #ddd;
+border-bottom:1px solid #ddd;
+}
+
+.tabs button{
+flex:1;
+padding:15px 5px;
+border:none;
+background:white;
+font-size:15px;
+font-weight:bold;
+cursor:pointer;
+}
+
+.tabs button:hover{
+color:#1877f2;
+}
+
+.container{
+padding:15px;
+}
+
+.card{
+background:white;
+padding:18px;
+border-radius:12px;
+margin-bottom:15px;
+box-shadow:0 1px 3px #ccc;
+}
+
+.album{
+display:grid;
+grid-template-columns:repeat(3,1fr);
+gap:8px;
+}
+
+.album img{
+width:100%;
+height:110px;
+object-fit:cover;
+border-radius:10px;
+}
+
+.family{
+display:flex;
+gap:10px;
+align-items:center;
+padding:10px;
+border-bottom:1px solid #ddd;
+}
+
+.avatar{
+width:50px;
+height:50px;
+border-radius:50%;
+background:#1877f2;
+color:white;
+display:flex;
+align-items:center;
+justify-content:center;
+font-size:25px;
+}
+
+</style>
+
+</head>
+
+<body>
+
+
+<div class="header">
+❤️ Family Memories
 </div>
 
-<div class="topButtons">
 
-<button class="iconBtn">⚙️</button>
+<div class="profile">
 
-<button class="iconBtn">☰</button>
+<img src="https://picsum.photos/300">
+
+<h2>Our Family</h2>
+
+<p>Mga alaala, kwento, at masasayang sandali.</p>
+
+
+<div class="icons">
+
+<span>🏠</span>
+<span>👨‍👩‍👧</span>
+<span>📷</span>
 
 </div>
 
-</header>
+</div>
+
+
+
+<div class="tabs">
+
+<button onclick="show('home')">Home</button>
+
+<button onclick="show('family')">Family</button>
+
+<button onclick="show('photos')">Photos</button>
+
+</div>
+
+
+
+<div class="container">
+
+
+<div id="home" class="card">
+
+<h2>Welcome</h2>
+
+<p>
+Maligayang pagdating sa aming family album.
+Dito namin inilalagay ang mga espesyal na alaala.
+</p>
+
+</div>
+
+
+
+<div id="family" class="card" style="display:none">
+
+<h2>Family Members</h2>
+
+
+<div class="family">
+
+<div class="avatar">👨</div>
+
+<p>Father</p>
+
+</div>
+
+
+<div class="family">
+
+<div class="avatar">👩</div>
+
+<p>Mother</p>
+
+</div>
+
+
+<div class="family">
+
+<div class="avatar">👦</div>
+
+<p>Children</p>
+
+</div>
+
+
+<div class="family">
+
+<div class="avatar">👧</div>
+
+<p>Siblings</p>
+
+</div>
+
+
+</div>
+
+
+
+
+
+<div id="photos" class="card" style="display:none">
+
+
+<h2>Photo Album</h2>
+
+
+<div class="album">
+
+<img src="https://picsum.photos/400/400?1">
+
+<img src="https://picsum.photos/400/400?2">
+
+<img src="https://picsum.photos/400/400?3">
+
+<img src="https://picsum.photos/400/400?4">
+
+<img src="https://picsum.photos/400/400?5">
+
+<img src="https://picsum.photos/400/400?6">
+
+</div>
+
+
+</div>
+
+
+</div>
+
+
+
+
+<script>
+
+function show(page){
+
+document.getElementById("home").style.display="none";
+
+document.getElementById("family").style.display="none";
+
+document.getElementById("photos").style.display="none";
+
+
+document.getElementById(page).style.display="block";
+
+}
+
+</script>
+
+
+
+</body>
+</html>
