@@ -4,28 +4,28 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Jhaneez Album</title>
-    <!-- Kumokonekta nang diretso sa iyong style.css sa GitHub -->
+    <!-- Connected to your style.css in GitHub -->
     <link rel="stylesheet" href="style.css">
     <style>
         .hidden { display: none !important; }
         
-        /* Login Form Setup gamit ang modernong Facebook style mo */
+        /* Login Card View Setup */
         .login-container { max-width: 400px; margin: 80px auto; padding: 20px; text-align: center; }
         .login-card { background: white; padding: 30px; border-radius: 20px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); }
         .login-card h2 { color: #1877f2; margin-bottom: 20px; }
         .login-input { width: 100%; padding: 12px; margin: 10px 0; border: 1px solid #ccc; border-radius: 8px; font-size: 16px; box-sizing: border-box; color: black; }
         .login-btn { width: 100%; background: #1877f2; color: white; border: none; padding: 12px; border-radius: 8px; font-size: 16px; font-weight: bold; cursor: pointer; margin-top: 10px; }
         
-        /* Album Folders Layout Grid */
+        /* Folder Item Grid View */
         .folder-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; padding: 12px; }
         .folder-item { background: #1877f2; color: white; padding: 25px 10px; border-radius: 14px; text-align: center; font-weight: bold; cursor: pointer; box-shadow: 0 4px 10px rgba(24,119,242,0.2); }
         .folder-item::before { content: "📁 "; }
 
-        /* Grid Layout para sa mga Litrato */
+        /* Media Assets Item Grid View */
         .photo-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; padding: 12px; }
         .photo-grid img { width: 100%; height: 110px; object-fit: cover; border-radius: 10px; background: #eee; box-shadow: 0 2px 6px rgba(0,0,0,0.05); cursor: pointer; }
 
-        /* Facebook-Style Zoom/Lightbox Overlay */
+        /* Zoom Modals Engine Layout Overlay */
         .lightbox { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.9); z-index: 9999; display: flex; align-items: center; justify-content: center; }
         .lightbox img { max-width: 95%; max-height: 85%; object-fit: contain; border-radius: 8px; box-shadow: 0 5px 25px rgba(0,0,0,0.5); }
         .lightbox-close { position: absolute; top: 20px; right: 20px; font-size: 30px; color: white; cursor: pointer; font-weight: bold; user-select: none; }
@@ -39,7 +39,7 @@
             <h2>❤️ Family Love</h2>
             <input id="username" class="login-input" placeholder="Username">
             <input id="password" class="login-input" type="password" placeholder="Password">
-            <button class="login-btn" type="button" onclick="login()">Login</button>
+            <button id="submitLoginBtn" class="login-btn" type="button">Login</button>
             <p id="loginMsg" style="color: red; font-weight: bold; margin-top: 10px; font-size: 14px;"></p>
         </div>
     </div>
@@ -105,10 +105,10 @@
     </div>
 
 <script>
-    // Direktang Login Engine (Nakasulat sa pinakatuktok para laging gumana agad)
-    function login() {
-        const u = document.getElementById("username").value.trim();
-        const p = document.getElementById("password").value.trim();
+    // Independent Login Engine Hook Up
+    document.getElementById("submitLoginBtn").addEventListener("click", function() {
+        var u = document.getElementById("username").value.trim();
+        var p = document.getElementById("password").value.trim();
 
         if (u === "jhan" && p === "12345") {
             document.getElementById("loginPage").classList.add("hidden");
@@ -117,25 +117,25 @@
         } else {
             document.getElementById("loginMsg").innerHTML = "Maling username o password";
         }
-    }
+    });
 
-    let folders = []; 
-    let activeFolderId = null;
+    var folders = []; 
+    var activeFolderId = null;
 
-    // Kunin ang lumang records mula sa phone storage
+    // Load Local Memory Safely
     try {
-        let savedData = localStorage.getItem("jhan_albums");
+        var savedData = localStorage.getItem("jhan_albums");
         if (savedData) {
             folders = JSON.parse(savedData);
         }
     } catch (e) { folders = []; }
 
     function createFolder() {
-        const nameInput = document.getElementById("newAlbumName");
-        const folderName = nameInput.value.trim();
+        var nameInput = document.getElementById("newAlbumName");
+        var folderName = nameInput.value.trim();
         if (folderName === "") return;
 
-        const newFolder = {
+        var newFolder = {
             id: "folder_" + Date.now(),
             name: folderName,
             photos: [] 
@@ -150,8 +150,8 @@
     }
 
     function renderFolders() {
-        const container = document.getElementById("folderContainer");
-        const emptyState = document.getElementById("emptyState");
+        var container = document.getElementById("folderContainer");
+        var emptyState = document.getElementById("emptyState");
         if(!container || !emptyState) return;
         
         container.innerHTML = "";
@@ -162,8 +162,8 @@
         }
 
         emptyState.classList.add("hidden");
-        folders.forEach(folder => {
-            const div = document.createElement("div");
+        folders.forEach(function(folder) {
+            var div = document.createElement("div");
             div.className = "folder-item";
             div.innerHTML = folder.name;
             div.onclick = function() { openFolder(folder.id); };
@@ -173,7 +173,7 @@
 
     function openFolder(folderId) {
         activeFolderId = folderId;
-        const folder = folders.find(f => f.id === folderId);
+        var folder = folders.find(function(f) { return f.id === folderId; });
         if(!folder) return;
 
         document.getElementById("mainPage").classList.add("hidden");
@@ -190,7 +190,7 @@
     }
 
     function renderPhotos(photoArray) {
-        const container = document.getElementById("photoContainer");
+        var container = document.getElementById("photoContainer");
         if(!container) return;
         container.innerHTML = "";
 
@@ -199,8 +199,8 @@
             return;
         }
 
-        photoArray.forEach(url => {
-            const img = document.createElement("img");
+        photoArray.forEach(function(url) {
+            var img = document.createElement("img");
             img.src = url;
             img.onclick = function() { zoomImage(url); };
             container.appendChild(img);
@@ -208,29 +208,29 @@
     }
 
     function uploadPhotosToFolder() {
-        const fileInput = document.getElementById("photoUpload");
+        var fileInput = document.getElementById("photoUpload");
         if(!fileInput || fileInput.files.length === 0) return;
-        const files = fileInput.files;
+        var files = fileInput.files;
 
-        const folder = folders.find(f => f.id === activeFolderId);
+        var folder = folders.find(function(f) { return f.id === activeFolderId; });
         if(!folder) return;
 
-        let loadedCount = 0;
-        for (let file of files) {
-            const r = new FileReader();
-            r.onload = function() {
-                if(!folder.photos) { folder.photos = []; }
-                folder.photos.push(r.result);
-                
-                loadedCount++;
-                if (loadedCount === files.length) {
-                    saveToDevice();
-                    renderPhotos(folder.photos); 
-                }
-            };
-            r.readAsDataURL(file);
+        var loadedCount = 0;
+        for (var i = 0; i < files.length; i++) {
+            (function(file) {
+                var r = new FileReader();
+                r.onload = function() {
+                    if(!folder.photos) { folder.photos = []; }
+                    folder.photos.push(r.result);
+                    
+                    loadedCount++;
+                    if (loadedCount === files.length) {
+                        saveToDevice();
+                        renderPhotos(folder.photos); 
+                    }
+                };
+                r.readAsDataURL(file);
+            })(files[i]);
         }
     }
 
-    function saveToDevice() {
-        try {
