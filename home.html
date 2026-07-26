@@ -9,23 +9,23 @@
     <style>
         .hidden { display: none !important; }
         
-        /* Login Card View Setup */
-        .login-container { max-width: 400px; margin: 80px auto; padding: 20px; text-align: center; }
+        /* Siguradong disenyo para sa Login Box */
+        .login-container { max-width: 400px; margin: 80px auto; padding: 20px; text-align: center; font-family: Arial, sans-serif; }
         .login-card { background: white; padding: 30px; border-radius: 20px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); }
         .login-card h2 { color: #1877f2; margin-bottom: 20px; }
         .login-input { width: 100%; padding: 12px; margin: 10px 0; border: 1px solid #ccc; border-radius: 8px; font-size: 16px; box-sizing: border-box; color: black; }
         .login-btn { width: 100%; background: #1877f2; color: white; border: none; padding: 12px; border-radius: 8px; font-size: 16px; font-weight: bold; cursor: pointer; margin-top: 10px; }
         
-        /* Album Folders Layout Grid */
+        /* Disenyo para sa mga Album Folders */
         .folder-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; padding: 12px; }
         .folder-item { background: #1877f2; color: white; padding: 25px 10px; border-radius: 14px; text-align: center; font-weight: bold; cursor: pointer; box-shadow: 0 4px 10px rgba(24,119,242,0.2); }
         .folder-item::before { content: "📁 "; }
 
-        /* Media Assets Item Grid View */
+        /* Disenyo para sa Grid ng mga Larawan */
         .photo-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; padding: 12px; }
         .photo-grid img { width: 100%; height: 110px; object-fit: cover; border-radius: 10px; background: #eee; box-shadow: 0 2px 6px rgba(0,0,0,0.05); cursor: pointer; }
 
-        /* Zoom Modals Engine Layout Overlay */
+        /* Facebook-Style Zoom Overlay Setup */
         .lightbox { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.9); z-index: 9999; display: flex; align-items: center; justify-content: center; }
         .lightbox img { max-width: 95%; max-height: 85%; object-fit: contain; border-radius: 8px; box-shadow: 0 5px 25px rgba(0,0,0,0.5); }
         .lightbox-close { position: absolute; top: 20px; right: 20px; font-size: 30px; color: white; cursor: pointer; font-weight: bold; user-select: none; }
@@ -39,12 +39,12 @@
             <h2>❤️ Family Love</h2>
             <input id="username" class="login-input" placeholder="Username">
             <input id="password" class="login-input" type="password" placeholder="Password">
-            <button id="submitLoginBtn" class="login-btn" type="button" onclick="login()">Login</button>
+            <button class="login-btn" type="button" onclick="pumasokSaWebsite()">Login</button>
             <p id="loginMsg" style="color: red; font-weight: bold; margin-top: 10px; font-size: 14px;"></p>
         </div>
     </div>
 
-    <!-- 2. MAIN WEBSITE -->
+    <!-- 2. MAIN WEBSITE (DIRETSO JHANEEZ) -->
     <div id="mainPage" class="hidden">
         <div class="topbar">
             <div class="logo">JHANEEZ ❤️</div>
@@ -65,7 +65,7 @@
             <h4 style="margin: 0 0 5px 0; text-align: left; color: #333;">Gumawa ng Bagong Album</h4>
             <div style="display: flex; gap: 8px; width: 100%;">
                 <input id="newAlbumName" style="flex: 1; padding: 10px; border: 1px solid #ccc; border-radius: 20px; background: #f0f2f5; outline: none; color: black;" placeholder="Pangalan ng Folder...">
-                <button id="postBtn" style="background:#7db6ff; border:none; color:white; padding:10px 20px; border-radius:30px; font-weight:700; cursor:pointer;" onclick="createFolder()">Create</button>
+                <button id="postBtn" style="background:#7db6ff; border:none; color:white; padding:10px 20px; border-radius:30px; font-weight:700; cursor:pointer;" onclick="gumawaNgFolder()">Create</button>
             </div>
         </div>
 
@@ -79,19 +79,19 @@
         </div>
     </div>
 
-    <!-- 3. INSIDE FOLDER CONTENT PAGE -->
+    <!-- 3. INSIDE FOLDER CONTENT PAGE (ALBUM PHOTOS) -->
     <div id="folderPage" class="hidden">
         <div class="topbar">
             <div class="logo" id="currentFolderName">Pangalan ng Album</div>
             <div class="topButtons">
-                <button class="iconBtn" onclick="backToDashboard()">⬅️</button>
+                <button class="iconBtn" onclick="bumalikSaDashboard()">⬅️</button>
             </div>
         </div>
 
         <div class="composer" style="flex-direction: column; align-items: center; padding: 25px 15px;">
             <label style="color:#16a34a; font-weight:700; cursor:pointer; font-size: 18px;">
                 📸 Mag-upload ng mga Litrato
-                <input id="photoUpload" type="file" accept="image/*" multiple style="display: none;" onchange="uploadPhotosToFolder()">
+                <input id="photoUpload" type="file" accept="image/*" multiple style="display: none;" onchange="magUploadNgPhotos()">
             </label>
         </div>
 
@@ -99,135 +99,127 @@
     </div>
 
     <!-- POPUP ELEMENT PARA SA ZOOM-IN IMAGE PREVIEW -->
-    <div id="imageLightbox" class="lightbox hidden" onclick="closeZoom()">
-        <span class="lightbox-close" onclick="closeZoom()">X</span>
+    <div id="imageLightbox" class="lightbox hidden" onclick="isaraAngZoom()">
+        <span class="lightbox-close" onclick="isaraAngZoom()">X</span>
         <img id="lightboxImg" src="" alt="Zoomed Photo">
     </div>
 
 <script>
-    var savedUser = "jhan";
-    var savedPass = "12345";
-    var folders = []; 
-    var activeFolderId = null;
+    // Sobrang daling login check para hindi magka-conflict sa Vercel rules
+    function pumasokSaWebsite() {
+        var userBox = document.getElementById("username").value.trim();
+        var passBox = document.getElementById("password").value.trim();
 
-    // Load Local Memory Safely pagka-bukas ng browser
-    try {
-        var savedData = localStorage.getItem("jhan_albums");
-        if (savedData) {
-            folders = JSON.parse(savedData);
-        }
-    } catch (e) { 
-        folders = []; 
-    }
-
-    // Sinuring Login Engine (Gagana kahit anong mangyari)
-    function login() {
-        var u = document.getElementById("username").value.trim();
-        var p = document.getElementById("password").value.trim();
-
-        if (u === savedUser && p === savedPass) {
+        if (userBox === "jhan" && passBox === "12345") {
             document.getElementById("loginPage").classList.add("hidden");
             document.getElementById("mainPage").classList.remove("hidden");
-            renderFolders(); 
+            ipakitaAngMgaFolder();
         } else {
             document.getElementById("loginMsg").innerHTML = "Maling username o password";
         }
     }
 
-    function createFolder() {
-        var nameInput = document.getElementById("newAlbumName");
-        var folderName = nameInput.value.trim();
-        if (folderName === "") return;
+    var listahanNgAlbums = [];
+    var kasalukuyangFolderId = null;
 
-        var newFolder = {
-            id: "folder_" + Date.now(),
-            name: folderName,
-            photos: [] 
-        };
-
-        if (!Array.isArray(folders)) { folders = []; }
-        folders.push(newFolder);
-        
-        saveToDevice();
-        nameInput.value = "";
-        renderFolders();
+    // Load folders mula sa phone storage safely
+    try {
+        var nakuhangData = localStorage.getItem("jhan_main_albums");
+        if (nakuhangData) {
+            listahanNgAlbums = JSON.parse(nakuhangData);
+        }
+    } catch(e) {
+        listahanNgAlbums = [];
     }
 
-    function renderFolders() {
+    function gumawaNgFolder() {
+        var inputName = document.getElementById("newAlbumName");
+        var pangalan = inputName.value.trim();
+        if (pangalan === "") return;
+
+        var bagongFolder = {
+            id: "id_" + Date.now(),
+            name: pangalan,
+            images: []
+        };
+
+        listahanNgAlbums.push(bagongFolder);
+        isaveSaPhone();
+        inputName.value = "";
+        ipakitaAngMgaFolder();
+    }
+
+    function ipakitaAngMgaFolder() {
         var container = document.getElementById("folderContainer");
-        var emptyState = document.getElementById("emptyState");
-        if(!container || !emptyState) return;
-        
+        var emptyBox = document.getElementById("emptyState");
+        if (!container || !emptyBox) return;
+
         container.innerHTML = "";
 
-        if (!Array.isArray(folders) || folders.length === 0) {
-            emptyState.classList.remove("hidden");
+        if (listahanNgAlbums.length === 0) {
+            emptyBox.classList.remove("hidden");
             return;
         }
 
-        emptyState.classList.add("hidden");
-        folders.forEach(function(folder) {
+        emptyBox.classList.add("hidden");
+        listahanNgAlbums.forEach(function(folder) {
             var div = document.createElement("div");
             div.className = "folder-item";
             div.innerHTML = folder.name;
-            div.onclick = function() { openFolder(folder.id); };
+            div.onclick = function() { buksanAngFolder(folder.id); };
             container.appendChild(div);
         });
     }
 
-    function openFolder(folderId) {
-        activeFolderId = folderId;
-        var folder = folders.find(function(f) { return f.id === folderId; });
-        if(!folder) return;
+    function buksanAngFolder(id) {
+        kasalukuyangFolderId = id;
+        var folder = listahanNgAlbums.find(function(f) { return f.id === id; });
+        if (!folder) return;
 
         document.getElementById("mainPage").classList.add("hidden");
         document.getElementById("folderPage").classList.remove("hidden");
         document.getElementById("currentFolderName").innerHTML = folder.name;
 
-        renderPhotos(folder.photos);
+        ipakitaAngMgaPhotos(folder.images);
     }
 
-    function backToDashboard() {
+    function bumalikSaDashboard() {
         document.getElementById("folderPage").classList.add("hidden");
         document.getElementById("mainPage").classList.remove("hidden");
-        renderFolders();
+        ipakitaAngMgaFolder();
     }
 
-    function renderPhotos(photoArray) {
+    function ipakitaAngMgaPhotos(arrayNgPhotos) {
         var container = document.getElementById("photoContainer");
-        if(!container) return;
+        if (!container) return;
         container.innerHTML = "";
 
-        if (!photoArray || photoArray.length === 0) {
-            container.innerHTML = "<p style='grid-column: 1/-1; padding: 30px 0; color: #777; font-weight: bold;'>Wala pang larawan sa album na ito.</p>";
+        if (!arrayNgPhotos || arrayNgPhotos.length === 0) {
+            container.innerHTML = "<p style='grid-column:1/-1; padding:30px 0; color:#777; font-weight:bold;'>Wala pang larawan sa album na ito.</p>";
             return;
         }
 
-        photoArray.forEach(function(url) {
+        arrayNgPhotos.forEach(function(link) {
             var img = document.createElement("img");
-            img.src = url;
-            img.onclick = function(e) { 
-                e.stopPropagation(); // Iwas-conflict sa close button
-                zoomImage(url); 
+            img.src = link;
+            img.onclick = function(e) {
+                e.stopPropagation();
+                magZoomNgLarawan(link);
             };
             container.appendChild(img);
         });
     }
 
-    function uploadPhotosToFolder() {
-        var fileInput = document.getElementById("photoUpload");
-        if(!fileInput || fileInput.files.length === 0) return;
-        var files = fileInput.files;
+    function magUploadNgPhotos() {
+        var inputFiles = document.getElementById("photoUpload");
+        if (!inputFiles || inputFiles.files.length === 0) return;
+        var files = inputFiles.files;
 
-        var folder = folders.find(function(f) { return f.id === activeFolderId; });
-        if(!folder) return;
+        var folder = listahanNgAlbums.find(function(f) { return f.id === kasalukuyangFolderId; });
+        if (!folder) return;
 
-        var loadedCount = 0;
+        var bilang = 0;
         for (var i = 0; i < files.length; i++) {
             (function(file) {
-                var r = new FileReader();
-                r.onload = function() {
-                    if(!folder.photos) { folder.photos = []; }
-                    folder.photos.push(r.result);
-                    
-                    loadedCount++;
+                var reader = new FileReader();
+                reader.onload = function() {
