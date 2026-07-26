@@ -23,13 +23,12 @@
 
         /* Grid Layout para sa mga Litrato */
         .photo-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; padding: 12px; }
-        .photo-grid img { width: 100%; height: 110px; object-fit: cover; border-radius: 10px; background: #eee; box-shadow: 0 2px 6px rgba(0,0,0,0.05); cursor: pointer; transition: transform 0.2s; }
-        .photo-grid img:hover { transform: scale(1.03); }
+        .photo-grid img { width: 100%; height: 110px; object-fit: cover; border-radius: 10px; background: #eee; box-shadow: 0 2px 6px rgba(0,0,0,0.05); cursor: pointer; }
 
-        /* NEW: Facebook-Style Zoom/Lightbox Overlay */
+        /* Facebook-Style Zoom/Lightbox Overlay */
         .lightbox { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.9); z-index: 9999; display: flex; align-items: center; justify-content: center; }
         .lightbox img { max-width: 95%; max-height: 85%; object-fit: contain; border-radius: 8px; box-shadow: 0 5px 25px rgba(0,0,0,0.5); }
-        .lightbox-close { position: absolute; top: 20px; right: 20px; font-size: 35px; color: white; cursor: pointer; font-weight: bold; user-select: none; }
+        .lightbox-close { position: absolute; top: 20px; right: 20px; font-size: 30px; color: white; cursor: pointer; font-weight: bold; user-select: none; }
     </style>
 </head>
 <body>
@@ -99,31 +98,19 @@
         <div id="photoContainer" class="photo-grid"></div>
     </div>
 
-    <!-- NEW: POPUP ELEMENT PARA SA ZOOM-IN IMAGE PREVIEW -->
+    <!-- POPUP ELEMENT PARA SA ZOOM-IN IMAGE PREVIEW -->
     <div id="imageLightbox" class="lightbox hidden" onclick="closeZoom()">
-        <span class="lightbox-close" onclick="closeZoom()">&times;</span>
+        <span class="lightbox-close" onclick="closeZoom()">X</span>
         <img id="lightboxImg" src="" alt="Zoomed Photo">
     </div>
 
 <script>
-    const savedUser = "jhan";
-    const savedPass = "12345";
-
-    let folders = []; 
-    let activeFolderId = null;
-
-    try {
-        let savedData = localStorage.getItem("jhan_albums");
-        if (savedData) {
-            folders = JSON.parse(savedData);
-        }
-    } catch (e) { folders = []; }
-
+    // Direktang Login Engine (Nakasulat sa pinakatuktok para laging gumana agad)
     function login() {
         const u = document.getElementById("username").value.trim();
         const p = document.getElementById("password").value.trim();
 
-        if (u === savedUser && p === savedPass) {
+        if (u === "jhan" && p === "12345") {
             document.getElementById("loginPage").classList.add("hidden");
             document.getElementById("mainPage").classList.remove("hidden");
             renderFolders(); 
@@ -131,6 +118,17 @@
             document.getElementById("loginMsg").innerHTML = "Maling username o password";
         }
     }
+
+    let folders = []; 
+    let activeFolderId = null;
+
+    // Kunin ang lumang records mula sa phone storage
+    try {
+        let savedData = localStorage.getItem("jhan_albums");
+        if (savedData) {
+            folders = JSON.parse(savedData);
+        }
+    } catch (e) { folders = []; }
 
     function createFolder() {
         const nameInput = document.getElementById("newAlbumName");
@@ -204,7 +202,6 @@
         photoArray.forEach(url => {
             const img = document.createElement("img");
             img.src = url;
-            // NEW: Kapag pinindot ang photo, tatakbo ang function para mag-zoom in
             img.onclick = function() { zoomImage(url); };
             container.appendChild(img);
         });
@@ -232,3 +229,8 @@
                 }
             };
             r.readAsDataURL(file);
+        }
+    }
+
+    function saveToDevice() {
+        try {
