@@ -6,139 +6,51 @@
     <title>Family Apps - JHANEEZ 💕</title>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: sans-serif; }
-        body { background: #f0f2f5; color: #1c1e21; }
-        .p { display: none; width: 100%; min-height: 100vh; }
-        .p.a { display: block; }
-        #loginScreen { background: #1877f2; display: flex; justify-content: center; align-items: center; padding: 20px; }
-        .lc { background: white; padding: 25px; border-radius: 12px; width: 100%; max-width: 380px; text-align: center; box-shadow: 0 4px 12px rgba(0,0,0,0.1); }
-        .e { display: none; background: #ffebe9; color: #ce1126; padding: 10px; border-radius: 6px; margin-bottom: 15px; font-size: 14px; font-weight: bold; }
+        body { background: #1877f2; display: flex; justify-content: center; align-items: center; min-height: 100vh; padding: 20px; }
+        .lc { background: white; padding: 30px 25px; border-radius: 12px; width: 100%; max-width: 380px; text-align: center; box-shadow: 0 4px 12px rgba(0,0,0,0.15); }
+        .e { display: none; background: #ffebe9; color: #ce1126; padding: 12px; border-radius: 6px; margin-bottom: 15px; font-size: 14px; font-weight: bold; border: 1px solid rgba(206,17,38,0.2); }
         .ig { margin-bottom: 15px; text-align: left; }
-        .ig input { width: 100%; padding: 12px; border: 1px solid #ccd0d5; border-radius: 8px; font-size: 16px; outline: none; }
-        .btn { background: #1877f2; color: white; border: none; border-radius: 8px; width: 100%; padding: 12px; font-size: 18px; font-weight: bold; cursor: pointer; }
-        .nv { background: white; height: 56px; padding: 0 16px; display: flex; align-items: center; justify-content: space-between; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
-        .pc { background: white; max-width: 940px; margin: 0 auto; padding-bottom: 20px; }
-        .cv { background: linear-gradient(135deg, #ff758c, #ff7eb3); height: 200px; position: relative; }
-        .dp { width: 120px; height: 120px; border-radius: 50%; border: 4px solid white; background: #ccc; margin: -60px 0 0 20px; position: relative; overflow: hidden; display: inline-block; }
-        .dp img { width: 100%; height: 100%; object-fit: cover; }
-        .pn { display: inline-block; vertical-align: top; margin: 15px 0 0 20px; font-size: 24px; font-weight: bold; }
-        .cc { max-width: 940px; margin: 20px auto; padding: 0 16px; }
-        .ab { display: flex; justify-content: space-between; align-items: center; background: white; padding: 15px; border-radius: 8px; margin-bottom: 20px; }
-        .g { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 15px; }
-        .card { background: white; border-radius: 8px; padding: 15px; text-align: center; cursor: pointer; box-shadow: 0 1px 2px rgba(0,0,0,0.1); }
-        .mi { width: 100%; height: 140px; object-fit: cover; border-radius: 8px; cursor: pointer; }
-        .sbtn { background: #e4e6eb; color: black; border: none; border-radius: 6px; padding: 8px 12px; font-weight: bold; cursor: pointer; }
-        .lb { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.9); z-index: 999; justify-content: center; align-items: center; }
-        .lb img, .lb video { max-width: 90%; max-height: 80%; border-radius: 4px; }
+        .ig input { width: 100%; padding: 14px; border: 1px solid #ccd0d5; border-radius: 8px; font-size: 16px; outline: none; }
+        .btn { background: #1877f2; color: white; border: none; border-radius: 8px; width: 100%; padding: 14px; font-size: 18px; font-weight: bold; cursor: pointer; margin-top: 10px; }
+        .dash-view { display: none; background: white; padding: 30px; border-radius: 12px; text-align: center; width: 100%; max-width: 600px; color: #1c1e21; }
     </style>
-</head><body>
+</head>
+<body>
 
-    <div id="loginScreen" class="p a">
-        <div class="lc">
-            <h1 style="color:#1877f2; margin-bottom: 20px;">FamilyLOVE</h1>
-            <div id="loginError" class="e">Maling username o password!</div>
-            <div class="ig"><input type="text" id="usernameInput" placeholder="Username o Email"></div>
-            <div class="ig"><input type="password" id="passwordInput" placeholder="Password"></div>
-            <button class="btn" onclick="onLogin()">Log In</button>
-        </div>
+    <!-- LOGIN PANEL -->
+    <div id="loginBox" class="lc">
+        <h1 style="color:#1877f2; margin-bottom: 25px; font-size: 36px; letter-spacing: -0.5px;">FamilyLOVE</h1>
+        <div id="loginError" class="e">Maling username o password!</div>
+        <div class="ig"><input type="text" id="usernameInput" placeholder="Username o Email"></div>
+        <div class="ig"><input type="password" id="passwordInput" placeholder="Password"></div>
+        <button type="button" class="btn" onclick="onLoginClick()">Log In</button>
     </div>
 
-    <div id="homeScreen" class="p">
-        <nav class="nv">
-            <h2 style="color:#1877f2;">f <span style="color:black; font-size:16px;">JHANEEZ 💕</span></h2>
-            <button class="sbtn" onclick="toSettings()">⚙️ Settings</button>
-        </nav>
-        <div class="pc">
-            <div class="cv">
-                <label style="position:absolute; bottom:10px; right:10px; background:white; padding:6px; border-radius:4px; font-size:12px; cursor:pointer;">📷 Edit Cover<input type="file" onchange="upCv(event)" style="display:none;"></label>
-            </div>
-            <div class="dp">
-                <img src="https://picsum.photos" id="mDp">
-                <label style="position:absolute; bottom:0; left:0; width:100%; background:rgba(0,0,0,0.5); color:white; text-align:center; font-size:10px; cursor:pointer; padding:2px;">📷<input type="file" onchange="upDp(event)" style="display:none;"></label>
-            </div>
-            <h2 class="pn">JHANEEZ 💕</h2>
-        </div>
-        <div id="setBox" class="cc" style="display:none; background:white; padding:15px; border-radius:8px; margin-bottom:20px;">
-            <h3>⚙️ Settings</h3><br>
-            <div class="ig"><input type="text" id="newU" placeholder="Bagong Username"></div>
-            <div class="ig"><input type="password" id="newP" placeholder="Bagong Password"></div>
-            <button class="sbtn" style="background:#1877f2; color:white;" onclick="saveSet()">Save</button>
-        </div>
-        <div id="dashBox" class="cc">
-            <div class="ab"><h3>Mga Album</h3><button class="sbtn" onclick="addAlb()">+ Create Album</button></div>
-            <div class="g" id="albG"><div class="card" onclick="openAlb('Our First Date')">📂<h4>Our First Date</h4></div></div>
-        </div>
-    </div>    <div id="albScreen" class="p">
-        <nav class="nv"><button class="sbtn" onclick="goHome()">⬅ Back</button><h3 id="albT">Album</h3></nav>
-        <div class="cc">
-            <div class="ab">
-                <input type="file" id="fIn" onchange="upMe(event)" multiple style="display:none;">
-                <button class="btn" onclick="document.getElementById('fIn').click()">+ Upload Photos / Videos</button>
-            </div>
-            <div class="g" id="meG"></div>
-        </div>
+    <!-- SIMPLE DASHBOARD (Lilitaw kapag pumasok ang login) -->
+    <div id="dashboardBox" class="dash-view">
+        <h1 style="color:#1877f2; margin-bottom: 15px;">JHANEEZ 💕</h1>
+        <p style="font-size: 18px; color: #555;">Maligayang pagdating sa iyong Album Dashboard!</p>
+        <br>
+        <div style="font-size: 48px;">📂</div>
+        <h3 style="margin-top: 10px;">Our First Date</h3>
     </div>
-
-    <div id="lbBox" class="lb" onclick="clLb(event)"><div id="lbC"></div></div>
 
     <script>
-        if(!localStorage.getItem("u")) localStorage.setItem("u","admin");
-        if(!localStorage.getItem("p")) localStorage.setItem("p","admin123");
-        function onLogin(){
-            var u=document.getElementById("userInput").value.trim();
-            var p=document.getElementById("passInput").value.trim();
-            if(u===localStorage.getItem("u") && p===localStorage.getItem("p")){
-                document.getElementById("loginScreen").classList.remove("a");
-                document.getElementById("homeScreen").classList.add("a");
-            }else{ document.getElementById("loginError").style.display="block"; }
-        }
-        function toSettings(){
-            var box=document.getElementById("setBox");
-            box.style.display=box.style.display==="none"?"block":"none";
-        }
-        function saveSet(){
-            var nu=document.getElementById("newU").value.trim();
-            var np=document.getElementById("newP").value.trim();
-            if(nu) localStorage.setItem("u",nu); if(np) localStorage.setItem("p",np);
-            alert("Saved!"); toSettings();
-        }
-        function upDp(e){ if(e.target.files) document.getElementById("mDp").src=URL.createObjectURL(e.target.files[0]); }
-        function upCv(e){ if(e.target.files) document.getElementById("coverPhotoBg").style.backgroundImage="url('"+URL.createObjectURL(e.target.files[0])+"')"; }
-        function addAlb(){
-            var n=prompt("Album Name:");
-            if(n&&n.trim()){
-                var card=document.createElement("div"); card.className="card";
-                card.onclick=function(){ openAlb(n.trim()); };
-                card.innerHTML="📂<h4>"+n.trim()+"</h4>"; document.getElementById("albG").appendChild(card);
+        function onLoginClick() {
+            var uInput = document.getElementById("usernameInput").value.trim();
+            var pInput = document.getElementById("passwordInput").value.trim();
+            var errDisplay = document.getElementById("loginError");
+
+            // Direct check para walang kumplikadong loading array loops
+            if (uInput === "admin" && pInput === "admin123") {
+                errDisplay.style.display = "none";
+                document.getElementById("loginBox").style.display = "none";
+                document.body.style.background = "#f0f2f5"; // Palitan ang kulay ng background para sa dashboard
+                document.getElementById("dashboardBox").style.display = "block";
+            } else {
+                errDisplay.style.display = "block";
             }
         }
-        function openAlb(t){
-            document.getElementById("albT").innerText=t;
-            document.getElementById("homeScreen").classList.remove("a");
-            document.getElementById("albScreen").classList.add("a");
-            document.getElementById("meG").innerHTML='<img src="https://picsum.photos" class="mi" onclick="shLb(this.src,\'i\')">';
-        }
-        function goHome(){ document.getElementById("albScreen").classList.remove("a"); document.getElementById("homeScreen").classList.add("a"); }
-        function upMe(e){
-            var g=document.getElementById("meG"); var fs=e.target.files;
-            for(var i=0; i<fs.length; i++){
-                var url=URL.createObjectURL(fs[i]);
-                if(fs[i].type.startsWith("image/")){
-                    var img=document.createElement("img"); img.src=url; img.className="mi";
-                    img.onclick=(function(src){return function(){shLb(src,\'i\');};})(url); g.insertBefore(img,g.firstChild);
-                }else{
-                    var vid=document.createElement("video"); vid.src=url; vid.className="mi"; vid.controls=true;
-                    vid.onclick=(function(src){return function(){shLb(src,\'v\');};})(url); g.insertBefore(vid,g.firstChild);
-                }
-            }
-        }
-        function shLb(s,t){
-            var box=document.getElementById("lbBox");
-            document.getElementById("lbC").innerHTML=t==='i'?"<img src='"+s+"'>":"<video src='"+s+"' controls autoplay></video>";
-            box.style.display="flex";
-        }
-        function clLb(e){ if(e.target.id==="lbBox"){ document.getElementById("lbBox").style.display="none"; document.getElementById("lbC").innerHTML=""; } }
     </script>
 </body>
 </html>
-
-
