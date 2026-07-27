@@ -13,13 +13,13 @@
         <div class="login-wrapper">
             <h1 class="app-logo-text">FamilyLOVE</h1>
             <div class="login-card">
-                <div id="loginError" class="error-msg">Maling username o password!</div>
+                <div id="loginError" class="error-msg" style="display: none; background-color: #ffebe9; color: #ce1126; padding: 10px; border-radius: 6px; margin-bottom: 15px; font-size: 0.9rem; font-weight: 600; border: 1px solid rgba(206,17,38,0.2);">Maling username o password!</div>
                 <div class="input-group">
                     <input type="text" id="usernameInput" placeholder="Username o Email">
                 </div>
                 <div class="input-group password-group">
                     <input type="password" id="passwordInput" placeholder="Password">
-                    <span class="view-password-icon">👀</span>
+                    <span class="view-password-icon" style="position: absolute; right: 15px; top: 50%; transform: translateY(-50%); cursor: pointer; font-size: 1.2rem; user-select: none;">👀</span>
                 </div>
                 <button id="loginBtn" class="fb-login-submit-btn">Log In</button>
             </div>
@@ -76,7 +76,10 @@
                 <button id="createAlbumBtn" class="fb-btn-secondary">+ Create Album</button>
             </div>
             <div class="album-grid" id="albumGrid">
-                <!-- Dito papasok ang dynamic folders mula database -->
+                <div class="album-card" data-album-id="local-1">
+                    <div class="album-cover-placeholder">📂</div>
+                    <h4>Our First Date</h4>
+                </div>
             </div>
         </div>
     </div>
@@ -94,19 +97,115 @@
                 <button id="triggerUploadBtn" class="fb-btn">+ Upload Photos / Videos</button>
             </div>
             <div class="media-grid" id="mediaGrid">
-                <!-- Dito papasok ang mga dynamic photos mula Supabase Storage -->
+                <img src="https://picsum.photos" class="zoomable media-item" alt="Sample Image">
+                <video src="https://w3schools.com" class="media-item clickable-video" controls muted></video>
             </div>
         </div>
     </div>
 
-    <!-- SECTION 4: LIGHTBOX OVERLAY FOR PHOTOS & VIDEOS -->
+    <!-- SECTION 4: LIGHTBOX OVERLAY -->
     <div id="lightbox" class="lightbox">
         <span class="close-btn">&times;</span>
         <div class="lightbox-content-wrapper" id="lightboxContent"></div>
     </div>
 
-    <!-- KONEKSYON SA SUPABASE VIA CDN LIBRARY -->
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-    <script src="script.js"></script>
-</body>
-</html>
+    <!-- INLINE SCRIPT LOGIC -->
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            let currentUsername = "admin";
+            let currentPassword = "admin123";
+            let navigationHistory = ["loginScreen"];
+            let activeAlbumId = null;
+
+            function navigateTo(screenId) {
+                document.querySelectorAll(".page").forEach(page => page.classList.remove("active"));
+                document.getElementById(screenId).classList.add("active");
+                if (navigationHistory[navigationHistory.length - 1] !== screenId) {
+                    navigationHistory.push(screenId);
+                }
+            }
+
+            function goBack() {
+                if (navigationHistory.length > 1) {
+                    navigationHistory.pop();
+                    const previousScreen = navigationHistory[navigationHistory.length - 1];
+                    document.querySelectorAll(".page").forEach(page => page.classList.remove("active"));
+                    document.getElementById(previousScreen).classList.add("active");
+                    document.getElementById("settingsPanel").style.display = "none";
+                    document.getElementById("mainDashboardContent").style.display = "block";
+                }
+            }
+
+            // LOGIN FUNCTION
+            document.getElementById("loginBtn").addEventListener("click", () => {
+                const userInp = document.getElementById("usernameInput").value.trim();
+                const passInp = document.getElementById("passwordInput").value.trim();
+                const errorBox = document.getElementById("loginError");
+
+                if (userInp === currentUsername && passInp === currentPassword) {
+                    errorBox.style.display = "none";
+                    navigateTo("homeScreen");
+                } else {
+                    errorBox.style.display = "block";
+                }
+            });
+
+            // Toggle Password Eye
+            const passwordInput = document.getElementById("passwordInput");
+            const viewPasswordIcon = document.querySelector(".view-password-icon");
+            if (viewPasswordIcon && passwordInput) {
+                viewPasswordIcon.addEventListener("click", () => {
+                    if (passwordInput.type === "password") {
+                        passwordInput.type = "text";
+                        viewPasswordIcon.innerText = "🕶️";
+                    } else {
+                        passwordInput.type = "password";
+                        viewPasswordIcon.innerText = "👀";
+                    }
+                });
+            }
+
+            // Settings Tab Switch
+            const settingsBtn = document.getElementById("settingsTabBtn");
+            const settingsPanel = document.getElementById("settingsPanel");
+            const mainDashboardContent = document.getElementById("mainDashboardContent");
+
+            settingsBtn.addEventListener("click", () => {
+                if (settingsPanel.style.display === "none") {
+                    settingsPanel.style.display = "block";
+                    mainDashboardContent.style.display = "none";
+                    settingsBtn.innerText = "📁 Dashboard";
+                } else {
+                    settingsPanel.style.display = "none";
+                    mainDashboardContent.style.display = "block";
+                    settingsBtn.innerText = "⚙️ Settings";
+                }
+            });
+
+            // Save Settings
+            document.getElementById("saveSettingsBtn").addEventListener("click", () => {
+                const newU = document.getElementById("newUsername").value.trim();
+                const newP = document.getElementById("newPassword").value.trim();
+                if (newU !== "") currentUsername = newU;
+                if (newP !== "") currentPassword = newP;
+                alert("Credentials changed successfully!");
+                settingsPanel.style.display = "none";
+                mainDashboardContent.style.display = "block";
+                settingsBtn.innerText = "⚙️ Settings";
+            });
+
+            // Avatar Upload
+            document.getElementById("dpUploadInput").addEventListener("change", (e) => {
+                const file = e.target.files[0];
+                if (file) document.getElementById("profileDp").src = URL.createObjectURL(file);
+            });
+
+            // Cover Upload
+            document.getElementById("coverUploadInput").addEventListener("change", (e) => {
+                const file = e.target.files[0];
+                if (file) document.getElementById("coverPhotoBg").style.backgroundImage = `url('${URL.createObjectURL(file)}')`;
+            });
+
+            // Open Folder
+            document.getElementById("albumGrid").addEventListener("click", (e) => {
+                const card = e.target.closest(".album-card");
