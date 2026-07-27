@@ -11,11 +11,9 @@
     <!-- SECTION 1: FAMILYLOVE LOGIN SCREEN -->
     <div id="loginScreen" class="page active">
         <div class="login-wrapper">
-            <!-- Pangalan ng App gaya ng sa pic -->
             <h1 class="app-logo-text">FamilyLOVE</h1>
-            
-            <!-- Ang White Login Card -->
             <div class="login-card">
+                <div id="loginError" class="error-msg">Maling username o password!</div>
                 <div class="input-group">
                     <input type="text" id="usernameInput" placeholder="Username o Email">
                 </div>
@@ -30,37 +28,55 @@
 
     <!-- SECTION 2: HOME / PROFILE SCREEN (Facebook Style) -->
     <div id="homeScreen" class="page">
-        <!-- Navigation Header -->
         <nav class="fb-navbar">
-            <span class="fb-logo">f</span>
-            <span class="profile-name-nav">JHANEEZ 💕</span>
+            <div class="nav-left">
+                <span class="fb-logo">f</span>
+                <span class="profile-name-nav" id="navProfileName">JHANEEZ 💕</span>
+            </div>
+            <button id="settingsTabBtn" class="fb-btn-secondary">⚙️ Settings</button>
         </nav>
 
-        <!-- Profile / Cover Photo Section -->
         <div class="profile-container">
-            <div class="cover-photo"></div>
+            <div class="cover-photo" id="coverPhotoBg">
+                <label class="change-photo-btn cover-upload-label">
+                    📷 <span>Edit Cover</span>
+                    <input type="file" id="coverUploadInput" accept="image/*" style="display:none;">
+                </label>
+            </div>
             <div class="profile-info">
-                <!-- DP (Display Picture) -->
                 <div class="dp-container">
                     <img src="https://picsum.photos" alt="DP" id="profileDp">
+                    <label class="dp-upload-overlay">
+                        📷
+                        <input type="file" id="dpUploadInput" accept="image/*" style="display:none;">
+                    </label>
                 </div>
-                <h2 class="profile-name">JHANEEZ 💕</h2>
+                <h2 class="profile-name" id="mainProfileName">JHANEEZ 💕</h2>
             </div>
         </div>
 
-        <!-- Album Controls -->
-        <div class="content-container">
+        <div id="settingsPanel" class="settings-card content-container" style="display: none;">
+            <h3>⚙️ Account Settings</h3>
+            <div class="settings-form">
+                <div class="input-group">
+                    <label>Bagong Username:</label>
+                    <input type="text" id="newUsername" placeholder="Ipasok ang bagong username">
+                </div>
+                <div class="input-group">
+                    <label>Bagong Password:</label>
+                    <input type="password" id="newPassword" placeholder="Ipasok ang bagong password">
+                </div>
+                <button id="saveSettingsBtn" class="fb-btn">I-save ang Pagbabago</button>
+            </div>
+        </div>
+
+        <div id="mainDashboardContent" class="content-container">
             <div class="action-bar">
                 <h3>Mga Album</h3>
                 <button id="createAlbumBtn" class="fb-btn-secondary">+ Create Album</button>
             </div>
-
-            <!-- Dito lalabas ang mga ginawang Album Card -->
             <div class="album-grid" id="albumGrid">
-                <div class="album-card" data-album-id="1">
-                    <div class="album-cover-placeholder">📂</div>
-                    <h4>Our First Date</h4>
-                </div>
+                <!-- Dito papasok ang dynamic folders mula database -->
             </div>
         </div>
     </div>
@@ -68,22 +84,17 @@
     <!-- SECTION 3: INSIDE ALBUM SCREEN -->
     <div id="albumViewScreen" class="page">
         <nav class="fb-navbar">
-            <!-- TAMANG BACK BUTTON: Babalik lang sa Home, hindi sa Login -->
             <button id="backToHomeBtn" class="back-btn">⬅ Back</button>
             <h3 id="currentAlbumTitle">Pangalan ng Album</h3>
         </nav>
 
         <div class="content-container">
             <div class="upload-bar">
-                <!-- Inputs para makapag-upload -->
                 <input type="file" id="mediaUploadInput" accept="image/*,video/*" multiple style="display:none;">
                 <button id="triggerUploadBtn" class="fb-btn">+ Upload Photos / Videos</button>
             </div>
-
-            <!-- Media Grid sa Loob ng Album -->
             <div class="media-grid" id="mediaGrid">
-                <img src="https://picsum.photos" class="zoomable media-item" alt="Sample Image">
-                <video src="https://w3schools.com" class="media-item clickable-video" controls muted></video>
+                <!-- Dito papasok ang mga dynamic photos mula Supabase Storage -->
             </div>
         </div>
     </div>
@@ -91,11 +102,11 @@
     <!-- SECTION 4: LIGHTBOX OVERLAY FOR PHOTOS & VIDEOS -->
     <div id="lightbox" class="lightbox">
         <span class="close-btn">&times;</span>
-        <div class="lightbox-content-wrapper" id="lightboxContent">
-            <!-- Dito ipapasok ng JS ang malaking Image o Video -->
-        </div>
+        <div class="lightbox-content-wrapper" id="lightboxContent"></div>
     </div>
 
+    <!-- KONEKSYON SA SUPABASE VIA CDN LIBRARY -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script src="script.js"></script>
 </body>
 </html>
