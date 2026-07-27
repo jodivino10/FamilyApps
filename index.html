@@ -38,7 +38,7 @@
 
         <div class="profile-container">
             <div class="cover-photo" id="coverPhotoBg">
-                <label class="change-photo-btn cover-upload-label">
+                <label class="change-photo-btn cover-upload-label" style="position: absolute; bottom: 15px; right: 15px; background: rgba(255,255,255,0.9); padding: 8px 12px; border-radius: 6px; font-size: 0.9rem; font-weight: 600; cursor: pointer; display: flex; align-items: center; gap: 6px;">
                     📷 <span>Edit Cover</span>
                     <input type="file" id="coverUploadInput" accept="image/*" style="display:none;">
                 </label>
@@ -46,7 +46,7 @@
             <div class="profile-info">
                 <div class="dp-container">
                     <img src="https://picsum.photos" alt="DP" id="profileDp">
-                    <label class="dp-upload-overlay">
+                    <label class="dp-upload-overlay" style="position: absolute; bottom: 0; left: 0; width: 100%; height: 35%; background: rgba(0,0,0,0.6); color: white; display: flex; justify-content: center; align-items: center; cursor: pointer; font-size: 1.1rem;">
                         📷
                         <input type="file" id="dpUploadInput" accept="image/*" style="display:none;">
                     </label>
@@ -55,21 +55,23 @@
             </div>
         </div>
 
+        <!-- Settings Tab -->
         <div id="settingsPanel" class="settings-card content-container" style="display: none;">
             <h3>⚙️ Account Settings</h3>
             <div class="settings-form">
                 <div class="input-group">
                     <label>Bagong Username:</label>
-                    <input type="text" id="newUsername" placeholder="Ipasok ang bagong username">
+                    <input type="text" id="newUsername" placeholder="Ipasok ang bagong username" style="width: 100%; padding: 10px; border: 1px solid #ccd0d5; border-radius: 6px;">
                 </div>
                 <div class="input-group">
                     <label>Bagong Password:</label>
-                    <input type="password" id="newPassword" placeholder="Ipasok ang bagong password">
+                    <input type="password" id="newPassword" placeholder="Ipasok ang bagong password" style="width: 100%; padding: 10px; border: 1px solid #ccd0d5; border-radius: 6px;">
                 </div>
                 <button id="saveSettingsBtn" class="fb-btn">I-save ang Pagbabago</button>
             </div>
         </div>
 
+        <!-- Album Dashboard Content -->
         <div id="mainDashboardContent" class="content-container">
             <div class="action-bar">
                 <h3>Mga Album</h3>
@@ -109,13 +111,12 @@
         <div class="lightbox-content-wrapper" id="lightboxContent"></div>
     </div>
 
-    <!-- INLINE SCRIPT LOGIC -->
+    <!-- INTERNAL JAVA-SCRIPT LOGIC -->
     <script>
         document.addEventListener("DOMContentLoaded", () => {
             let currentUsername = "admin";
             let currentPassword = "admin123";
             let navigationHistory = ["loginScreen"];
-            let activeAlbumId = null;
 
             function navigateTo(screenId) {
                 document.querySelectorAll(".page").forEach(page => page.classList.remove("active"));
@@ -136,7 +137,7 @@
                 }
             }
 
-            // LOGIN FUNCTION
+            // GARANTISADONG LOGIN TRIGGER HAKBANG
             document.getElementById("loginBtn").addEventListener("click", () => {
                 const userInp = document.getElementById("usernameInput").value.trim();
                 const passInp = document.getElementById("passwordInput").value.trim();
@@ -150,7 +151,7 @@
                 }
             });
 
-            // Toggle Password Eye
+            // Toggle Password Indicator Icon Eye
             const passwordInput = document.getElementById("passwordInput");
             const viewPasswordIcon = document.querySelector(".view-password-icon");
             if (viewPasswordIcon && passwordInput) {
@@ -165,7 +166,7 @@
                 });
             }
 
-            // Settings Tab Switch
+            // Settings View Navigation Switch Tab
             const settingsBtn = document.getElementById("settingsTabBtn");
             const settingsPanel = document.getElementById("settingsPanel");
             const mainDashboardContent = document.getElementById("mainDashboardContent");
@@ -182,7 +183,7 @@
                 }
             });
 
-            // Save Settings
+            // Account Save settings credentials
             document.getElementById("saveSettingsBtn").addEventListener("click", () => {
                 const newU = document.getElementById("newUsername").value.trim();
                 const newP = document.getElementById("newPassword").value.trim();
@@ -194,18 +195,4 @@
                 settingsBtn.innerText = "⚙️ Settings";
             });
 
-            // Avatar Upload
-            document.getElementById("dpUploadInput").addEventListener("change", (e) => {
-                const file = e.target.files[0];
-                if (file) document.getElementById("profileDp").src = URL.createObjectURL(file);
-            });
-
-            // Cover Upload
-            document.getElementById("coverUploadInput").addEventListener("change", (e) => {
-                const file = e.target.files[0];
-                if (file) document.getElementById("coverPhotoBg").style.backgroundImage = `url('${URL.createObjectURL(file)}')`;
-            });
-
-            // Open Folder
-            document.getElementById("albumGrid").addEventListener("click", (e) => {
-                const card = e.target.closest(".album-card");
+            // Avatar Live Image Preview
