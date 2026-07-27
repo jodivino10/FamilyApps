@@ -3,36 +3,97 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Family Apps - Memories</title>
+    <title>Family Apps - JHANEEZ 💕</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-    <header>
-        <h1>Our Family Memories</h1>
-        <p>Isang koleksyon ng ating mga pinahahalagang alaala.</p>
-    </header>
-
-    <main>
-        <!-- Dito lalabas ang mga larawan -->
-        <div class="gallery" id="galleryContainer">
-            <!-- Halimbawang mga larawan. Palitan ang 'src' ng iyong Supabase URLs mamaya -->
-            <div class="gallery-item">
-                <img src="https://picsum.photos" alt="Memory 1" class="zoomable">
-            </div>
-            <div class="gallery-item">
-                <img src="https://picsum.photos" alt="Memory 2" class="zoomable">
-            </div>
-            <div class="gallery-item">
-                <img src="https://picsum.photos" alt="Memory 3" class="zoomable">
+    <!-- SECTION 1: FAMILYLOVE LOGIN SCREEN -->
+    <div id="loginScreen" class="page active">
+        <div class="login-wrapper">
+            <!-- Pangalan ng App gaya ng sa pic -->
+            <h1 class="app-logo-text">FamilyLOVE</h1>
+            
+            <!-- Ang White Login Card -->
+            <div class="login-card">
+                <div class="input-group">
+                    <input type="text" id="usernameInput" placeholder="Username o Email">
+                </div>
+                <div class="input-group password-group">
+                    <input type="password" id="passwordInput" placeholder="Password">
+                    <span class="view-password-icon">👀</span>
+                </div>
+                <button id="loginBtn" class="fb-login-submit-btn">Log In</button>
             </div>
         </div>
-    </main>
+    </div>
 
-    <!-- Ito ang Pop-up Zoom (Lightbox Overlay) -->
+    <!-- SECTION 2: HOME / PROFILE SCREEN (Facebook Style) -->
+    <div id="homeScreen" class="page">
+        <!-- Navigation Header -->
+        <nav class="fb-navbar">
+            <span class="fb-logo">f</span>
+            <span class="profile-name-nav">JHANEEZ 💕</span>
+        </nav>
+
+        <!-- Profile / Cover Photo Section -->
+        <div class="profile-container">
+            <div class="cover-photo"></div>
+            <div class="profile-info">
+                <!-- DP (Display Picture) -->
+                <div class="dp-container">
+                    <img src="https://picsum.photos" alt="DP" id="profileDp">
+                </div>
+                <h2 class="profile-name">JHANEEZ 💕</h2>
+            </div>
+        </div>
+
+        <!-- Album Controls -->
+        <div class="content-container">
+            <div class="action-bar">
+                <h3>Mga Album</h3>
+                <button id="createAlbumBtn" class="fb-btn-secondary">+ Create Album</button>
+            </div>
+
+            <!-- Dito lalabas ang mga ginawang Album Card -->
+            <div class="album-grid" id="albumGrid">
+                <div class="album-card" data-album-id="1">
+                    <div class="album-cover-placeholder">📂</div>
+                    <h4>Our First Date</h4>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- SECTION 3: INSIDE ALBUM SCREEN -->
+    <div id="albumViewScreen" class="page">
+        <nav class="fb-navbar">
+            <!-- TAMANG BACK BUTTON: Babalik lang sa Home, hindi sa Login -->
+            <button id="backToHomeBtn" class="back-btn">⬅ Back</button>
+            <h3 id="currentAlbumTitle">Pangalan ng Album</h3>
+        </nav>
+
+        <div class="content-container">
+            <div class="upload-bar">
+                <!-- Inputs para makapag-upload -->
+                <input type="file" id="mediaUploadInput" accept="image/*,video/*" multiple style="display:none;">
+                <button id="triggerUploadBtn" class="fb-btn">+ Upload Photos / Videos</button>
+            </div>
+
+            <!-- Media Grid sa Loob ng Album -->
+            <div class="media-grid" id="mediaGrid">
+                <img src="https://picsum.photos" class="zoomable media-item" alt="Sample Image">
+                <video src="https://w3schools.com" class="media-item clickable-video" controls muted></video>
+            </div>
+        </div>
+    </div>
+
+    <!-- SECTION 4: LIGHTBOX OVERLAY FOR PHOTOS & VIDEOS -->
     <div id="lightbox" class="lightbox">
         <span class="close-btn">&times;</span>
-        <img class="lightbox-img" id="lightboxImg" src="" alt="Zoomed view">
+        <div class="lightbox-content-wrapper" id="lightboxContent">
+            <!-- Dito ipapasok ng JS ang malaking Image o Video -->
+        </div>
     </div>
 
     <script src="script.js"></script>
