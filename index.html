@@ -17,8 +17,8 @@
                 <div class="input-group">
                     <input type="text" id="usernameInput" placeholder="Username o Email">
                 </div>
-                <div class="input-group password-group">
-                    <input type="password" id="passwordInput" placeholder="Password">
+                <div class="input-group password-group" style="position: relative;">
+                    <input type="password" id="passwordInput" placeholder="Password" style="width: 100%;">
                     <span class="view-password-icon" style="position: absolute; right: 15px; top: 50%; transform: translateY(-50%); cursor: pointer; font-size: 1.2rem; user-select: none;">👀</span>
                 </div>
                 <button id="loginBtn" class="fb-login-submit-btn">Log In</button>
@@ -26,7 +26,7 @@
         </div>
     </div>
 
-    <!-- SECTION 2: HOME / PROFILE SCREEN (Facebook Style) -->
+    <!-- SECTION 2: HOME / PROFILE SCREEN -->
     <div id="homeScreen" class="page">
         <nav class="fb-navbar">
             <div class="nav-left">
@@ -111,11 +111,13 @@
         <div class="lightbox-content-wrapper" id="lightboxContent"></div>
     </div>
 
-    <!-- INTERNAL JAVA-SCRIPT LOGIC -->
+    <!-- INTERNAL JAVASCRIPT LOGIC -->
     <script>
         document.addEventListener("DOMContentLoaded", () => {
-            let currentUsername = "admin";
-            let currentPassword = "admin123";
+            // Gumamit ng localStorage para permanenteng ma-store ang credentials kahit i-refresh (Solusyon sa #3 sa pic mo)
+            if (!localStorage.getItem("username")) localStorage.setItem("username", "admin");
+            if (!localStorage.getItem("password")) localStorage.setItem("password", "admin123");
+
             let navigationHistory = ["loginScreen"];
 
             function navigateTo(screenId) {
@@ -137,13 +139,16 @@
                 }
             }
 
-            // GARANTISADONG LOGIN TRIGGER HAKBANG
+            // LOGIN LOGIC
             document.getElementById("loginBtn").addEventListener("click", () => {
                 const userInp = document.getElementById("usernameInput").value.trim();
                 const passInp = document.getElementById("passwordInput").value.trim();
                 const errorBox = document.getElementById("loginError");
 
-                if (userInp === currentUsername && passInp === currentPassword) {
+                const storedUser = localStorage.getItem("username");
+                const storedPass = localStorage.getItem("password");
+
+                if (userInp === storedUser && passInp === storedPass) {
                     errorBox.style.display = "none";
                     navigateTo("homeScreen");
                 } else {
@@ -151,7 +156,7 @@
                 }
             });
 
-            // Toggle Password Indicator Icon Eye
+            // Toggle Password View Eye
             const passwordInput = document.getElementById("passwordInput");
             const viewPasswordIcon = document.querySelector(".view-password-icon");
             if (viewPasswordIcon && passwordInput) {
@@ -166,7 +171,7 @@
                 });
             }
 
-            // Settings View Navigation Switch Tab
+            // Settings Tab Switch
             const settingsBtn = document.getElementById("settingsTabBtn");
             const settingsPanel = document.getElementById("settingsPanel");
             const mainDashboardContent = document.getElementById("mainDashboardContent");
@@ -183,16 +188,7 @@
                 }
             });
 
-            // Account Save settings credentials
+            // Permanent Save Settings via LocalStorage
             document.getElementById("saveSettingsBtn").addEventListener("click", () => {
                 const newU = document.getElementById("newUsername").value.trim();
                 const newP = document.getElementById("newPassword").value.trim();
-                if (newU !== "") currentUsername = newU;
-                if (newP !== "") currentPassword = newP;
-                alert("Credentials changed successfully!");
-                settingsPanel.style.display = "none";
-                mainDashboardContent.style.display = "block";
-                settingsBtn.innerText = "⚙️ Settings";
-            });
-
-            // Avatar Live Image Preview
